@@ -1,44 +1,53 @@
-var express = require('express')
-  , sio = require('socket.io')
+var express = require('express'),
+sio = require('socket.io'),
+redis = require("redis"),
+client = redis.createClient();
 
-,app = express.createServer(
+var rooms = 0;
+
+var app = express.createServer(
     express.bodyParser()
-  , express.static('public')
 );
-
-var ids = [];
 
 app.configure(function(){
   app.set('view engine', 'jade');  
 });
 
 app.get('/',function(req,res,next){
+	client.smembers('rooms');
   res.render('index');
 });
 
 app.post('/create',function(req,res,next){
-	ids.push(req.body.room_name);
-	var room_id = ids.length - 1;
-  res.redirect('/room/'+room_id);
+	client.set(rooms,req.body.room_name);
+	res.redirect('/room/'+rooms);
+	rooms++;
 });
 
 app.get('/room/:id',function(req,res,next){
-	res.locals({'room_name':ids[req.params.id],'room_id':req.params.id});
-	res.render('room');
+	client.get(req.params.id,function(err,room_name){
+		res.locals({'room_name':room_name,'room_id':req.params.id});
+		res.render('room');
+	});
 });
 
 var io = sio.listen(app);
 
-io.configure(function () {
-  io.set('log level', 2);
-});
-
 io.sockets.on('connection', function (socket) {
-	console.log(io);
 	socket.on('set nickname',function(data){
 		socket.join(data.room_id);
     socket.set('nickname', data.nickname, function () {
-    	socket.broadcast.to(data.room_id).emit('new user',{nickname:data.nickname});
+    });
+		client.sadd('users'+data.room_id,data.nickname);
+  	socket.broadcast.to(data.room_id).emit('new user',{'nickname':data.nickname});
+		client.smembers('users'+data.room_id,function(error,usrs){
+			socket.emit('ready',{'user_list':usrs});
+		});
+	});
+
+	socket.on('my msg',function(data){
+		socket.get('nickname',function(err,nickname){
+	  	io.sockets.in(data.room_id).emit('new msg',{'nickname':nickname,'msg':data.msg});		
 		});
 	});
 
