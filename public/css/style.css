@@ -93,6 +93,7 @@ ul.chat-list li{font-weight: bold; color: #666; position: relative; border-botto
 ul.chat-list li .status-bar{background-color: rgba(0,0,0,.05); width: 24px; float: left;  position: absolute; bottom: 0; top: 0}
 
 img.avatar{background: white; padding: 2px; border: 1px solid #ccc;}
+.username{font-weight: bold; }
 ul.chat-list li img.avatar{width: 30px; height: 30px}
 
 .user-space{padding: 10px; margin-left: 20px}
@@ -103,6 +104,7 @@ ul.chat-list li img.avatar{width: 30px; height: 30px}
 
 .content{left: 260px; right: 10px; top: 60px; position: absolute; height: 300px}
 .content .chat-box .message-box{background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 2px rgba(0,0,0,.2); top: 0; left: 70px; right: 0; position: absolute; color: #666}
+.content .chat-box .message-box .username{display: block; margin-bottom: 10px}
 .content .chat-box img.avatar{width: 46px; height: 46px}
 
 /* ==|== non-semantic helper classes ======================================== */
