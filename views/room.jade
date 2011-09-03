@@ -1,0 +1,21 @@
+p= room_name
+
+ul.user_list
+
+
+ul.log
+
+span#room_id(style="display:none")= room_id
+script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js")
+script(src="/socket.io/socket.io.js")
+script()
+	$(document).ready(function(){
+		var socket = io.connect('http://localhost');
+		var nickname = prompt('Cual es tu nickname?');
+		socket.emit('set nickname',{nickname: nickname,room_id:$('#room_id').text()});	
+		
+		socket.on('new user',function(data){
+			$('.user_list').append('<li>'+data.nickname+'</li>');
+		});
+	});
+
