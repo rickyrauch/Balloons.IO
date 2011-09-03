@@ -1,0 +1,13 @@
+h3 Available rooms
+p
+  select#available_rooms(name="available_rooms")
+    
+
+h3 Create new room
+form(method="POST",action="/create")
+  p
+    label Room name
+    input.text(type="text",name="room_name")
+    
+  p
+    input(type="submit",value="Send")
