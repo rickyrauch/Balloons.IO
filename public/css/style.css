@@ -88,17 +88,20 @@ header ul{
 	background-image: -o-linear-gradient(#555a60 7.4%, #3c4147);
 	font-size: 12px; color: white; border: 1px solid #2C3037; width: 200px; float: left; list-style: none; padding: 6px; margin: 6px; border-radius: 5px}
 
-ul.chat-list{padding: 0; margin: 0; list-style: none; width: 200px; height: 300px; background: #EFEFEF; position: absolute; top: 0; padding-top: 48px; bottom: 0; border-right: 1px solid rgba(255,255,255,.4); box-shadow: -1px 0 0 rgba(0,0,0,.4) inset}
-ul.chat-list li{font-weight: bold; color: #666}
+ul.chat-list{padding: 0; margin: 0; list-style: none; width: 230px; height: 300px; background: #EFEFEF; position: absolute; top: 0; padding-top: 42px; bottom: 0; border-right: 1px solid rgba(0,0,0,.4); box-shadow: 1px 0 0 rgba(255,255,255,.4) }
+ul.chat-list li{font-weight: bold; color: #666; position: relative; border-bottom: 1px solid #ccc}
 
 
-ul.chat-list li .status-bar{background-color: rgba(0,0,0,.1); height: 40px; width: 14px; float: left; margin-right: 10px}
+ul.chat-list li .status-bar{background-color: rgba(0,0,0,.05); width: 24px; float: left;  position: absolute; bottom: 0; top: 0}
 
 ul.chat-list li img{background: white; padding: 2px; border: 1px solid #ccc}
 
+.user-space{padding: 10px; margin-left: 20px}
 
-
-
+.status{border: 1px solid #333; width: 10px; height: 10px;display: block; border-radius: 100px; top: 22px; position: absolute; left: 5px}
+.status.available{border: 1px solid #486D14; background-image: -webkit-linear-gradient(bottom, #90D42F, #CBFF80)}
+.status.not-available{border: 1px solid #A64343; background-image: -webkit-linear-gradient(bottom, #DA3839, #FF8081)}
+.status.idle{border: 1px solid #807244; background-image: -webkit-linear-gradient(bottom, #FBC710, #FFE99C)}
 
 /* ==|== non-semantic helper classes ======================================== */
 .ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; }
