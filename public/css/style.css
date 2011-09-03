@@ -66,7 +66,9 @@ td { vertical-align: top; }
    Author: 
    ========================================================================== */
 
-body{position: relative; bottom: 0; height: 100%; text-shadow: 0 1px 0 white; background: url('../img/bg.png')}
+body{ text-shadow: 0 1px 0 white; background: url('../img/bg.png')}
+
+#container{background: red; }
 
 header{
 	background-image: -webkit-gradient(linear, 0 0, 0 48, color-stop(0.041, #4f545a), color-stop(0.5, #31363c));
@@ -88,7 +90,7 @@ header ul{
 	background-image: -o-linear-gradient(#555a60 7.4%, #3c4147);
 	font-size: 12px; color: white; border: 1px solid #2C3037; width: 200px; float: left; list-style: none; padding: 6px; margin: 6px; border-radius: 5px}
 
-ul.chat-list{padding: 0; margin: 0; list-style: none; width: 240px; height: 300px; background: #EFEFEF; position: absolute; top: 0; padding-top: 42px; bottom: 0; border-right: 1px solid rgba(0,0,0,.4); box-shadow: 1px 0 0 rgba(255,255,255,.4) }
+ul.chat-list{padding: 0; margin: 0; list-style: none; width: 240px;  background: #EFEFEF; position: absolute; top: 0; padding-top: 42px; bottom: 0; border-right: 1px solid rgba(0,0,0,.4); box-shadow: 1px 0 0 rgba(255,255,255,.4) }
 ul.chat-list li{font-weight: bold; color: #666; position: relative; border-bottom: 1px solid #ccc}
 ul.chat-list li .status-bar{background-color: rgba(0,0,0,.05); width: 24px; float: left;  position: absolute; bottom: 0; top: 0}
 
@@ -102,10 +104,18 @@ ul.chat-list li img.avatar{width: 30px; height: 30px}
 .status.not-available{border: 1px solid #A64343; background-image: -webkit-linear-gradient(bottom, #DA3839, #FF8081)}
 .status.idle{border: 1px solid #807244; background-image: -webkit-linear-gradient(bottom, #FBC710, #FFE99C)}
 
-.content{left: 260px; right: 10px; top: 60px; position: absolute; height: 300px}
+.content{left: 260px; right: 10px; top: 60px; position: absolute; bottom: 0;}
+.content .chat-box{padding-bottom: 30px; position: relative}
 .content .chat-box .message-box{background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 2px rgba(0,0,0,.2); top: 0; left: 70px; right: 0; position: absolute; color: #666}
 .content .chat-box .message-box .username{display: block; margin-bottom: 10px}
 .content .chat-box img.avatar{width: 46px; height: 46px}
+
+
+/* Type message */
+.type-message{height: 120px; background: #333; bottom: 10px; right: 0; left: 0; position: absolute; background: url('../img/bg-2.png'); padding: 14px; border-radius: 5px;}
+.type-message .user{position: absolute}
+.type-message .user img{width: 50px}
+.type-message textarea{ left: 90px; position: absolute; bottom: 10px; right: 10px; border-radius: 5px}
 
 /* ==|== non-semantic helper classes ======================================== */
 .ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; }
