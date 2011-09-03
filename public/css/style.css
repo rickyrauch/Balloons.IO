@@ -66,7 +66,7 @@ td { vertical-align: top; }
    Author: 
    ========================================================================== */
 
-body{ text-shadow: 0 1px 0 white; background: url('../img/bg.png')}
+body{ text-shadow: 0 1px 0 rgba(255,255,255,.7); background: url('../img/bg.png')}
 
 #container{background: red; }
 
@@ -90,21 +90,21 @@ header ul{
 	background-image: -o-linear-gradient(#555a60 7.4%, #3c4147);
 	font-size: 12px; color: white; border: 1px solid #2C3037; width: 200px; float: left; list-style: none; padding: 6px; margin: 6px; border-radius: 5px}
 
+
+img.avatar{background: white; padding: 2px; border: 1px solid #ccc; box-shadow: 0 1px 2px rgba(0,0,0,.1)}
+.username{font-weight: bold; }
+
 ul.chat-list{padding: 0; margin: 0; list-style: none; width: 240px;  background: #EFEFEF; position: absolute; top: 0; padding-top: 42px; bottom: 0; border-right: 1px solid rgba(0,0,0,.4); box-shadow: 1px 0 0 rgba(255,255,255,.4) }
 ul.chat-list li{font-weight: bold; color: #666; position: relative; border-bottom: 1px solid #ccc}
 ul.chat-list li .status-bar{background-color: rgba(0,0,0,.05); width: 24px; float: left;  position: absolute; bottom: 0; top: 0}
+ul.chat-list li img.avatar{width: 30px; height: 30px; margin-right: 4px}
+ul.chat-list li .user-space{padding: 10px; margin-left: 20px}
+ul.chat-list li .status{border: 1px solid #333; width: 10px; height: 10px;display: block; border-radius: 100px; top: 22px; position: absolute; left: 5px}
+ul.chat-list li .status.available{border: 1px solid #486D14; background-image: -webkit-linear-gradient(bottom, #90D42F, #CBFF80)}
+ul.chat-list li .status.not-available{border: 1px solid #A64343; background-image: -webkit-linear-gradient(bottom, #DA3839, #FF8081)}
+ul.chat-list li .status.idle{border: 1px solid #807244; background-image: -webkit-linear-gradient(bottom, #FBC710, #FFE99C)}
 
-img.avatar{background: white; padding: 2px; border: 1px solid #ccc;}
-.username{font-weight: bold; }
-ul.chat-list li img.avatar{width: 30px; height: 30px}
-
-.user-space{padding: 10px; margin-left: 20px}
-.status{border: 1px solid #333; width: 10px; height: 10px;display: block; border-radius: 100px; top: 22px; position: absolute; left: 5px}
-.status.available{border: 1px solid #486D14; background-image: -webkit-linear-gradient(bottom, #90D42F, #CBFF80)}
-.status.not-available{border: 1px solid #A64343; background-image: -webkit-linear-gradient(bottom, #DA3839, #FF8081)}
-.status.idle{border: 1px solid #807244; background-image: -webkit-linear-gradient(bottom, #FBC710, #FFE99C)}
-
-.content{left: 260px; right: 10px; top: 60px; position: absolute; bottom: 0;}
+.content{left: 256px; right: 10px; top: 50px; position: absolute; bottom: 0;}
 .content .chat-box{padding-bottom: 30px; position: relative}
 .content .chat-box .message-box{background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 2px rgba(0,0,0,.2); top: 0; left: 70px; right: 0; position: absolute; color: #666}
 .content .chat-box .message-box .username{display: block; margin-bottom: 10px}
@@ -112,10 +112,28 @@ ul.chat-list li img.avatar{width: 30px; height: 30px}
 
 
 /* Type message */
-.type-message{height: 120px; background: #333; bottom: 10px; right: 0; left: 0; position: absolute; background: url('../img/bg-2.png'); padding: 14px; border-radius: 5px;}
+.type-message{box-shadow: 0 0 10px black inset, 0 2px 2px rgba(0,0,0,.4); height: 120px; background: #333; bottom: 10px; right: 0; left: 0; position: absolute; background: url('../img/bg-2.png'); padding: 14px; border-radius: 5px;}
 .type-message .user{position: absolute}
 .type-message .user img{width: 50px}
-.type-message textarea{ left: 90px; position: absolute; bottom: 10px; right: 10px; border-radius: 5px}
+.type-message textarea{ left: 80px; position: absolute; bottom: 50px; padding: 4px; top: 10px; right: 10px; border-radius: 5px}
+
+.send-message{
+	background-image: -webkit-gradient(linear, 0 0, 0 30, color-stop(0.066, #8dcde9), color-stop(0.2, #89cce9), color-stop(0.8, #65bde5), color-stop(0.833, #63c2d8), color-stop(0.866, #68baec), color-stop(0.9, #60bce1), to(#5ebddb));
+	background-image: -webkit-linear-gradient(#8dcde9 6.6%, #89cce9 20%, #65bde5 80%, #63c2d8, #68baec 86.6%, #60bce1 90%, #5ebddb);
+	background-image: -moz-linear-gradient(#8dcde9 6.6%, #89cce9 20%, #65bde5 80%, #63c2d8, #68baec 86.6%, #60bce1 90%, #5ebddb);
+	background-image: -o-linear-gradient(#8dcde9 6.6%, #89cce9 20%, #65bde5 80%, #63c2d8, #68baec 86.6%, #60bce1 90%, #5ebddb);
+	padding: 8px 10px;
+	border-radius: 100px;
+	width: 130px;
+	position: absolute;
+	bottom: 10px;
+	font-weight: bold;
+	color: #333;
+	left: 80px;
+	text-decoration: none;
+	text-align: center;
+	box-shadow: 0 2px 2px black;
+}
 
 /* ==|== non-semantic helper classes ======================================== */
 .ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; }
