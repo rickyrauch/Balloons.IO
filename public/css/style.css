@@ -66,16 +66,35 @@ td { vertical-align: top; }
    Author: 
    ========================================================================== */
 
+body{position: relative; bottom: 0; height: 100%; text-shadow: 0 1px 0 white; background: url('../img/bg.png')}
+
+header{
+	background-image: -webkit-gradient(linear, 0 0, 0 48, color-stop(0.041, #4f545a), color-stop(0.5, #31363c));
+	background-image: -webkit-linear-gradient(#4f545a 4.1%, #31363c 50%);
+	background-image: -moz-linear-gradient(#4f545a 4.1%, #31363c 50%);
+	background-image: -o-linear-gradient(#4f545a 4.1%, #31363c 50%);
+	position: fixed;
+	width: 100%;
+	box-shadow: 0 2px 2px black;
+	z-index: 1000;
+}
+
+header ul{
+	text-shadow: 0 1px 1px black;
+	font-weight: bold;
+	background-image: -webkit-gradient(linear, 0 0, 0 27, color-stop(0.074, #555a60), to(#3c4147));
+	background-image: -webkit-linear-gradient(#555a60 7.4%, #3c4147);
+	background-image: -moz-linear-gradient(#555a60 7.4%, #3c4147);
+	background-image: -o-linear-gradient(#555a60 7.4%, #3c4147);
+	font-size: 12px; color: white; border: 1px solid #2C3037; width: 200px; float: left; list-style: none; padding: 6px; margin: 6px; border-radius: 5px}
+
+ul.chat-list{padding: 0; margin: 0; list-style: none; width: 200px; height: 300px; background: #EFEFEF; position: absolute; top: 0; padding-top: 48px; bottom: 0; border-right: 1px solid rgba(255,255,255,.4); box-shadow: -1px 0 0 rgba(0,0,0,.4) inset}
+ul.chat-list li{font-weight: bold; color: #666}
 
 
+ul.chat-list li .status-bar{background-color: rgba(0,0,0,.1); height: 40px; width: 14px; float: left; margin-right: 10px}
 
-
-
-
-
-
-
-
+ul.chat-list li img{background: white; padding: 2px; border: 1px solid #ccc}
 
 
 
