@@ -63,12 +63,15 @@ td { vertical-align: top; }
 
 
 /* ==|== primary styles =====================================================
-   Author: 
+   Author: Ricardo Rauch
    ========================================================================== */
 
 body{ text-shadow: 0 1px 0 rgba(255,255,255,1); background: url('../img/bg.png')}
 
-#container{background: red; }
+a:visited { color: inherit}
+a:hover { color: #06e; }
+a:focus { outline: thin dotted; }
+a:hover, a:active { outline: 0; }
 
 header{
 	background-image: -webkit-gradient(linear, 0 0, 0 48, color-stop(0.041, #4f545a), color-stop(0.5, #31363c));
@@ -89,11 +92,11 @@ header .dropdown-room{
 	background-image: -webkit-linear-gradient(#555a60 7.4%, #3c4147);
 	background-image: -moz-linear-gradient(#555a60 7.4%, #3c4147);
 	background-image: -o-linear-gradient(#555a60 7.4%, #3c4147);
-	font-size: 14px; color: white; border: 1px solid #2C3037; width: 230px; float: left; list-style: none; margin: 6px; border-radius: 5px}
+	font-size: 14px; color: white; border: 1px solid #2C3037; width: 233px; float: left; list-style: none; margin: 6px; border-radius: 5px}
 
 .dropdown-room .dropdown{display: block; float: right; width: 18px; height: 19px; background: url('../img/dropdown.png') no-repeat 94% center ;   margin: 4px 6px 0 0;}
 .dropdown-room a{display: none;  padding: 5px 5px 5px 10px; border-radius: 5px;  text-shadow: none; text-decoration: none; color: white; }
-.dropdown-room:hover {background: white;}
+.dropdown-room:hover {background: white; box-shadow: 0 1px 2px rgba(0,0,0,.4)}
 .dropdown-room:hover .dropdown{display: none;}
 .dropdown-room:hover a{display: block;  padding: 10px 10px; color: black}
 .dropdown-room:hover a:hover{background-color: #f1f1f1}
@@ -109,7 +112,7 @@ header .logout{float: right; margin: 6px 10px 0 0; box-shadow: 0 1px 2px black; 
 
 
 img.avatar{background: white; padding: 2px; border: 1px solid #ccc; box-shadow: 0 1px 2px rgba(0,0,0,.1)}
-.username{font-weight: bold; }
+.content .username{font-weight: bold; }
 
 ul.chat-list{overflow: scroll; padding: 0; margin: 0; list-style: none; width: 240px;  background: #EFEFEF; position: absolute; top: 40px; padding-top: 4px; bottom: 0; border-right: 1px solid rgba(0,0,0,.4); box-shadow: 1px 0 0 rgba(255,255,255,.4) }
 ul.chat-list li{font-weight: bold; color: #666; position: relative; border-bottom: 1px solid #ccc}
@@ -171,61 +174,39 @@ padding: 10px; border-radius: 5px; box-shadow: 0 -1px 0 white inset, 0 2px 2px r
 
 
 
-/* Container */
-.modal {
-
-/* Overlay page content */
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background: rgba(0,0,0,0.5);
-z-index: 10000;
-
-/* Transition opacity on open */
--webkit-transition: opacity 500ms ease-in;
--moz-transition: opacity 500ms ease-in;
-transition: opacity 500ms ease-in;
-
-/* Hide for now */
-opacity: 0;
-pointer-events: none;
+.login-box{background: white; width: 260px; padding: 20px; border-radius: 5px; margin: auto;  margin-top: 30px; box-shadow: 0 2px 2px rgba(0,0,0,.3)}
+.login-box h1{font-size: 20px; text-align: center; margin-bottom: 30px; border-top: 1px solid #f1f1f1; border-bottom: 1px solid #f1f1f1; padding: 10px 0 }
+.login-box p{line-height: 22px; font-size: 11px; color: #666}
+.login-box input.text{padding: 16px 20px; width: 220px; background: #f3f3f3; border: 1px solid #ccc}
+.login-box input.username{
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom: 0px;
 }
 
-/* Show modal */
-.modal:target {
-opacity: 1;
-pointer-events: auto;
+.login-box input.password{
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
 }
 
-/* Content */
-.modal > div {
-width: 500px;
-background: #fff;
-position: relative;
-margin: 10% auto;
-
-/* Default minimise animation */
--webkit-animation: minimise 500ms linear;
-
-/* Prettify */
-padding: 30px;
--moz-border-radius: 7px;
-border-radius: 7px;
--webkit-box-shadow: 0 3px 20px rgba(0,0,0,0.9);
--moz-box-shadow: 0 3px 20px rgba(0,0,0,0.9);
-box-shadow: 0 3px 20px rgba(0,0,0,0.9);
-background: -moz-linear-gradient(#fff, #ccc);
-background: -webkit-gradient(linear, right bottom, right top, color-stop(1, rgb(255,255,255)), color-stop(0.57, rgb(230,230,230)));
-text-shadow: 0 1px 0 #fff;
+.sign-in-twitter {
+	background: url('../img/twitter_signin.png') no-repeat 0 0;
+	width: 150px;
+	height: 22px;
+	display: block;
+	margin: auto;
 }
 
-/* Override animation on modal open */
-.modal:target > div {
--webkit-animation-name: bounce;
-}
-
+.sign-in-twitter:hover{background-position: center}
+.sign-in-twitter:active{background-position: bottom center}
 
 
 /* ==|== non-semantic helper classes ======================================== */
