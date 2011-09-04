@@ -121,6 +121,7 @@ ul.chat-list li .status.idle{border: 1px solid #807244; background-image: -webki
 	background-image: -o-linear-gradient(#fff 7.4%, #f3f3f3);	
 padding: 10px; border-radius: 5px; box-shadow: 0 -1px 0 white inset, 0 2px 2px rgba(0,0,0,.2);  color: #666}
 .content .chats .chat-box .message-box .username{display: block; margin-bottom: 10px}
+.content .chats .chat-box .message-box .message-text{line-height: 24px}
 .content .chats .chat-box img.avatar{width: 46px; height: 46px; float: left;}
 
 
