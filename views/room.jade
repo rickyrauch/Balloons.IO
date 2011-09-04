@@ -35,6 +35,10 @@ script()
 			$('.log').append('<li>'+data.nickname+': '+data.msg+'</li>');
 		});
 
+		socket.on('disconnect',function(){
+			socket.emit('room leave',{'room_id':$('#room_id').text()});	
+		});
+
 		$('#msgbutton').click(function(e){
 			socket.emit('my msg',{'msg': $('#msgbox').val(),'room_id':$('#room_id').text()});
 		});
