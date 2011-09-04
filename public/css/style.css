@@ -90,12 +90,18 @@ header ul{
 	background-image: -o-linear-gradient(#555a60 7.4%, #3c4147);
 	font-size: 12px; color: white; border: 1px solid #2C3037; width: 200px; float: left; list-style: none; padding: 6px; margin: 6px; border-radius: 5px}
 
+header .logged-box{display: none;float: right; width: 180px; margin: 4px 0}
+header .logged-box .avatar{float: left; margin-right: 10px}
+header .logged-box span{color: white; text-shadow: 0 1px 0 black; display: block;}
+header .logged-box .logged-as{font-size: 11px; margin: 3px 0}
+header .logout{float: right; margin: 6px 10px 0 0; box-shadow: 0 1px 2px black; background-color: #F5CFFF; background: url('../img/icon-logout.png') center no-repeat, -webkit-linear-gradient(#F5CFFF , #CC00FF); text-indent: -1000em; border-radius: 100px; display: block; width: 30px; height: 30px; }
 
 img.avatar{background: white; padding: 2px; border: 1px solid #ccc; box-shadow: 0 1px 2px rgba(0,0,0,.1)}
 .username{font-weight: bold; }
 
 ul.chat-list{overflow: scroll; padding: 0; margin: 0; list-style: none; width: 240px;  background: #EFEFEF; position: absolute; top: 40px; padding-top: 4px; bottom: 0; border-right: 1px solid rgba(0,0,0,.4); box-shadow: 1px 0 0 rgba(255,255,255,.4) }
 ul.chat-list li{font-weight: bold; color: #666; position: relative; border-bottom: 1px solid #ccc}
+ul.chat-list li:hover{background-color: #f3f3f3}
 ul.chat-list li .status-bar{background-color: rgba(0,0,0,.05); width: 24px; float: left;  position: absolute; bottom: 0; top: 0}
 ul.chat-list li img.avatar{width: 30px; height: 30px; margin-right: 4px}
 ul.chat-list li .user-space{padding: 10px; margin-left: 20px}
@@ -109,7 +115,11 @@ ul.chat-list li .status.idle{border: 1px solid #807244; background-image: -webki
 .content .chats{padding-top: 10px; overflow: scroll; position: absolute; bottom: 180px; top: 0; right: 0; left: 0}
 .content .chats .chat-box{margin-bottom: 10px; }
 .content .chats .chat-box .user{width: 60px; }
-.content .chats .chat-box .message-box{line-break: strict ; display: block; margin-left: 68px; margin-bottom: 16px; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 2px rgba(0,0,0,.2);  color: #666}
+.content .chats .chat-box .message-box{line-break: strict ; display: block; margin-left: 68px; margin-bottom: 16px; background: white; 
+	background-image: -webkit-linear-gradient(#fff 7.4%, #f3f3f3);
+	background-image: -moz-linear-gradient(#fff 7.4%, #f3f3f3);
+	background-image: -o-linear-gradient(#fff 7.4%, #f3f3f3);	
+padding: 10px; border-radius: 5px; box-shadow: 0 -1px 0 white inset, 0 2px 2px rgba(0,0,0,.2);  color: #666}
 .content .chats .chat-box .message-box .username{display: block; margin-bottom: 10px}
 .content .chats .chat-box img.avatar{width: 46px; height: 46px; float: left;}
 
@@ -121,22 +131,21 @@ ul.chat-list li .status.idle{border: 1px solid #807244; background-image: -webki
 .type-message textarea{ box-shadow: 0 2px 4px rgba(0,0,0,.4) inset; border: 1px solid black; left: 80px; position: absolute; bottom: 50px; padding: 4px; top: 10px; right: 10px; border-radius: 5px}
 
 .send-message{
-	background-image: -webkit-gradient(linear, 0 0, 0 30, color-stop(0.066, #8dcde9), color-stop(0.2, #89cce9), color-stop(0.8, #65bde5), color-stop(0.833, #63c2d8), color-stop(0.866, #68baec), color-stop(0.9, #60bce1), to(#5ebddb));
-	background-image: -webkit-linear-gradient(#8dcde9 6.6%, #89cce9 20%, #65bde5 80%, #63c2d8, #68baec 86.6%, #60bce1 90%, #5ebddb);
-	background-image: -moz-linear-gradient(#8dcde9 6.6%, #89cce9 20%, #65bde5 80%, #63c2d8, #68baec 86.6%, #60bce1 90%, #5ebddb);
-	background-image: -o-linear-gradient(#8dcde9 6.6%, #89cce9 20%, #65bde5 80%, #63c2d8, #68baec 86.6%, #60bce1 90%, #5ebddb);
-	padding: 8px 10px;
+	background: url('../img/icon-send.png') 16px 8px no-repeat, -webkit-linear-gradient(#68B6EB 7.4%, #0486DD);
+	background: url('../img/icon-send.png') 16px 8px no-repeat, -moz-linear-gradient(#68B6EB 7.4%, #0486DD);
+	background: url('../img/icon-send.png') 16px 8px no-repeat, -o-linear-gradient(#68B6EB 7.4%, #0486DD);
+	
+	padding: 8px 20px 8px 34px;
 	border-radius: 100px;
-	width: 130px;
 	position: absolute;
 	bottom: 10px;
 	font-weight: bold;
-	color: #333;
+	color: #fff;
 	left: 80px;
 	text-decoration: none;
 	text-align: center;
 	box-shadow: 0 2px 2px black;
-	text-shadow: 0 1px 0 rgba(255,255,255,.4);
+	text-shadow: 0 1px 0 rgba(0,0,0,.4);
 }
 
 
