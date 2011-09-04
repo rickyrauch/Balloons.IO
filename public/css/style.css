@@ -63,10 +63,15 @@ td { vertical-align: top; }
 
 
 /* ==|== primary styles =====================================================
-   Author: 
+   Author: Ricardo Rauch
    ========================================================================== */
 
 body{ text-shadow: 0 1px 0 rgba(255,255,255,1); background: url('../img/bg.png')}
+
+a:visited { color: inherit}
+a:hover { color: #06e; }
+a:focus { outline: thin dotted; }
+a:hover, a:active { outline: 0; }
 
 header{
 	background-image: -webkit-gradient(linear, 0 0, 0 48, color-stop(0.041, #4f545a), color-stop(0.5, #31363c));
@@ -87,11 +92,11 @@ header .dropdown-room{
 	background-image: -webkit-linear-gradient(#555a60 7.4%, #3c4147);
 	background-image: -moz-linear-gradient(#555a60 7.4%, #3c4147);
 	background-image: -o-linear-gradient(#555a60 7.4%, #3c4147);
-	font-size: 14px; color: white; border: 1px solid #2C3037; width: 230px; float: left; list-style: none; margin: 6px; border-radius: 5px}
+	font-size: 14px; color: white; border: 1px solid #2C3037; width: 233px; float: left; list-style: none; margin: 6px; border-radius: 5px}
 
 .dropdown-room .dropdown{display: block; float: right; width: 18px; height: 19px; background: url('../img/dropdown.png') no-repeat 94% center ;   margin: 4px 6px 0 0;}
 .dropdown-room a{display: none;  padding: 5px 5px 5px 10px; border-radius: 5px;  text-shadow: none; text-decoration: none; color: white; }
-.dropdown-room:hover {background: white;}
+.dropdown-room:hover {background: white; box-shadow: 0 1px 2px rgba(0,0,0,.4)}
 .dropdown-room:hover .dropdown{display: none;}
 .dropdown-room:hover a{display: block;  padding: 10px 10px; color: black}
 .dropdown-room:hover a:hover{background-color: #f1f1f1}
@@ -106,7 +111,7 @@ header .logout{float: right; margin: 6px 10px 0 0; box-shadow: 0 1px 2px black; 
 
 
 
-.content img.avatar{background: white; padding: 2px; border: 1px solid #ccc; box-shadow: 0 1px 2px rgba(0,0,0,.1)}
+img.avatar{background: white; padding: 2px; border: 1px solid #ccc; box-shadow: 0 1px 2px rgba(0,0,0,.1)}
 .content .username{font-weight: bold; }
 
 ul.chat-list{overflow: scroll; padding: 0; margin: 0; list-style: none; width: 240px;  background: #EFEFEF; position: absolute; top: 40px; padding-top: 4px; bottom: 0; border-right: 1px solid rgba(0,0,0,.4); box-shadow: 1px 0 0 rgba(255,255,255,.4) }
