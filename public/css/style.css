@@ -79,22 +79,34 @@ header{
 	width: 100%;
 	box-shadow: 0 2px 2px black;
 	z-index: 1000;
+	height: 42px;
 }
 
-header ul{
+header .dropdown-room{
 	text-shadow: 0 1px 1px black;
 	font-weight: bold;
 	background-image: -webkit-gradient(linear, 0 0, 0 27, color-stop(0.074, #555a60), to(#3c4147));
 	background-image: -webkit-linear-gradient(#555a60 7.4%, #3c4147);
 	background-image: -moz-linear-gradient(#555a60 7.4%, #3c4147);
 	background-image: -o-linear-gradient(#555a60 7.4%, #3c4147);
-	font-size: 12px; color: white; border: 1px solid #2C3037; width: 200px; float: left; list-style: none; padding: 6px; margin: 6px; border-radius: 5px}
+	font-size: 14px; color: white; border: 1px solid #2C3037; width: 230px; float: left; list-style: none; margin: 6px; border-radius: 5px}
+
+.dropdown-room .dropdown{display: block; float: right; width: 18px; height: 19px; background: url('../img/dropdown.png') no-repeat 94% center ;   margin: 4px 6px 0 0;}
+.dropdown-room a{display: none;  padding: 5px 5px 5px 10px; border-radius: 5px;  text-shadow: none; text-decoration: none; color: white; }
+.dropdown-room:hover {background: white;}
+.dropdown-room:hover .dropdown{display: none;}
+.dropdown-room:hover a{display: block;  padding: 10px 10px; color: black}
+.dropdown-room:hover a:hover{background-color: #f1f1f1}
+.dropdown-room a.current{display: block; }
+.dropdown-room a:last-child{border-bottom: 0; }
 
 header .logged-box{display: none;float: right; width: 180px; margin: 4px 0}
 header .logged-box .avatar{float: left; margin-right: 10px}
 header .logged-box span{color: white; text-shadow: 0 1px 0 black; display: block;}
 header .logged-box .logged-as{font-size: 11px; margin: 3px 0}
 header .logout{float: right; margin: 6px 10px 0 0; box-shadow: 0 1px 2px black; background-color: #F5CFFF; background: url('../img/icon-logout.png') center no-repeat, -webkit-linear-gradient(#F5CFFF , #CC00FF); text-indent: -1000em; border-radius: 100px; display: block; width: 30px; height: 30px; }
+
+
 
 img.avatar{background: white; padding: 2px; border: 1px solid #ccc; box-shadow: 0 1px 2px rgba(0,0,0,.1)}
 .username{font-weight: bold; }
@@ -115,7 +127,7 @@ ul.chat-list li .status.idle{border: 1px solid #807244; background-image: -webki
 .content .chats{padding-top: 10px; overflow: scroll; position: absolute; bottom: 180px; top: 0; right: 0; left: 0}
 .content .chats .chat-box{margin-bottom: 10px; }
 .content .chats .chat-box .user{width: 60px; }
-.content .chats .chat-box .message-box{line-break: strict ; display: block; margin-left: 68px; margin-bottom: 16px; background: white; 
+.content .chats .chat-box .message-box{line-break: strict ; position: relative; display: block; margin-left: 68px; margin-bottom: 16px; background: white; 
 	background-image: -webkit-linear-gradient(#fff 7.4%, #f3f3f3);
 	background-image: -moz-linear-gradient(#fff 7.4%, #f3f3f3);
 	background-image: -o-linear-gradient(#fff 7.4%, #f3f3f3);	
@@ -124,6 +136,14 @@ padding: 10px; border-radius: 5px; box-shadow: 0 -1px 0 white inset, 0 2px 2px r
 .content .chats .chat-box .message-box .message-text{line-height: 24px}
 .content .chats .chat-box img.avatar{width: 46px; height: 46px; float: left;}
 
+.chat-corner{
+	background: white;
+	width: 12px;
+	height: 12px;
+	-webkit-transform:rotate(134deg);
+	position: absolute;
+	left: -4px;
+}
 
 /* Type message */
 .type-message{box-shadow: 0 0 10px black inset, 0 2px 2px rgba(0,0,0,.4); height: 120px; background: #333; bottom: 10px; right: 0; left: 0; position: absolute; background: url('../img/bg-2.png'); padding: 14px; border-radius: 5px;}
