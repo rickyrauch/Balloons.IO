@@ -1,21 +1,46 @@
 p= room_name
 
+
 ul.user_list
 
 
 ul.log
+
+
+p
+	input#msgbox(type='text')
+p
+	button#msgbutton Enviar mensaje
 
 span#room_id(style="display:none")= room_id
 script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js")
 script(src="/socket.io/socket.io.js")
 script()
 	$(document).ready(function(){
-		var socket = io.connect('http://localhost');
+		var socket = io.connect('htlentp://localhost');
 		var nickname = prompt('Cual es tu nickname?');
 		socket.emit('set nickname',{nickname: nickname,room_id:$('#room_id').text()});	
 		
 		socket.on('new user',function(data){
 			$('.user_list').append('<li>'+data.nickname+'</li>');
+		});
+
+		socket.on('ready',function(data){
+			$.each(data.user_list,function(k,v){
+				$('.user_list').append('<li>'+v+'</li>');
+			});
+		});
+
+		socket.on('new msg',function(data){
+			$('.log').append('<li>'+data.nickname+': '+data.msg+'</li>');
+		});
+
+		socket.on('disconnect',function(){
+			socket.emit('room leave',{'room_id':$('#room_id').text()});	
+		});
+
+		$('#msgbutton').click(function(e){
+			socket.emit('my msg',{'msg': $('#msgbox').val(),'room_id':$('#room_id').text()});
 		});
 	});
 
