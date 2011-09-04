@@ -9,6 +9,7 @@ var app = express.createServer(
 
 app.configure(function(){
   app.set('view engine', 'jade');  
+  app.use(express.static(__dirname + '/public'));
 });
 
 app.get('/',function(req,res,next){
@@ -58,8 +59,10 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('disconnect',function(){
 		socket.get('nickname',function(err,nickname){
-			client.srem('users'+data.room_id,nickname);
-	  	io.sockets.in(data.room_id).emit('user leave',{'nickname': nickname});		
+			socket.get('room_id',function(e,room_id){
+				client.srem('users'+room_id,nickname);
+		  	io.sockets.in(room_id).emit('user leave',{'nickname': nickname});		
+			});
 		});
 	});
 
