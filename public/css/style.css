@@ -94,7 +94,7 @@ header ul{
 img.avatar{background: white; padding: 2px; border: 1px solid #ccc; box-shadow: 0 1px 2px rgba(0,0,0,.1)}
 .username{font-weight: bold; }
 
-ul.chat-list{padding: 0; margin: 0; list-style: none; width: 240px;  background: #EFEFEF; position: absolute; top: 0; padding-top: 42px; bottom: 0; border-right: 1px solid rgba(0,0,0,.4); box-shadow: 1px 0 0 rgba(255,255,255,.4) }
+ul.chat-list{overflow: scroll; padding: 0; margin: 0; list-style: none; width: 240px;  background: #EFEFEF; position: absolute; top: 40px; padding-top: 4px; bottom: 0; border-right: 1px solid rgba(0,0,0,.4); box-shadow: 1px 0 0 rgba(255,255,255,.4) }
 ul.chat-list li{font-weight: bold; color: #666; position: relative; border-bottom: 1px solid #ccc}
 ul.chat-list li .status-bar{background-color: rgba(0,0,0,.05); width: 24px; float: left;  position: absolute; bottom: 0; top: 0}
 ul.chat-list li img.avatar{width: 30px; height: 30px; margin-right: 4px}
@@ -109,7 +109,7 @@ ul.chat-list li .status.idle{border: 1px solid #807244; background-image: -webki
 .content .chats{padding-top: 10px; overflow: scroll; position: absolute; bottom: 180px; top: 0; right: 0; left: 0}
 .content .chats .chat-box{margin-bottom: 10px; }
 .content .chats .chat-box .user{width: 60px; }
-.content .chats .chat-box .message-box{line-break: strict ; display: block; margin-left: 80px; margin-bottom: 10px; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 2px rgba(0,0,0,.2);  color: #666}
+.content .chats .chat-box .message-box{line-break: strict ; display: block; margin-left: 68px; margin-bottom: 16px; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 2px rgba(0,0,0,.2);  color: #666}
 .content .chats .chat-box .message-box .username{display: block; margin-bottom: 10px}
 .content .chats .chat-box img.avatar{width: 46px; height: 46px; float: left;}
 
