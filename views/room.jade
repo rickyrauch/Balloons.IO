@@ -81,8 +81,8 @@ script(src="/socket.io/socket.io.js")
 script()
 	$(document).ready(function(){
 		var socket = io.connect('htlentp://localhost');
-		var nickname = prompt('Cual es tu nickname?');
-		socket.emit('set nickname',{nickname: nickname,room_id:$('#room_id').text()});	
+		//var nickname = prompt('Cual es tu nickname?');
+		socket.emit('set nickname',{room_id:$('#room_id').text()});	
 		
 		socket.on('new user',function(data){
 			$('.chat-list').append('<li><div class="status-bar"><span class="status available"></span></div><div class="user-space"><img src="http://placehold.it/30x30" class="avatar"><span class="username">'+data.nickname+'</span></div></li>');

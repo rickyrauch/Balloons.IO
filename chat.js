@@ -1,15 +1,30 @@
 var express = require('express'),
+sys = require('sys'),
 sio = require('socket.io'),
+auth= require('connect-auth'),
 redis = require("redis"),
 client = redis.createClient();
 
+var consumer_key = 's6iO5CDeqZiJrpgnivltQ',
+	consumer_secret = 'gqRlE3dG0m7svYWSkuIlTd0hZCO3JN5Bk4eYch5KE';
+
+var access_token= '308711490-aGd70sodkgzAJ4xrRephF5myVXuDT025vF7RIwau';
+var access_token_secret= 'vlzu0NUCzrWXUtpYnLX1o1hqFJQ3aOKH8cGUQDtsCs';
+
+
+
 var app = express.createServer(
-    express.bodyParser()
+	express.bodyParser(),
 );
 
 app.configure(function(){
   app.set('view engine', 'jade');  
   app.use(express.static(__dirname + '/public'));
+	app.use(express.cookieParser());
+	app.use(express.session({ secret: 'foobar' }));
+	app.use(auth( [
+		auth.Twitter({consumerKey: consumer_key, consumerSecret: consumer_secret})
+  ]));
 });
 
 app.get('/',function(req,res,next){
@@ -26,7 +41,7 @@ app.post('/create',function(req,res,next){
 	});
 });
 
-app.get('/room/:id',function(req,res,next){
+app.get('/room/:id',protect,function(req,res,next){
 	client.lindex(['rooms',req.params.id],function(err,room_name){
 		res.locals({'room_name':room_name,'room_id':req.params.id});
 		res.render('room');
@@ -38,7 +53,7 @@ var io = sio.listen(app);
 io.sockets.on('connection', function (socket) {
 	socket.on('set nickname',function(data){
 		socket.join(data.room_id);
-    socket.set('nickname', data.nickname, function () {
+	   socket.set('nickname', data.nickname, function () {
 	    socket.set('room_id', data.room_id, function () {
 				client.sadd('users'+data.room_id,data.nickname);
 	 	 	socket.broadcast.to(data.room_id).emit('new user',{'nickname':data.nickname});
@@ -46,7 +61,7 @@ io.sockets.on('connection', function (socket) {
 					socket.emit('ready',{'user_list':usrs});
 				});
 			});
-    });
+		});
 	});
 
 	socket.on('my msg',function(data){
@@ -65,7 +80,6 @@ io.sockets.on('connection', function (socket) {
 			});
 		});
 	});
-
 });
 
 app.listen(3000, function (err) {
@@ -73,3 +87,19 @@ app.listen(3000, function (err) {
   console.log('listening on http://localhost:3000');
 });
 
+
+function protect(req, res, next) {
+  if( req.isAuthenticated() ) next();
+  else {
+    req.authenticate(function(error, authenticated) {
+      if( error ) next(new Error("Problem authenticating"));
+      else {
+        if( authenticated === true)next();
+        else if( authenticated === false ) next(new Error("Access Denied!"));
+        else {
+          // Abort processing, browser interaction was required (and has happened/is happening)
+        }
+      }
+    })
+  }
+}
