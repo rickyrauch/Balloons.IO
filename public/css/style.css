@@ -91,9 +91,10 @@ header .dropdown-room{
 	background-image: -o-linear-gradient(#555a60 7.4%, #3c4147);
 	font-size: 14px; color: white; border: 1px solid #2C3037; width: 230px; float: left; list-style: none; margin: 6px; border-radius: 5px}
 
-.dropdown-room{display: inline-block; background: rgba(0,0,0,.5) url('../img/dropdown.png') no-repeat 94% center ;  float: left; margin-top: 5px; border-radius: 5px; overflow: hidden; z-index: 10000; }
-.dropdown-room a{display: none;  padding: 5px 16px; border-radius: 5px;  text-shadow: none; text-decoration: none; color: white; }
+.dropdown-room .dropdown{display: block; float: right; width: 18px; height: 19px; background: url('../img/dropdown.png') no-repeat 94% center ;   margin: 4px 6px 0 0;}
+.dropdown-room a{display: none;  padding: 5px 5px 5px 10px; border-radius: 5px;  text-shadow: none; text-decoration: none; color: white; }
 .dropdown-room:hover {background: white;}
+.dropdown-room:hover .dropdown{display: none;}
 .dropdown-room:hover a{display: block;  padding: 10px 10px; color: black}
 .dropdown-room:hover a:hover{background-color: #f1f1f1}
 .dropdown-room a.current{display: block; }
