@@ -14,7 +14,7 @@ var access_token_secret= 'vlzu0NUCzrWXUtpYnLX1o1hqFJQ3aOKH8cGUQDtsCs';
 
 
 var app = express.createServer(
-	express.bodyParser(),
+	express.bodyParser()
 );
 
 app.configure(function(){
