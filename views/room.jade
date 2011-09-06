@@ -8,30 +8,21 @@
 		div.logged-box
 			img.avatar(src="http://placehold.it/30x30")
 			span.logged-as Logged in as:
-			span.username Ricardo Rauch
+			span.username= username
 
 	ul.chat-list
-		li
-			div.status-bar
-				span.status.available
-			div.user-space
-				img.avatar(src="http://placehold.it/30x30")
-				span.username Ricardo Rauch
+		-user_list.forEach(function(username){
+			li
+				.status-bar
+					span.status.available
+				.user-space
+					img.avatar(src='http://placehold.it/30x30')
+					span.username= username
+		-});
 
 	div#main.content(role="main")
-		aside#example2.modal
-			div
-				h2 Another modal box
-				p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				a(href="#close",title="Close") Close
-
 		div.chats
 			div.chat-box
-				div.user
-					img.avatar(src="http://placehold.it/30x30")
-				div.message-box
-					span.username Ricardo Rauch says:
-					div.message-text Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 		div.type-message
 			div.user
@@ -76,13 +67,13 @@ p
 	button#msgbutton Enviar mensaje
 
 span#room_id(style="display:none")= room_id
+span#username(style="display:none")= username
 script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js")
 script(src="/socket.io/socket.io.js")
 script()
 	$(document).ready(function(){
 		var socket = io.connect('htlentp://localhost');
-		//var nickname = prompt('Cual es tu nickname?');
-		socket.emit('set nickname',{room_id:$('#room_id').text()});	
+		socket.emit('set nickname',{room_id:$('#room_id').text(),'nickname':$('#username').text()});	
 		
 		socket.on('new user',function(data){
 			$('.chat-list').append('<li><div class="status-bar"><span class="status available"></span></div><div class="user-space"><img src="http://placehold.it/30x30" class="avatar"><span class="username">'+data.nickname+'</span></div></li>');
