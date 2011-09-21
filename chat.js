@@ -6,12 +6,6 @@ redis = require("redis"),
 client = redis.createClient();
 
 
-
-//var access_token= '308711490-aGd70sodkgzAJ4xrRephF5myVXuDT025vF7RIwau';
-//var access_token_secret= 'vlzu0NUCzrWXUtpYnLX1o1hqFJQ3aOKH8cGUQDtsCs';
-
-
-
 var app = express.createServer(
 	express.bodyParser()
 );

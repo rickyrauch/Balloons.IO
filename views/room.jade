@@ -3,10 +3,10 @@
 		ul
 			li= room_name
 
-		a.logout(href="#") Logout
+		a.logout(href="/logout") Logout
 		
 		div.logged-box
-			img.avatar(src="http://placehold.it/30x30")
+			img.avatar(src=" http://img.tweetimag.es/i/"+username)
 			span.logged-as Logged in as:
 			span.username= username
 
@@ -16,7 +16,7 @@
 				.status-bar
 					span.status.available
 				.user-space
-					img.avatar(src='http://placehold.it/30x30')
+					img.avatar(src=" http://img.tweetimag.es/i/"+username)
 					span.username= username
 		-});
 
@@ -26,7 +26,7 @@
 
 		div.type-message
 			div.user
-				img.avatar(src="http://placehold.it/30x30")
+				img.avatar(src=" http://img.tweetimag.es/i/"+username)
 				a(href="#")
 
 			textarea#msgbox(name="Name",rows="8",cols="40")
@@ -38,8 +38,8 @@
 	script()
 		window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')
 		
-	script(defer,src="js/plugins.js")
-	script(defer,src="js/script.js")				
+	script(defer,src="/js/plugins.js")
+	script(defer,src="/js/script.js")				
 	
 	script()
 		// Change UA-XXXXX-X to be your site's ID
@@ -81,12 +81,21 @@ script()
 
 		socket.on('ready',function(data){
 			$.each(data.user_list,function(k,v){
-				$('.chat-list').append('<li><div class="status-bar"><span class="status available"></span></div><div class="user-space"><img src="http://placehold.it/30x30" class="avatar"><span class="username">'+v+'</span></div></li>');
+				$('.chat-list').append('<li><div class="status-bar"><span class="status available"></span></div><div class="user-space"><img src="http://img.tweetimag.es/i/"+v class="avatar"><span class="username">'+v+'</span></div></li>');
 			});
 		});
 
 		socket.on('new msg',function(data){
-			$('.chats').append('<div class="chat-box"><div class="user"><img src="http://placehold.it/30x30" class="avatar"></div><div class="message-box"><span class="username">'+data.nickname+' says:</span><div class="message-text">'+data.msg+'</div></div></div>');
+			var usrname = $('.message-box').last().children('.username').eq(0);
+			if(usrname.text() == data.nickname+' says:'){
+
+				$('.message-box').last().children('.message-text').append('<br />'+data.msg);
+				
+			} else{
+
+				$('.chats').append('<div class="chat-box"><div class="user"><img src="http://img.tweetimag.es/i/'+data.nickname+'" class="avatar"></div><div class="message-box"><span class="username">'+data.nickname+' says:</span><div class="message-text">'+data.msg+'</div></div></div>');
+
+			}
 		});
 
 		socket.on('disconnect',function(){
