@@ -75,6 +75,21 @@ a:hover { color: #06e; }
 a:focus { outline: thin dotted; }
 a:hover, a:active { outline: 0; }
 
+input[type="submit"]{
+	border: 1px solid #999;
+	color: #666;
+	box-shadow: 0 1px 2px rgba(0,0,0,.3);
+	border-radius: 5px;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 6px 10px;
+	text-shadow: 0 1px 0 white;
+	background-image: -webkit-gradient(linear, 0 0, 0 26, color-stop(0.076, #f7f7f7), to(#d5d5d5));
+	background-image: -webkit-linear-gradient(#f7f7f7 7.6%, #d5d5d5);
+	background-image: -moz-linear-gradient(#f7f7f7 7.6%, #d5d5d5);
+	background-image: -o-linear-gradient(#f7f7f7 7.6%, #d5d5d5);
+}
+
 header{
 	background-image: -webkit-gradient(linear, 0 0, 0 48, color-stop(0.041, #4f545a), color-stop(0.5, #31363c));
 	background-image: -webkit-linear-gradient(#4f545a 4.1%, #31363c 50%);
@@ -189,8 +204,10 @@ padding: 10px; border-radius: 5px; box-shadow: 0 -1px 0 white inset, 0 2px 2px r
 .sign-in-twitter:hover{background-position: center}
 .sign-in-twitter:active{background-position: bottom center}
 
-.white-box{margin: auto; width: 300px; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,.4); margin-top: 10%}
-
+.white-box{margin: auto; overflow: hidden; width: 300px; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,.4); margin-top: 10%}
+.white-box.room-list{width: 500px}
+.white-box .half{width: 50%; float: left;}
+input[type="text"]{width: 96%; padding: 2%; border: 1px solid #ccc; }
 
 /* ==|== non-semantic helper classes ======================================== */
 .ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; }

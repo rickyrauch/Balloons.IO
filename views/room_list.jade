@@ -1,17 +1,23 @@
-h3 Available rooms
-p
-	ul#available_rooms
-	-for(var room in rooms){
-		li
-			a(href='/room/'+room)= rooms[room]
-	-}
+.white-box.room-list
+	
+	h1.logo Ballons.IO
+	
+	hr	
+	
+	.half
+		h3 Available rooms
+		p
+			ul#available_rooms
+			-for(var room in rooms){
+				li
+					a(href='/room/'+room)= rooms[room]
+			-}
 
+	.half
+		h3 Create new room
+		form(method="POST",action="/create")
+			p
+				input.text(type="text",name="room_name", placeholder="Enter the name")
 
-h3 Create new room
-form(method="POST",action="/create")
-	p
-		label Room name
-		input.text(type="text",name="room_name")
-
-	p
-		input(type="submit",value="Send")
+			p
+				input(type="submit",value="Create")
