@@ -199,7 +199,7 @@ padding: 10px; border-radius: 5px; box-shadow: 0 -1px 0 white inset, 0 2px 2px r
 	text-indent: -1000em;
 }
 
-.logo{width: 158px; height: 38px; background: url('../img/logo.png'); display: block; text-indent: -1000em}
+.white-box .logo{width: 158px; height: 38px; background: url('../img/logo.png'); display: block; text-indent: -1000em}
 
 .sign-in-twitter:hover{background-position: center}
 .sign-in-twitter:active{background-position: bottom center}
@@ -207,7 +207,7 @@ padding: 10px; border-radius: 5px; box-shadow: 0 -1px 0 white inset, 0 2px 2px r
 .white-box{margin: auto; overflow: hidden; width: 300px; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,.4); margin-top: 10%}
 .white-box.room-list{width: 500px}
 .white-box .half{width: 50%; float: left;}
-input[type="text"]{width: 96%; padding: 2%; border: 1px solid #ccc; }
+.white-box input[type="text"]{width: 96%; padding: 2%; border: 1px solid #ccc; }
 
 /* ==|== non-semantic helper classes ======================================== */
 .ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; }
