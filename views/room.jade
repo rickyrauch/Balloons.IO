@@ -1,16 +1,17 @@
 #container
 	header
-		ul
-			li 
-				a(href="/room/"+room_id)= room_name
-		-rooms.forEach(function(room,index){
-			-if(index != room_id){
-				li
-					a(href="/room/"+index)= room
-			-}
-		-});
-
 		a.logout(href="/logout") Logout
+
+
+		div.dropdown-room
+			span.dropdown
+			a(href="#").current= room_name
+			-rooms.forEach(function(room,index){
+				-if(index != room_id){
+					li
+						a(href="/room/"+index)= room
+				-}
+			-});
 		
 		div.logged-box
 			img.avatar(src=" http://img.tweetimag.es/i/"+username)
@@ -37,7 +38,6 @@
 				a(href="#")
 
 			textarea#msgbox(name="Name",rows="8",cols="40")
-			a.send-message(href="#") Send Message	
 
 	footer
 
@@ -109,9 +109,12 @@ script()
 			socket.emit('room leave',{'room_id':$('#room_id').text()});	
 		});
 
-		$('.send-message').click(function(e){
-			socket.emit('my msg',{'msg': $('#msgbox').val(),'room_id':$('#room_id').text()});
-			$('#msgbox').val('');
+
+		$("#msgbox").keypress(function(e) {
+			if ( e.which == 13 ) {
+				socket.emit('my msg',{'msg': $('#msgbox').val(),'room_id':$('#room_id').text()});
+				$('#msgbox').val('');
+			}
 		});
 	});
 
