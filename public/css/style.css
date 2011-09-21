@@ -115,8 +115,15 @@ header .dropdown-room{
 .dropdown-room a{display: none;  padding: 5px 5px 5px 10px; border-radius: 5px;  text-shadow: none; text-decoration: none; color: white; }
 .dropdown-room:hover {background: white; box-shadow: 0 1px 2px rgba(0,0,0,.4)}
 .dropdown-room:hover .dropdown{display: none;}
-.dropdown-room:hover a{display: block;  padding: 10px 10px; color: black}
-.dropdown-room:hover a:hover{background-color: #f1f1f1}
+.dropdown-room:hover a{display: block;  padding: 5px 5px 5px 10px; color: black}
+.dropdown-room:hover a:hover{
+	color: white;
+	border-radius: 4px;
+	text-shadow: 0 -1px 1px black;
+	background:  -webkit-linear-gradient(#68B6EB 7.4%, #0486DD);
+	background:  -moz-linear-gradient(#68B6EB 7.4%, #0486DD);
+	background:  -o-linear-gradient(#68B6EB 7.4%, #0486DD);
+}
 .dropdown-room a.current{display: block; }
 .dropdown-room a:last-child{border-bottom: 0; }
 
