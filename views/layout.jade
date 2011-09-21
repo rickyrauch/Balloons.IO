@@ -29,7 +29,7 @@ head
 	script()
 		$(document).ready(function(){
 			var authcallback = function(data){
-				$('#twitbutt').after('<p>You are all signed in as <strong>'+data.user.username+'</strong><br></p><a href="/rooms/list">You can access to Balloons</a>').fadeIn('slow');
+				window.location.reload();
 			}
 
 			$('#twitbutt').click(function(){
