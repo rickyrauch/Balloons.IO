@@ -1,20 +1,2 @@
-h3 Available rooms
-p
-	ul#available_rooms
-	-for(var room in rooms){
-		li
-			a(href='/room/'+room)= rooms[room]
-	-}
-
-
-h3 Create new room
-form(method="POST",action="/create")
-	p
-		label Room name
-		input.text(type="text",name="room_name")
-
-	p
-		input(type="submit",value="Send")
-
 div
-	a#twitbutt(href="#") cqewf
+	a#twitbutt(href="#") Sign in with twitter

@@ -21,11 +21,31 @@ app.configure(function(){
 });
 
 app.get('/',function(req,res,next){
-	client.lrange(['rooms',0,-1],function(err,rooms){
-		res.locals({'rooms':rooms});
-	  res.render('index');
-	});
+	if(req.getAuthDetails().user){
+		client.lrange(['rooms',0,-1],function(err,rooms){
+			res.locals({'rooms':rooms});
+	  		res.render('room_list');
+		});
+	}
+	else
+		res.render('index');	
 });
+
+app.get('/auth/twitter_callback',function(req,res,next){
+	res.redirect('rooms/list');
+});
+
+app.get('/rooms/list',function(req,res,next){
+	if(req.getAuthDetails().user){
+		client.lrange(['rooms',0,-1],function(err,rooms){
+			res.locals({'rooms':rooms});
+	  		res.render('room_list');
+		});
+	}
+	else
+		res.redirect('back');	
+});
+
 
 app.post('/create',function(req,res,next){
 	client.rpush('rooms',req.body.room_name);
