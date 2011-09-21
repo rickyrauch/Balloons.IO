@@ -104,6 +104,7 @@ script()
 
 		$('.send-message').click(function(e){
 			socket.emit('my msg',{'msg': $('#msgbox').val(),'room_id':$('#room_id').text()});
+			$('#msgbox').val('');
 		});
 	});
 
