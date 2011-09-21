@@ -22,10 +22,7 @@ app.configure(function(){
 
 app.get('/',function(req,res,next){
 	if(req.getAuthDetails().user){
-		client.lrange(['rooms',0,-1],function(err,rooms){
-			res.locals({'rooms':rooms});
-	  		res.render('room_list');
-		});
+	  	res.redirect('/rooms/list');
 	}
 	else
 		res.render('index');	
@@ -39,7 +36,7 @@ app.get('/rooms/list',function(req,res,next){
 	if(req.getAuthDetails().user){
 		client.lrange(['rooms',0,-1],function(err,rooms){
 			res.locals({'rooms':rooms});
-	  		res.render('room_list');
+			res.render('room_list');
 		});
 	}
 	else
@@ -58,8 +55,10 @@ app.get('/room/:id',function(req,res,next){
 	if(req.getAuthDetails().user){
 		client.lindex(['rooms',req.params.id],function(err,room_name){
 			client.smembers('users'+req.params.id,function(error,user_list){
-					res.locals({'room_name':room_name,'room_id':req.params.id,'username': req.getAuthDetails().user.username,'user_list':user_list});
+				client.lrange(['rooms',0,-1],function(err,rooms){
+					res.locals({'rooms':rooms,'room_name':room_name,'room_id':req.params.id,'username': req.getAuthDetails().user.username,'user_list':user_list});
 					res.render('room');
+				});
 			});
 		});
 	}

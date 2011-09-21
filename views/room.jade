@@ -1,7 +1,14 @@
 #container
 	header
 		ul
-			li= room_name
+			li 
+				a(href="/room/"+room_id)= room_name
+		-rooms.forEach(function(room,index){
+			-if(index != room_id){
+				li
+					a(href="/room/"+index)= room
+			-}
+		-});
 
 		a.logout(href="/logout") Logout
 		
