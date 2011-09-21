@@ -67,7 +67,9 @@ td { vertical-align: top; }
    ========================================================================== */
 
 body{ text-shadow: 0 1px 0 rgba(255,255,255,1); background: url('../img/bg.png')}
+p{line-height: 22px; color: #666}
 
+a{font-weight: bold;}
 a:visited { color: inherit}
 a:hover { color: #06e; }
 a:focus { outline: thin dotted; }
@@ -172,41 +174,22 @@ padding: 10px; border-radius: 5px; box-shadow: 0 -1px 0 white inset, 0 2px 2px r
 	text-shadow: 0 1px 0 rgba(0,0,0,.4);
 }
 
-
-
-.login-box{background: white; width: 260px; padding: 20px; border-radius: 5px; margin: auto;  margin-top: 30px; box-shadow: 0 2px 2px rgba(0,0,0,.3)}
-.login-box h1{font-size: 20px; text-align: center; margin-bottom: 30px; border-top: 1px solid #f1f1f1; border-bottom: 1px solid #f1f1f1; padding: 10px 0 }
-.login-box p{line-height: 22px; font-size: 11px; color: #666}
-.login-box input.text{padding: 16px 20px; width: 220px; background: #f3f3f3; border: 1px solid #ccc}
-.login-box input.username{
-	-webkit-border-top-left-radius: 5px;
-	-webkit-border-top-right-radius: 5px;
-	-moz-border-radius-topleft: 5px;
-	-moz-border-radius-topright: 5px;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	border-bottom: 0px;
-}
-
-.login-box input.password{
-	-webkit-border-bottom-right-radius: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-	-moz-border-radius-bottomright: 5px;
-	-moz-border-radius-bottomleft: 5px;
-	border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
-}
-
+.login-box h4{text-align: center;}
 .sign-in-twitter {
 	background: url('../img/twitter_signin.png') no-repeat 0 0;
-	width: 150px;
-	height: 22px;
+	width: 151px;
+	height: 24px;
 	display: block;
 	margin: auto;
+	text-indent: -1000em;
 }
+
+.logo{width: 158px; height: 38px; background: url('../img/logo.png'); display: block; text-indent: -1000em}
 
 .sign-in-twitter:hover{background-position: center}
 .sign-in-twitter:active{background-position: bottom center}
+
+.white-box{margin: auto; width: 300px; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,.4); margin-top: 10%}
 
 
 /* ==|== non-semantic helper classes ======================================== */

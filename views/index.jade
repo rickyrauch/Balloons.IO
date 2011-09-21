@@ -1,20 +1,16 @@
-h3 Available rooms
-p
-	ul#available_rooms
-	-for(var room in rooms){
-		li
-			a(href='/room/'+room)= rooms[room]
-	-}
+div.white-box.login-box
+	
+	h1.logo Ballons.IO
 
-
-h3 Create new room
-form(method="POST",action="/create")
-	p
-		label Room name
-		input.text(type="text",name="room_name")
+	p	
+		strong \Ballons.IO 
+		\is a web chat server and client ready to use. It's build with the help of node.JS, Socket\.IO and Redis.
 
 	p
-		input(type="submit",value="Send")
+		\It's developed by 
+		a(href="") Gravity On Mars
+		\ for free use. You can use it on your projects without asking.
 
-div
-	a#twitbutt(href="#") cqewf
+	h4 To start using it, please sign in:
+	div
+		a#twitbutt.sign-in-twitter(href="#") cqewf
