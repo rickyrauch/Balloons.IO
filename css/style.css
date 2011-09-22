@@ -113,8 +113,9 @@ td { vertical-align: top; }
 a:visited{color: #333}
 body{text-shadow: 0 1px 0 white;}
 header{background-color: #fff7d7; padding-top: 20px}	
-hgroup{padding: 20px 0}
+hgroup{padding: 30px 0}
 a{text-decoration: none; font-weight: bold; color: #333}
+a:hover{color: #222}
 .content{width: 722px; margin: auto}
 .fork-us{float: right; background: white; padding: 6px 10px; border-radius: 5px ; display: inline-block; }
 .logo a{
@@ -138,9 +139,18 @@ a{text-decoration: none; font-weight: bold; color: #333}
 	font-weight: normal;
 }
 
+.download-button:hover{
+	background-image: -webkit-gradient(linear, 0 0, 0 74, color-stop(0.04, #fefefe), to(#dedede));
+	background-image: -webkit-linear-gradient(#fefefe 40%, #dedede);
+	background-image: -moz-linear-gradient(#fefefe 40%, #dedede);
+	background-image: -o-linear-gradient(#fefefe 40%, #dedede);
+}
+
+.download-button:active{box-shadow: none}
+
 .download-button span{display: block; font-size: 11px; margin-top: 10px; font-weight: bold;}
 
-.copy{font-size: 15px; line-height: 38px; width: 420px; }
+.copy{font-size: 15px; line-height: 38px; width: 400px; }
 
 .flash{
 	float: right;
