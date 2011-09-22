@@ -1,77 +1,96 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-  <meta charset='utf-8'>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>gravityonmars/Balloons.IO @ GitHub</title>
+  <title></title>
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #913394;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #6ecc6b; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #6ecc6b; }
-    h3 { text-align: center; color: #6ecc6b; }
-    a { color: #6ecc6b; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- CSS concatenated and minified via ant build script-->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- end CSS-->
+
+  <script src="js/libs/modernizr-2.0.6.min.js"></script>
 </head>
 
 <body>
-  <a href="http://github.com/gravityonmars/Balloons.IO"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
   <div id="container">
+    <header class="clearfix">
+			<div class="content">
+				<a class="fork-us" href="#">Fork us on Github</a>
 
-    <div class="download">
-      <a href="http://github.com/gravityonmars/Balloons.IO/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/gravityonmars/Balloons.IO/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+				<h1 class="logo"><a href="#">Balloons.IO</a></h1>
+
+				<hgroup>
+					<a href="#" class="download-button">
+						<i class="flash"></i>
+						Download the Script
+						<span>Free to Download, Free to use</span>
+					</a>
+
+					<div class="copy">Web multi-room chat server and client ready to use. It’s build with the help of node.JS, Express, Socket.IO and Redis.</div>
+
+					
+				</hgroup>
+			</div>
+
+			<div class="screenshot">
+
+			</div>
+    </header>
+    <div id="main" role="main" class="content">
+			<div class="grid_9">
+				<div class="box twitter-box">
+					<h4>Twitter Based</h4>
+				</div>
+
+				<div class="box redis-box">
+					<h4>Key Value Storing</h4>
+				</div>
+
+				<div class="box last realtime-box">
+					<h4>Realtime</h4>
+
+				</div>
+			</div>
     </div>
-
-    <h1><a href="http://github.com/gravityonmars/Balloons.IO">Balloons.IO</a>
-      <span class="small">by <a href="http://github.com/gravityonmars">gravityonmars</a></span></h1>
-
-    <div class="description">
-      Balloons.IO is a web multi-room chat server and client ready to use. It's build with the help of node.JS, Express, Socket\.IO and Redis.
-    </div>
-
-    <h2>Authors</h2>
-<p>Dan Zajdband (dan.zajdband@gmail.com)<br/>Ricardo Rauch (ricardo@gravityonmars.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Gravity On Mars (admin@gravityonmars.com)<br/>      </p>
+		<!-- #main -->
+    <footer class="content">
+			<p>This product is  developed by <a href="#">Gravity On Mars</a>.</p>
+    </footer>
+  </div> <!--! end of #container -->
 
 
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/gravityonmars/Balloons.IO/zipball/master">zip</a> or
-      <a href="http://github.com/gravityonmars/Balloons.IO/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/gravityonmars/Balloons.IO</pre>
-    </p>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
 
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/gravityonmars/Balloons.IO">gravityonmars/Balloons.IO</a>
-    </div>
 
-  </div>
+  <!-- scripts concatenated and minified via ant build script-->
+  <script defer src="js/plugins.js"></script>
+  <script defer src="js/script.js"></script>
+  <!-- end scripts-->
 
+
+  <script> // Change UA-XXXXX-X to be your site's ID
+    window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+    Modernizr.load({
+      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+    });
+  </script>
+
+
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  <![endif]-->
   
 </body>
 </html>
