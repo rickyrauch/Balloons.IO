@@ -113,7 +113,8 @@ script()
 		$("#msgbox").keypress(function(e) {
 			if ( e.which == 13 ) {
 				socket.emit('my msg',{'msg': $('#msgbox').val(),'room_id':$('#room_id').text()});
-				$('#msgbox').val('');
+				$(this).val('');
+				return false;
 			}
 		});
 	});
