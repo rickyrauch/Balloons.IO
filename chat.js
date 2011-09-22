@@ -84,8 +84,10 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('my msg',function(data){
 		socket.get('nickname',function(err,nickname){
-			socket.get('room_id',function(err,room_id){			
-	 		 	io.sockets.in(room_id).emit('new msg',{'nickname':nickname,'msg':data.msg});		
+			socket.get('room_id',function(err,room_id){	
+				var no_empty = data.msg.replace("\n","");
+				if(no_empty.length > 0)	
+	 		 		io.sockets.in(room_id).emit('new msg',{'nickname':nickname,'msg':data.msg});		
 			});
 		});
 	});
