@@ -131,9 +131,12 @@ header .logged-box{display: none;float: right; width: 180px; margin: 4px 0}
 header .logged-box .avatar{float: left; margin-right: 10px}
 header .logged-box span{color: white; text-shadow: 0 1px 0 black; display: block;}
 header .logged-box .logged-as{font-size: 11px; margin: 3px 0}
-header .logout{float: right; margin: 6px 10px 0 0; box-shadow: 0 1px 2px black; background-color: #F5CFFF; background: url('../img/icon-logout.png') center no-repeat, -webkit-linear-gradient(#F5CFFF , #CC00FF); text-indent: -1000em; border-radius: 100px; display: block; width: 30px; height: 30px; }
-
-
+header .logout{float: right; margin: 6px 10px 0 0; box-shadow: 0 1px 2px black; background-color: #F5CFFF; background: url('../img/icon-logout.png') center no-repeat, -webkit-linear-gradient(#F5CFFF , #CC00FF);  background: url('../img/icon-logout.png') center no-repeat, -moz-linear-gradient(#F5CFFF , #CC00FF); text-indent: -1000em; border-radius: 100px; display: block; width: 30px; height: 30px; }
+header .logout:hover{
+background: url('../img/icon-logout.png') center no-repeat, -webkit-linear-gradient(#e582ff , #CC00FF);
+background: url('../img/icon-logout.png') center no-repeat, -moz-linear-gradient(#e582ff , #CC00FF);	
+}
+header .logout:active{box-shadow: none}
 
 img.avatar{background: white; padding: 2px; border: 1px solid #ccc; box-shadow: 0 1px 2px rgba(0,0,0,.1)}
 .content .username{font-weight: bold; }
@@ -206,7 +209,7 @@ padding: 10px; border-radius: 5px; box-shadow: 0 -1px 0 white inset, 0 2px 2px r
 	text-indent: -1000em;
 }
 
-.white-box .logo{width: 158px; height: 38px; background: url('../img/logo.png'); display: block; text-indent: -1000em}
+.white-box .logo{width: 189px; height: 37px; background: url('../img/logo.png'); display: block; text-indent: -1000em}
 
 .sign-in-twitter:hover{background-position: center}
 .sign-in-twitter:active{background-position: bottom center}

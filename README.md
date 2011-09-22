@@ -1,11 +1,11 @@
-# Ballons.IO
+# Balloons.IO
 
 Balloons.IO is a web multi-room chat server and client ready to use.
 It’s build with the help of node.JS, Express, Socket.IO and Redis.
 
 ![image][]
 
-  [image]: https://github.com/gravityonmars/Ballons.IO/raw/master/public/img/Chat.png
+  [image]: https://github.com/gravityonmars/Balloons.IO/raw/master/public/img/Chat.png
 
 ## Installation
 
@@ -26,7 +26,7 @@ If you got these 3 tools installed, and you can go to terminal and type:
 
 Balloons uses easy-OAuth for authentication with twitter. You can easily
 change this code to authenticate with Facebook, for example, lets with
-facebook.
+Facebook.
 
 Balloons to connect with you twitter hacer lo following:
 
