@@ -101,8 +101,8 @@ script()
 			} else{
 
 				$('.chats').append('<div class="chat-box"><div class="user"><img src="http://img.tweetimag.es/i/'+data.nickname+'" class="avatar"></div><div class="message-box"><span class="username">'+data.nickname+' says:</span><div class="message-text">'+data.msg+'</div></div></div>');
-
 			}
+			$('.chats').scrollTop($('.chats').height());
 		});
 		
 		socket.on('user leave',function(data){
@@ -116,7 +116,6 @@ script()
 			if ( e.which == 13 ) {
 				socket.emit('my msg',{'msg': $('#msgbox').val(),'room_id':$('#room_id').text()});
 				$(this).val('');
-				$('.chats').scrollTop($('.chats').height());
 				return false;
 			}
 		});
