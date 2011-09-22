@@ -34,7 +34,7 @@
 
 		div.type-message
 			div.user
-				img.avatar(src=" http://img.tweetimag.es/i/"+username)
+				img.avatar(src="http://img.tweetimag.es/i/"+username)
 				a(href="#")
 
 			textarea#msgbox(name="Name",rows="8",cols="40")
@@ -83,7 +83,7 @@ script()
 		socket.emit('set nickname',{room_id:$('#room_id').text(),'nickname':$('#username').text()});	
 		
 		socket.on('new user',function(data){
-			$('.chat-list').append('<li><div class="status-bar"><span class="status available"></span></div><div class="user-space"><img src="http://placehold.it/30x30" class="avatar"><span class="username">'+data.nickname+'</span></div></li>');
+			$('.chat-list').append('<li><div class="status-bar"><span class="status available"></span></div><div class="user-space"><img src="http://img.tweetimag.es/i/'+data.nickname+'"+username class="avatar"><span class="username">'+data.nickname+'</span></div></li>');
 		});
 
 		socket.on('ready',function(data){
@@ -104,16 +104,19 @@ script()
 
 			}
 		});
-
-		socket.on('disconnect',function(){
-			socket.emit('room leave',{'room_id':$('#room_id').text()});	
+		
+		socket.on('user leave',function(data){
+			var user_list = $('.chat-list .li');
+			$.each(user_list,function(k,v){
+				alert(v);
+			});
 		});
-
 
 		$("#msgbox").keypress(function(e) {
 			if ( e.which == 13 ) {
 				socket.emit('my msg',{'msg': $('#msgbox').val(),'room_id':$('#room_id').text()});
 				$(this).val('');
+				$('.chats').scrollTop($('.chats').height());
 				return false;
 			}
 		});

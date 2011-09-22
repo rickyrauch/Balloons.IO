@@ -63,18 +63,21 @@ app.get('/room/:id',function(req,res,next){
 		});
 	}
 	else
-		res.redirect('back');
+		res.redirect('/');
 });
 
 var io = sio.listen(app);
 
 io.sockets.on('connection', function (socket) {
 	socket.on('set nickname',function(data){
-		socket.join(data.room_id);
+	   socket.join(data.room_id);
 	   socket.set('nickname', data.nickname, function () {
-	    socket.set('room_id', data.room_id, function () {
-				client.sadd('users'+data.room_id,data.nickname);
-	 	 		socket.broadcast.to(data.room_id).emit('new user',{'nickname':data.nickname});
+	   	socket.set('room_id', data.room_id, function () {
+				client.sadd('users'+data.room_id,data.nickname,function(err,added){
+					console.log('added: '+added);
+					if(added != 0)
+		 	 			socket.broadcast.to(data.room_id).emit('new user',{'nickname':data.nickname});					
+				});
 			});
 		});
 	});
@@ -91,7 +94,7 @@ io.sockets.on('connection', function (socket) {
 		socket.get('nickname',function(err,nickname){
 			socket.get('room_id',function(e,room_id){
 				client.srem('users'+room_id,nickname);
-		  	io.sockets.in(room_id).emit('user leave',{'nickname': nickname});		
+		  		io.sockets.in(room_id).emit('user leave',{'nickname': nickname});		
 			});
 		});
 	});
