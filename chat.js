@@ -56,6 +56,10 @@ app.get('/room/:id',function(req,res,next){
 		client.lindex(['rooms',req.params.id],function(err,room_name){
 			client.smembers('users'+req.params.id,function(error,user_list){
 				client.lrange(['rooms',0,-1],function(err,rooms){
+					user_list.forEach(function(user){
+						if(user == req.getAuthDetails().user.username)
+							user_list.splice(user_list.indexOf(user),1);
+					});
 					res.locals({'rooms':rooms,'room_name':room_name,'room_id':req.params.id,'username': req.getAuthDetails().user.username,'user_list':user_list});
 					res.render('room');
 				});
