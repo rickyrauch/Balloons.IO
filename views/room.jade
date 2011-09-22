@@ -106,9 +106,9 @@ script()
 		});
 		
 		socket.on('user leave',function(data){
-			var user_list = $('.chat-list .li');
-			$.each(user_list,function(k,v){
-				alert(v);
+			$('.chat-list li').each(function(k,v){
+				if($(v).last().last().text() == data.nickname)
+					$(v).remove();
 			});
 		});
 
