@@ -160,15 +160,37 @@ a{text-decoration: none; font-weight: bold; color: #333}
 }
 
 
-.box{background: #f3f3f3; border-radius: 5px; float: left; width: 228px; margin-right: 19px; margin-top: 20px; margin-bottom: 20px}
+.box{background: #f3f3f3; border-radius: 5px; padding: 20px 10px; float: left; width: 208px; margin-right: 19px; margin-top: 20px;min-height: 114px;
+ margin-bottom: 20px}
 .box.last{margin-right: 0}
-.box h4{text-align: center;}
+.box h4{text-align: center; margin-top: 0}
 footer{border-top: 1px solid #ccc; clear: both; margin-top: 30px}
 .box.twitter-box{background-color: #D7F5FF}
 .box.redis-box{background-color: #FFD7D7}
 .box.realtime-box{background-color: #D0F7D0}
 
+.img{
+	display: block;
+	margin: auto;
+}
+.box.twitter-box .img{
+	background: url('../img/images.png') no-repeat -227px -1px;
+		width: 120px;
+		height: 82px;
+}
 
+.box.redis-box .img{
+	background: url('../img/images.png') no-repeat -376px -13px;
+	width: 180px;
+	height: 58px;
+	margin-top: 30px;
+}
+
+.box.realtime-box .img{
+	background: url('../img/images.png') no-repeat -584px 0;
+	width: 140px;
+	height: 82px;
+}
 
 
 /* ==|== non-semantic helper classes ======================================== */
