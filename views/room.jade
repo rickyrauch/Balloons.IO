@@ -99,8 +99,8 @@ script()
 				$('.message-box').last().children('.message-text').append('<br />'+data.msg);
 				
 			} else{
-
-				$('.chats').append('<div class="chat-box"><div class="user"><img src="http://img.tweetimag.es/i/'+data.nickname+'" class="avatar"></div><div class="message-box"><span class="username">'+data.nickname+' says:</span><div class="message-text">'+data.msg+'</div></div></div>');
+				var now = new Date();
+				$('.chats').append('<div class="chat-box"><div class="user"><img src="http://img.tweetimag.es/i/'+data.nickname+'" class="avatar"></div><div class="message-box"><span>'+now.getHours()+':'+now.getMinutes()+'</span><span class="username">'+data.nickname+' says:</span><div class="message-text">'+data.msg+'</div></div></div>');
 			}
 			$('.chats').scrollTop($('.chats').height());
 		});

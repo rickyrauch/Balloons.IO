@@ -74,8 +74,7 @@ io.sockets.on('connection', function (socket) {
 	   socket.set('nickname', data.nickname, function () {
 	   	socket.set('room_id', data.room_id, function () {
 				client.sadd('users'+data.room_id,data.nickname,function(err,added){
-					console.log('added: '+added);
-					if(added != 0)
+					if(added > 0)
 		 	 			socket.broadcast.to(data.room_id).emit('new user',{'nickname':data.nickname});					
 				});
 			});
