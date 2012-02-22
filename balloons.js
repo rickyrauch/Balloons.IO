@@ -7,6 +7,7 @@ var express = require('express')
   , sio = require('socket.io')
   , easyoauth = require('easy-oauth')
   , redis = require('redis')
+  , RedisStore = require('connect-redis')(express)
   , config = require('./config.json')
 	, utils = require('./utils');
 
@@ -27,7 +28,7 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
   app.use(express.bodyParser());
 	app.use(express.cookieParser());
-	app.use(express.session({ secret: 'foobar' }));
+	app.use(express.session({ secret: 'foobar', store: new RedisStore }));
   app.use(easyoauth(config));
   app.use(app.router);
 });
@@ -39,29 +40,32 @@ app.configure(function(){
 app.get('/', function(req,res,next){
   req.authenticate(['oauth'], function(error, authenticated) { 
     if(authenticated) {
-      res.redirect('rooms/list');
+      res.redirect('/rooms/list');
     } else {
       res.render('index');
     } 
   });
 });
 
-app.get('/auth/twitter_callback', function(req,res,next){
-	res.redirect('rooms/list');
-});
-
-app.get('/rooms/list', utils.restrict, function(req,res,next){
-  client.lrange(['rooms', 0, -1],function(err,rooms){
+app.get('/rooms/list', utils.restrict, function(req, res){
+  client.hgetall('rooms', function(err, rooms){
     res.locals({'rooms' : rooms});
     res.render('room_list');
   });
 });
 
-app.post('/create',function(req,res,next){
-	client.rpush('rooms',req.body.room_name);
-	client.llen('rooms',function(err,len){
-		res.redirect('/room/'+(len - 1));
-	});
+app.post('/create', utils.restrict, function(req, res){
+  if(req.body.room_name.length <= 30) {
+    client.hget('rooms', req.body.room_name, function(err, room){
+      if(room) {
+        res.redirect('/room/' + encodeURIComponent(req.body.room));
+      } else {
+        client.hset('rooms', req.body.room_name, function(err, ));
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
 });
 
 app.get('/room/:id', utils.restrict, function(req,res){
@@ -85,13 +89,14 @@ app.get('/room/:id', utils.restrict, function(req,res){
 var io = sio.listen(app);
 
 io.sockets.on('connection', function (socket) {
+
 	socket.on('set nickname',function(data){
 	   socket.join(data.room_id);
 	   socket.set('nickname', data.nickname, function () {
 	   	socket.set('room_id', data.room_id, function () {
-				client.sadd('users'+data.room_id,data.nickname,function(err,added){
+				client.sadd('users'+data.room_id, data.nickname, function(err,added){
 					if(added > 0)
-		 	 			socket.broadcast.to(data.room_id).emit('new user',{'nickname':data.nickname});					
+		 	 			io.sockets.on(data.room_id).emit('new user',{'nickname':data.nickname});					
 				});
 			});
 		});

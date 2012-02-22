@@ -1,7 +1,7 @@
 {
     "twitter" : { 
-        "consumerkey" : "yourConsumerKey"
-      , "consumersecret" : "yourConsumerSecret" 
-      , "callback" : "your twitter callback" 
+        "consumerkey" : "6QqZAgEMJErJTMbIfaTBSA"
+      , "consumersecret" : "vyQbhJbrUuouq1XVxqwOdLELL99NaMzdnwjhZqwf08" 
+      , "callback" : "http://local.host:3000/auth/twitter_callback" 
     }
 }
