@@ -1,0 +1,7 @@
+{
+    "twitter" : { 
+        "consumerkey" : "yourConsumerKey"
+      , "consumersecret" : "yourConsumerSecret" 
+      , "callback" : "your twitter callback" 
+    }
+}
