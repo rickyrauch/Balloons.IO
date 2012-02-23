@@ -58,9 +58,11 @@ app.post('/create', utils.restrict, function(req, res){
   if(req.body.room_name.length <= 30) {
     client.hget('rooms', req.body.room_name, function(err, room){
       if(room) {
-        res.redirect('/room/' + encodeURIComponent(req.body.room));
+        res.redirect('/room/' + room);
       } else {
-        client.hset('rooms', req.body.room_name, function(err, ));
+        client.hset('rooms', req.body.room_name, encodeURIComponent(req.body.room_name), function(err, new_room){
+        	res.redirect('/room/' +	new_room);
+				});
       }
     });
   } else {
@@ -69,16 +71,15 @@ app.post('/create', utils.restrict, function(req, res){
 });
 
 app.get('/room/:id', utils.restrict, function(req,res){
-  client.lindex(['rooms',req.params.id],function(err,room_name){
-    client.smembers('users'+req.params.id,function(error,user_list){
-      client.lrange(['rooms',0,-1],function(err,rooms){
-        user_list.forEach(function(user){
-          user_list.splice(user_list.indexOf(user),1);
-        });
-        res.locals({'rooms':rooms,'room_name':room_name,'room_id':req.params.id,'username': req.getAuthDetails().user.username,'user_list':user_list});
-        res.render('room');
-      });
-    });
+  client.hgetall('rooms',  function(err, rooms){
+		if(rooms[decodeURIComponent(req.params.id)]){
+    	client.smembers('users:'+req.params.id, function(error, user_list){
+    		res.locals({'rooms': rooms,'room_name':decodeURIComponent(req.params.id) ,'room_id':req.params.id,'username': req.getAuthDetails().user.username,'user_list':user_list});
+     		res.render('room');
+   	 });
+		} else {
+			res.redirect('back');
+		}
   });
 });
 
@@ -94,7 +95,7 @@ io.sockets.on('connection', function (socket) {
 	   socket.join(data.room_id);
 	   socket.set('nickname', data.nickname, function () {
 	   	socket.set('room_id', data.room_id, function () {
-				client.sadd('users'+data.room_id, data.nickname, function(err,added){
+				client.sadd('users:'+data.room_id, data.nickname, function(err,added){
 					if(added > 0)
 		 	 			io.sockets.on(data.room_id).emit('new user',{'nickname':data.nickname});					
 				});
@@ -115,7 +116,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('disconnect',function(){
 		socket.get('nickname',function(err,nickname){
 			socket.get('room_id',function(e,room_id){
-				client.srem('users'+room_id,nickname);
+				client.srem('users:'+room_id,nickname);
 		  		io.sockets.in(room_id).emit('user leave',{'nickname': nickname});		
 			});
 		});

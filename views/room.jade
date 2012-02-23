@@ -6,12 +6,11 @@
 		div.dropdown-room
 			span.dropdown
 			a(href="#").current= room_name
-			-rooms.forEach(function(room,index){
+			each room,index in rooms	
 				-if(index != room_id){
 					li
 						a(href="/room/"+index)= room
 				-}
-			-});
 		
 		div.logged-box
 			img.avatar(src=" http://img.tweetimag.es/i/"+username)
@@ -79,7 +78,7 @@ script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js")
 script(src="/socket.io/socket.io.js")
 script()
 	$(document).ready(function(){
-		var socket = io.connect('htlentp://localhost');
+		var socket = io.connect('htlentp://local.host');
 		socket.emit('set nickname',{room_id:$('#room_id').text(),'nickname':$('#username').text()});	
 		
 		socket.on('new user',function(data){
