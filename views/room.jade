@@ -78,8 +78,8 @@ script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js")
 script(src="/socket.io/socket.io.js")
 script()
 	$(document).ready(function(){
-		var socket = io.connect('htlentp://localhost');
-		socket.emit('set nickname',{room_id:$('#room_id').text(),'nickname':$('#username').text()});	
+		var socket = io.connect('http://localhost');
+		socket.emit('set nickname',{room_id:$('#room_id').text(),'nickname':$('#username').text()});
 		
 		socket.on('new user',function(data){
 			$('.chat-list').append('<li><div class="status-bar"><span class="status available"></span></div><div class="user-space"><img src="http://img.tweetimag.es/i/'+data.nickname+'"+username class="avatar"><span class="username">'+data.nickname+'</span></div></li>');

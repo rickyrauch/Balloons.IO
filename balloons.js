@@ -95,9 +95,8 @@ io.sockets.on('connection', function (socket) {
 	   socket.join(data.room_id);
 	   socket.set('nickname', data.nickname, function () {
 	   	socket.set('room_id', data.room_id, function () {
-				client.sadd('users:'+data.room_id, data.nickname, function(err,added){
-					if(added > 0)
-		 	 			io.sockets.on(data.room_id).emit('new user',{'nickname':data.nickname});					
+				client.sadd('users:'+data.room_id, data.nickname, function(err, added){
+		 	 			io.sockets.in(data.room_id).emit('new user',{'nickname':data.nickname});
 				});
 			});
 		});
