@@ -8,10 +8,9 @@
 		h3 Available rooms
 		p
 			ul#available_rooms
-			-for(var room in rooms){
+			each room,key in rooms
 				li
-					a(href='/room/'+room)= rooms[room]
-			-}
+					a(href='/room/'+room)= key
 
 	.half
 		h3 Create new room
