@@ -57,11 +57,11 @@ app.get('/rooms/list', utils.restrict, function(req, res){
 app.post('/create', utils.restrict, function(req, res){
   if(req.body.room_name.length <= 30) {
     client.hget('rooms', req.body.room_name, function(err, room){
-      if(room) {
+      if(room){
         res.redirect('/room/' + room);
       } else {
         client.hset('rooms', req.body.room_name, encodeURIComponent(req.body.room_name), function(err, new_room){
-        	res.redirect('/room/' +	new_room);
+        	res.redirect('/room/' +	encodeURIComponent(req.body.room_name));
 				});
       }
     });
