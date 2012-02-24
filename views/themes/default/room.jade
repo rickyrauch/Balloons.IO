@@ -9,7 +9,7 @@
 			each room,index in rooms	
 				-if(room != room_id){
 					li
-						a(href="/room/"+room)= index
+						a(href="/rooms/"+room)= index
 				-}
 		
 		div.logged-box
@@ -99,7 +99,7 @@ script()
 				
 			} else{
 				var now = new Date();
-				$('.chats').append('<div class="chat-box"><div class="user"><img src="http://img.tweetimag.es/i/'+data.nickname+'" class="avatar"></div><div class="message-box"><span>'+now.getHours()+':'+now.getMinutes()+'</span><span class="username">'+data.nickname+' says:</span><div class="message-text">'+data.msg+'</div></div></div>');
+				$('.chats').append('<div class="chat-box"><div class="user"><img src="http://img.tweetimag.es/i/'+data.nickname+'" class="avatar"></div><div class="message-box"><span>'+now.getHours()+':'+((now.getMinutes() < 10) ? '0' : '') + now.getMinutes() +'</span><span class="username">'+data.nickname+' says:</span><div class="message-text">'+data.msg+'</div></div></div>');
 			}
 			$('.chats').scrollTop($('.chats').height());
 		});

@@ -24,12 +24,13 @@ var client = redis.createClient();
 var app = express.createServer();
 
 app.configure(function(){
-  app.set('view engine', 'jade');  
+  app.set('view engine', 'jade'); 
+  app.set('views', __dirname + '/views/themes/' + config.theme.name);
   app.use(express.static(__dirname + '/public'));
   app.use(express.bodyParser());
 	app.use(express.cookieParser());
-	app.use(express.session({ secret: 'foobar', store: new RedisStore }));
-  app.use(easyoauth(config));
+	app.use(express.session({ secret: config.session.secret, store: new RedisStore }));
+  app.use(easyoauth(config.auth));
   app.use(app.router);
 });
 
@@ -58,10 +59,10 @@ app.post('/create', utils.restrict, function(req, res){
   if(req.body.room_name.length <= 30) {
     client.hget('rooms', req.body.room_name, function(err, room){
       if(room){
-        res.redirect('/room/' + room);
+        res.redirect('/rooms/' + room);
       } else {
-        client.hset('rooms', req.body.room_name, encodeURIComponent(req.body.room_name), function(err, new_room){
-        	res.redirect('/room/' +	encodeURIComponent(req.body.room_name));
+        client.hset('rooms', req.body.room_name, encodeURIComponent(req.body.room_name), function(err, id){
+        	res.redirect('/rooms/' +	encodeURIComponent(req.body.room_name));
 				});
       }
     });
@@ -70,8 +71,8 @@ app.post('/create', utils.restrict, function(req, res){
   }
 });
 
-app.get('/room/:id', utils.restrict, function(req,res){
-  client.hgetall('rooms',  function(err, rooms){
+app.get('/rooms/:id', utils.restrict, function(req,res){
+  client.hgetall('rooms', function(err, rooms){
 		if(rooms[decodeURIComponent(req.params.id)]){
     	client.smembers('users:'+req.params.id, function(error, user_list){
     		res.locals({'rooms': rooms,'room_name':decodeURIComponent(req.params.id) ,'room_id':req.params.id,'username': req.getAuthDetails().user.username,'user_list':user_list});
