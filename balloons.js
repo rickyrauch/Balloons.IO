@@ -88,15 +88,23 @@ app.get('/rooms/:id', utils.restrict, function(req,res){
  * Socket.io
  */
 
+
 var io = sio.listen(app);
 
-io.sockets.on('connection', function (socket) {
+io.configure(function(){
+	io.set('store',new sio.RedisStore);
+	io.enable('browser client minification');
+	io.enable('browser client gzip');
+});
 
+
+io.sockets.on('connection', function (socket) {
 	socket.on('set nickname',function(data){
 	   socket.join(data.room_id);
 	   socket.set('nickname', data.nickname, function () {
 	   	socket.set('room_id', data.room_id, function () {
 				client.sadd('users:'+data.room_id, data.nickname, function(err, added){
+					if(added)
 		 	 			io.sockets.in(data.room_id).emit('new user',{'nickname':data.nickname});
 				});
 			});
@@ -116,7 +124,7 @@ io.sockets.on('connection', function (socket) {
 	socket.on('disconnect',function(){
 		socket.get('nickname',function(err,nickname){
 			socket.get('room_id',function(e,room_id){
-				client.srem('users:'+room_id,nickname);
+				client.srem('users:'+room_id, nickname);
 		  		io.sockets.in(room_id).emit('user leave',{'nickname': nickname});		
 			});
 		});
