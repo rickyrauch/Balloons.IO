@@ -1,13 +1,13 @@
 {
 		"auth" : {
 	  		"twitter" : { 
-       			"consumerkey" : "6QqZAgEMJErJTMbIfaTBSA"
-      		, "consumersecret" : "vyQbhJbrUuouq1XVxqwOdLELL99NaMzdnwjhZqwf08" 
+       			"consumerkey" : "yourConsumerKey"
+      		, "consumersecret" : "yourSecretKey" 
       		, "callback" : "http://local.host:3000/auth/twitter_callback" 
     		}
 		}
 	,	"theme" : {
-		"name" : "default"
+				"name" : "default"
 		}
 	,	"session" : {
 				"secret" : "vivaperon"
