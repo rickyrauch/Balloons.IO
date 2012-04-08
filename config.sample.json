@@ -1,0 +1,15 @@
+{
+	"auth": {
+		"twitter": {
+			"consumerkey" : "yourConsumerKey",
+			"consumersecret" : "yourSecretKey",
+			"callback" : "http://local.host:3000/auth/twitter_callback"
+		}
+	},
+	"theme": {
+		"name" : "default"
+	},
+	"session" : {
+		"secret" : "vivaperon"
+	}
+}
