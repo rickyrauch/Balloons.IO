@@ -1,8 +1,8 @@
 {
 		"auth" : {
 	  		"twitter" : { 
-       			"consumerkey" : "6QqZAgEMJErJTMbIfaTBSA"
-      		, "consumersecret" : "vyQbhJbrUuouq1XVxqwOdLELL99NaMzdnwjhZqwf08" 
+       		  "consumerkey" : "8nHtSMzYi1D3KWUjCOBLZQ"
+      		, "consumersecret" : "q1ujN5juNOeMYc5rdQ4nAjbbSajAicmIPwBG3eUe84" 
       		, "callback" : "http://local.host:3000/auth/twitter_callback" 
     		}
 		}
