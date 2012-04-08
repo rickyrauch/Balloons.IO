@@ -2,30 +2,14 @@
 	header
 		a.logout(href="/logout") Logout
 
-
-		div.dropdown-room
-			span.dropdown
-			a(href="#").current= room_name
-			each room,index in rooms	
-				-if(room != room_id){
-					li
-						a(href="/rooms/"+room)= index
-				-}
+		!=partial('rooms_dropdown', {rooms: rooms});
 		
 		div.logged-box
 			img.avatar(src=" http://img.tweetimag.es/i/"+username)
 			span.logged-as Logged in as:
 			span.username= username
 
-	ul.chat-list
-		-user_list.forEach(function(username){
-			li
-				.status-bar
-					span.status.available
-				.user-space
-					img.avatar(src=" http://img.tweetimag.es/i/"+username)
-					span.username= username
-		-});
+	!=partial('chat_list', {user_list: user_list});
 
 	div#main.content(role="main")
 		div.chats
@@ -70,4 +54,3 @@ p
 span#room_id(style="display:none")= room_name
 span#username(style="display:none")= username
 script(src="/socket.io/socket.io.js")
-

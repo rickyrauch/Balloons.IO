@@ -1,0 +1,8 @@
+div.dropdown-room
+	span.dropdown
+	a(href="#").current= room_name
+	each room,index in rooms	
+		-if(room != room_id){
+			li
+				a(href="/rooms/"+room)= index
+		-}

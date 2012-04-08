@@ -7,7 +7,7 @@
     		}
 		}
 	,	"theme" : {
-		"name" : "default"
+				"name" : "default"
 		}
 	,	"session" : {
 				"secret" : "vivaperon"

@@ -33,4 +33,6 @@ Log in with your account https://dev.twitter.com/.
 Create a new application (https://dev.twitter.com/apps/new) and then copy 
 the keys that twitter gives you in the file config.json
 
+Point your browser to `http://local.host:3000`
+
 Enjoy!
