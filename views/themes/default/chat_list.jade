@@ -1,10 +1,10 @@
-ul.chat-list
-	-user_list.forEach(function(username){
-		li
-			.status-bar
-				span.status.available
-			.user-space
-				img.avatar(src=" http://img.tweetimag.es/i/"+username)
-				span.username= username
-	-});
-
+.online
+	h4.inner-padding ONLINE
+	.people
+		-user_list.forEach(function(username){
+			a.available(href='#')
+				b
+				= username
+		-});
+	// .people 
+// .online 

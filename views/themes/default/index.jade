@@ -1,16 +1,43 @@
-div.white-box.login-box
+body.home-page
+	.homepage-container
+		.slideshow
+			#slideshow
+				.slide
+					h2 Realtime & Free
+				.slide
+					h2 Open or Private
+				.slide
+					h2 Collaborative Chat
+				#nav
+			// #slideshow
+			
+		.login-box
+			.inner-padding
+				img.logo(src='img/logo.png', width='217', height='239', alt='Logo')
+				h3 Free & ready to go web chat room.
+				p	
+					strong \Ballons.IO 
+					\is build with the help of node.JS, Socket\.IO and Redis.
+				div
+					a#twitbutt.sign-in-twitter(href="#") sign in
+		// #login-box 
+	// .homepage-container
 	
-	h1.logo Ballons.IO
-	hr	
-	p	
-		strong \Ballons.IO 
-		\is a web chat server and client ready to use. It's build with the help of node.JS, Socket\.IO and Redis.
+	footer
+		| Balloons.IO is an
+		a(href='https://github.com/gravityonmars/Balloons.IO') Open Source project
+		| .
 
-	p
-		\It's developed by 
-		a(href="http://gravityonmars.com", target="_blank") Gravity On Mars
-		\ for free use. You can use it on your projects without asking.
-
-	h4 To start using it, please sign in:
-	div
-		a#twitbutt.sign-in-twitter(href="#") sign in
+	// JavaScript at the bottom for fast page loading 
+	script(src='http://malsup.github.com/jquery.cycle.all.js')
+	script(type='text/javascript')
+		$(function() {
+			$('#slideshow').cycle({
+					fx:     'fade',
+					delay: '4',
+					speed:  'slow',
+					timeout: 3000,
+					pager:  '#nav',
+					slideExpr: 'div.slide'
+			});
+		});

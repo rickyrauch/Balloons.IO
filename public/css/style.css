@@ -1,259 +1,663 @@
-/* HTML5 ✰ Boilerplate
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ *
+ * Detailed information about this CSS: h5bp.com/css
+ *
  * ==|== normalize ==========================================================
  */
+
+
+/* =============================================================================
+   HTML5 display definitions
+   ========================================================================== */
 
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
 audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
 audio:not([controls]) { display: none; }
 [hidden] { display: none; }
 
-html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-body { margin: 0; font-size: 13px; line-height: 1.231; }
-body, button, input, select, textarea { font-family: sans-serif; color: #222; }
 
-::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
-::selection { background: #fe57a1; color: #fff; text-shadow: none; }
+/* =============================================================================
+   Base
+   ========================================================================== */
+
+/*
+ * 1. Correct text resizing oddly in IE6/7 when body font-size is set using em units
+ * 2. Prevent iOS text size adjust on device orientation change, without disabling user zoom: h5bp.com/g
+ */
+
+html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+
+html, button, input, select, textarea { font-family: sans-serif; color: #222; }
+
+body { margin: 0; font-size: 1em; line-height: 1.4; }
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection declarations have to be separate
+ * Also: hot pink! (or customize the background color to match your design)
+ */
+
+::-moz-selection { background: #f4e489; color: #333; text-shadow: none; }
+::selection { background: #f4e489; color: #333; text-shadow: none; }
+
+
+/* =============================================================================
+   Links
+   ========================================================================== */
 
 a { color: #00e; }
-a:visited { color: #551a8b; }
 a:hover { color: #06e; }
 a:focus { outline: thin dotted; }
+
+/* Improve readability when focused and hovered in all browsers: h5bp.com/h */
 a:hover, a:active { outline: 0; }
 
+
+/* =============================================================================
+   Typography
+   ========================================================================== */
+
 abbr[title] { border-bottom: 1px dotted; }
+
 b, strong { font-weight: bold; }
+
 blockquote { margin: 1em 40px; }
+
 dfn { font-style: italic; }
+
 hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+
 ins { background: #ff9; color: #000; text-decoration: none; }
+
 mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
-pre, code, kbd, samp { font-family: monospace, monospace; _font-family: 'courier new', monospace; font-size: 1em; }
+
+/* Redeclare monospace font family: h5bp.com/j */
+pre, code, kbd, samp { font-family: monospace, serif; _font-family: 'courier new', monospace; font-size: 1em; }
+
+/* Improve readability of pre-formatted text in all browsers */
 pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
+
 q { quotes: none; }
 q:before, q:after { content: ""; content: none; }
+
 small { font-size: 85%; }
+
+/* Position subscript and superscript content without affecting line-height: h5bp.com/k */
 sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
 sup { top: -0.5em; }
 sub { bottom: -0.25em; }
+
+
+/* =============================================================================
+   Lists
+   ========================================================================== */
+
 ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
 dd { margin: 0 0 0 40px; }
 nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
+
+
+/* =============================================================================
+   Embedded content
+   ========================================================================== */
+
+/*
+ * 1. Improve image quality when scaled in IE7: h5bp.com/d
+ * 2. Remove the gap between images and borders on image containers: h5bp.com/i/440
+ */
+
 img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+
+/*
+ * Correct overflow not hidden in IE9
+ */
+
 svg:not(:root) { overflow: hidden; }
+
+
+/* =============================================================================
+   Figures
+   ========================================================================== */
+
 figure { margin: 0; }
+
+
+/* =============================================================================
+   Forms
+   ========================================================================== */
 
 form { margin: 0; }
 fieldset { border: 0; margin: 0; padding: 0; }
+
+/* Indicate that 'label' will shift focus to the associated form element */
 label { cursor: pointer; }
-legend { border: 0; *margin-left: -7px; padding: 0; }
+
+/*
+ * 1. Correct color not inheriting in IE6/7/8/9
+ * 2. Correct alignment displayed oddly in IE6/7
+ */
+
+legend { border: 0; *margin-left: -7px; padding: 0; white-space: normal; }
+
+/*
+ * 1. Correct font-size not inheriting in all browsers
+ * 2. Remove margins in FF3/4 S5 Chrome
+ * 3. Define consistent vertical alignment display in all browsers
+ */
+
 button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
-button, input { line-height: normal; *overflow: visible; }
-table button, table input { *overflow: auto; }
-button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; }
-input[type="checkbox"], input[type="radio"] { box-sizing: border-box; }
+
+/*
+ * 1. Define line-height as normal to match FF3/4 (set using !important in the UA stylesheet)
+ */
+
+button, input { line-height: normal; }
+
+/*
+ * 1. Display hand cursor for clickable form elements
+ * 2. Allow styling of clickable form elements in iOS
+ * 3. Correct inner spacing displayed oddly in IE7 (doesn't effect IE6)
+ */
+
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; *overflow: visible; }
+
+/*
+ * Re-set default cursor for disabled elements
+ */
+
+button[disabled], input[disabled] { cursor: default; }
+
+/*
+ * Consistent box sizing and appearance
+ */
+
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; padding: 0; *width: 13px; *height: 13px; }
 input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
-input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+/*
+ * Remove inner padding and border in FF3/4: h5bp.com/l
+ */
+
 button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+
+/*
+ * 1. Remove default vertical scrollbar in IE6/7/8/9
+ * 2. Allow only vertical resizing
+ */
+
 textarea { overflow: auto; vertical-align: top; resize: vertical; }
+
+/* Colors for form validity */
 input:valid, textarea:valid {  }
 input:invalid, textarea:invalid { background-color: #f0dddd; }
+
+
+/* =============================================================================
+   Tables
+   ========================================================================== */
 
 table { border-collapse: collapse; border-spacing: 0; }
 td { vertical-align: top; }
 
 
-/* ==|== primary styles =====================================================
-   Author: Ricardo Rauch
+/* =============================================================================
+   Chrome Frame Prompt
    ========================================================================== */
 
-body{ text-shadow: 0 1px 0 rgba(255,255,255,1); background: url('../img/bg.png')}
-p{line-height: 22px; color: #666}
+.chromeframe { margin: 0.2em 0; background: #ccc; color: black; padding: 0.2em 0; }
 
-a{font-weight: bold;}
-a:visited { color: inherit}
-a:hover { color: #06e; }
-a:focus { outline: thin dotted; }
-a:hover, a:active { outline: 0; }
 
-input[type="submit"]{
+/* ==|== primary styles =====================================================
+   Author:
+   ========================================================================== */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+	  -webkit-font-smoothing: antialiased;
+	overflow: hidden;
+}
+
+body{position: relative; font-size: 78%; }
+a{ text-decoration: none; font-weight: bold; color: white}
+
+input.text{border: 1px solid #ccc; border-radius: 4px; padding: .6em; border: 1px solid #666; box-shadow: 0 1px 2px rgba(0,0,0,.6) inset; width: 200px}
+input[type=text].text:focus,
+input[type=search].text:focus,
+input[type=password].text:focus, textarea:focus{
+	border: 1px solid #488ef5;
+	outline: none;
+	-webkit-box-shadow: inset 0 1px 2px #ddd, 0px 0 5px #1a6dde;
+	-moz-box-shadow: 0 0 5px #1a6dde;
+	box-shadow: inset 0 1px 2px #ddd, 0px 0 5px #1a6dde;
+}
+
+.wrap{ 
+	height: auto !important; /* ie6 ignores !important, so this will be overridden below */
+	min-height: 100%; /* ie6 ignores min-height completely */
+	height: 100%;
+	overflow-y: scroll;
+	width: auto;
+	max-width: 100%;
+}
+
+a b{background: red; height: 8px;  width: 8px; border: 1px solid black; margin-bottom: -1px; margin-right: 6px; border-radius: 100px; display: inline-block;}
+a.available b{background: -webkit-radial-gradient(50% top, circle,  #B5D8A6, #58854B);}
+a.busy b{background: -webkit-radial-gradient(50% top, circle,  #DCCACC, #8C4F55);}
+a.away b{background: -webkit-radial-gradient(50% top, circle,  #DCDBCA, #908C51);}
+
+.color-line{
+	width: 100%;
+	background: #f23c24;
+	background-image: -webkit-gradient(linear, 0 0, 458 0, from(#4d6fbc), color-stop(0.004, #4d6fbc), color-stop(0.004, #4f6ebc), color-stop(0.01, #4f6eba), color-stop(0.01, #516dba), color-stop(0.019, #536bb5), color-stop(0.028, #5769b4), color-stop(0.03, #576ab2), color-stop(0.045, #5c64ae), color-stop(0.045, #5f63ac), color-stop(0.056, #6261a7), color-stop(0.056, #6560a5), color-stop(0.063, #665ea4), color-stop(0.063, #685da2), color-stop(0.067, #695c9f), color-stop(0.074, #70599e), color-stop(0.078, #70589b), color-stop(0.085, #735696), color-stop(0.087, #765496), color-stop(0.111, #864888), color-stop(0.12, #8a4682), color-stop(0.133, #944079), color-stop(0.137, #964077), color-stop(0.146, #9d3a70), color-stop(0.148, #9e3a70), color-stop(0.159, #a63767), color-stop(0.165, #aa3565), color-stop(0.168, #ad3362), color-stop(0.172, #af3361), color-stop(0.183, #b62f59), color-stop(0.185, #b82d56), color-stop(0.218, #cb2843), color-stop(0.246, #db2536), color-stop(0.406, #f03026), color-stop(0.46, #f33824), color-stop(0.462, #f13924), color-stop(0.515, #f24124), color-stop(0.604, #f35322), color-stop(0.604, #f1541f), color-stop(0.615, #f25520), color-stop(0.615, #f2571e), color-stop(0.622, #f2571e), color-stop(0.622, #f1591f), color-stop(0.641, #f25b20), color-stop(0.641, #f15c1d), color-stop(0.655, #f35e1f), color-stop(0.655, #f15f1c), color-stop(0.7, #f36a18), color-stop(0.703, #f26c19), color-stop(0.762, #f27714), color-stop(0.762, #f27910), color-stop(0.772, #f37a12), color-stop(0.772, #f27b14), color-stop(0.79, #f27d10), color-stop(0.79, #f2800d), color-stop(0.803, #f3810f), color-stop(0.803, #f2830b), color-stop(0.814, #f3840d), color-stop(0.814, #f28506), color-stop(0.855, #f48b05), color-stop(0.855, #f28c04), color-stop(0.888, #f39200), color-stop(0.914, #f49700), color-stop(0.914, #f29800), color-stop(0.93, #f39900), color-stop(0.93, #f39b00), color-stop(0.951, #f39f00), color-stop(0.995, #f4a300), color-stop(0.995, #f2a400), to(#f2a400));
+/*	background-image: -webkit-linear-gradient(360deg, #4d6fbc, #4d6fbc 0.4%, #4f6ebc 0.4%, #4f6eba 1%, #516dba 1%, #536bb5 1.9%, #5769b4 2.8%, #576ab2 3%, #5c64ae 4.5%, #5f63ac 4.5%, #6261a7 5.6%, #6560a5 5.6%, #665ea4 6.3%, #685da2 6.3%, #695c9f 6.7%, #70599e 7.4%, #70589b 7.8%, #735696 8.5%, #765496 8.7%, #864888 11.1%, #8a4682 12%, #944079 13.3%, #964077 13.7%, #9d3a70 14.6%, #9e3a70 14.8%, #a63767 15.9%, #aa3565 16.5%, #ad3362 16.8%, #af3361 17.2%, #b62f59 18.3%, #b82d56 18.5%, #cb2843 21.8%, #db2536 24.6%, #f03026 40.6%, #f33824 46%, #f13924 46.2%, #f24124 51.5%, #f35322 60.4%, #f1541f 60.4%, #f25520 61.5%, #f2571e 61.5%, #f2571e 62.2%, #f1591f 62.2%, #f25b20 64.1%, #f15c1d 64.1%, #f35e1f 65.5%, #f15f1c 65.5%, #f36a18 70%, #f26c19 70.3%, #f27714 76.2%, #f27910 76.2%, #f37a12 77.2%, #f27b14 77.2%, #f27d10 79%, #f2800d 79%, #f3810f 80.3%, #f2830b 80.3%, #f3840d 81.4%, #f28506 81.4%, #f48b05 85.5%, #f28c04 85.5%, #f39200 88.8%, #f49700 91.4%, #f29800 91.4%, #f39900 93%, #f39b00 93%, #f39f00 95.1%, #f4a300 99.5%, #f2a400 99.5%, #f2a400);*/
+/*	background-image: -webkit-linear-gradient(360deg,  #db2536 24.6%, #f03026 40.6%, #f33824 46%, #f13924 46.2%, #f24124 51.5%, #f35322 60.4%, #f1541f 60.4%, #f25520 61.5%, #f2571e 61.5%, #f2571e 62.2%, #f1591f 62.2%, #f25b20 64.1%, #f15c1d 64.1%, #f35e1f 65.5%, #f15f1c 65.5%, #f36a18 70%, #f26c19 70.3%, #f27714 76.2%, #f27910 76.2%, #f37a12 77.2%, #f27b14 77.2%, #f27d10 79%, #f2800d 79%, #f3810f 80.3%, #f2830b 80.3%, #f3840d 81.4%, #f28506 81.4%, #f48b05 85.5%, #f28c04 85.5%, #f39200 88.8%, #f49700 91.4%, #f29800 91.4%, #f39900 93%, #f39b00 93%, #f39f00 95.1%, #f4a300 99.5%, #f2a400 99.5%, #f2a400);*/
+	background-image: -webkit-linear-gradient(360deg, #4d6fbc, #e15389);
+	background-image: -moz-linear-gradient(360deg, #4d6fbc, #4d6fbc 0.4%, #4f6ebc 0.4%, #4f6eba 1%, #516dba 1%, #536bb5 1.9%, #5769b4 2.8%, #576ab2 3%, #5c64ae 4.5%, #5f63ac 4.5%, #6261a7 5.6%, #6560a5 5.6%, #665ea4 6.3%, #685da2 6.3%, #695c9f 6.7%, #70599e 7.4%, #70589b 7.8%, #735696 8.5%, #765496 8.7%, #864888 11.1%, #8a4682 12%, #944079 13.3%, #964077 13.7%, #9d3a70 14.6%, #9e3a70 14.8%, #a63767 15.9%, #aa3565 16.5%, #ad3362 16.8%, #af3361 17.2%, #b62f59 18.3%, #b82d56 18.5%, #cb2843 21.8%, #db2536 24.6%, #f03026 40.6%, #f33824 46%, #f13924 46.2%, #f24124 51.5%, #f35322 60.4%, #f1541f 60.4%, #f25520 61.5%, #f2571e 61.5%, #f2571e 62.2%, #f1591f 62.2%, #f25b20 64.1%, #f15c1d 64.1%, #f35e1f 65.5%, #f15f1c 65.5%, #f36a18 70%, #f26c19 70.3%, #f27714 76.2%, #f27910 76.2%, #f37a12 77.2%, #f27b14 77.2%, #f27d10 79%, #f2800d 79%, #f3810f 80.3%, #f2830b 80.3%, #f3840d 81.4%, #f28506 81.4%, #f48b05 85.5%, #f28c04 85.5%, #f39200 88.8%, #f49700 91.4%, #f29800 91.4%, #f39900 93%, #f39b00 93%, #f39f00 95.1%, #f4a300 99.5%, #f2a400 99.5%, #f2a400);
+	background-image: -o-linear-gradient(360deg, #4d6fbc, #4d6fbc 0.4%, #4f6ebc 0.4%, #4f6eba 1%, #516dba 1%, #536bb5 1.9%, #5769b4 2.8%, #576ab2 3%, #5c64ae 4.5%, #5f63ac 4.5%, #6261a7 5.6%, #6560a5 5.6%, #665ea4 6.3%, #685da2 6.3%, #695c9f 6.7%, #70599e 7.4%, #70589b 7.8%, #735696 8.5%, #765496 8.7%, #864888 11.1%, #8a4682 12%, #944079 13.3%, #964077 13.7%, #9d3a70 14.6%, #9e3a70 14.8%, #a63767 15.9%, #aa3565 16.5%, #ad3362 16.8%, #af3361 17.2%, #b62f59 18.3%, #b82d56 18.5%, #cb2843 21.8%, #db2536 24.6%, #f03026 40.6%, #f33824 46%, #f13924 46.2%, #f24124 51.5%, #f35322 60.4%, #f1541f 60.4%, #f25520 61.5%, #f2571e 61.5%, #f2571e 62.2%, #f1591f 62.2%, #f25b20 64.1%, #f15c1d 64.1%, #f35e1f 65.5%, #f15f1c 65.5%, #f36a18 70%, #f26c19 70.3%, #f27714 76.2%, #f27910 76.2%, #f37a12 77.2%, #f27b14 77.2%, #f27d10 79%, #f2800d 79%, #f3810f 80.3%, #f2830b 80.3%, #f3840d 81.4%, #f28506 81.4%, #f48b05 85.5%, #f28c04 85.5%, #f39200 88.8%, #f49700 91.4%, #f29800 91.4%, #f39900 93%, #f39b00 93%, #f39f00 95.1%, #f4a300 99.5%, #f2a400 99.5%, #f2a400);
+	height: 1px;
+	border-top: 1px solid black;
+	display: block;
+	top: 0;
+	z-index: 10000;
+}
+header{
+	background-image: -webkit-gradient(linear, 0 0, 0 34, color-stop(0.058, #555), to(#242424));
+	background-image: -webkit-linear-gradient(#555 5.8%, #242424);
+	background-image: -moz-linear-gradient(#555 5.8%, #242424);
+	background-image: -o-linear-gradient(#555 5.8%, #242424);
+	padding: .9em;
+	z-index: 1000;
+	position: absolute;
+	right: 0;
+	left: 0;
+	box-shadow: 0 1px 1px black, 0 1px 0 black inset;
+	border-bottom: 1px solid black;
+	font-size: .9em;
+}
+
+header a:hover{color: #ccc}
+
+header .button-circle{background: rgba(0,0,0,.2); box-shadow: 0 1px 0 rgba(255,255,255,.1); float: left; padding: 4px; border-radius: 100px; width: 22px; height: 22px; margin-right: .8em}
+header .button-circle span, header .button-circle.lock span{ height: 22px; display: block; border-radius: 100px;
+	background-image: -webkit-linear-gradient(#f1f1f1,  #ccc);
+	background-image: -moz-linear-gradient(#f1f1f1,  #ccc);
+	background-image: -o-linear-gradient(#f1f1f1,  #ccc);
+	box-shadow: 0 1px 1px rgba(0,0,0,.8);
+}
+
+header .button-circle span i{background:  url('../img/icon-invite.png') center no-repeat; width: 16px; margin: 2px 3px; float: left; height: 16px; display: block;}
+
+header .button-circle.lock.active span{ 
+	background-image: -webkit-linear-gradient(#fffbe6,  #ffee99);
+	background-image: -moz-linear-gradient(#f1f1f1,  #ccc);
+	background-image: -o-linear-gradient(#f1f1f1,  #ccc);
+}
+
+
+header .button-circle.lock span i{background:  url('../img/icon-unlocked.png') center no-repeat; }
+header .button-circle.lock.active span i{background:  url('../img/icon-locked.png') center no-repeat; }
+
+.dropdown {position: relative}
+.dropdown .selected{border: 1px solid #141617; padding: 6px 30px 6px 10px; display: block; text-transform: uppercase; box-shadow: 0 1px 0 rgba(255,255,255,.1) inset, 0 1px 0 rgba(255,255,255,.1); border-radius: 4px}
+.dropdown .selected:hover{
+	
+}
+.dropdown .selected.active{border: 1px solid rgba(255,255,255,.6); box-shadow: 0 0 4px rgba(255,255,255,.2)}
+.dropdown .dropdown-options{
+	background-image: -webkit-linear-gradient(#f1f1f1,  #ccc);
+	background-image: -moz-linear-gradient(#f1f1f1,  #ccc);
+	background-image: -o-linear-gradient(#f1f1f1,  #ccc);
+	border-radius: 4px; position: absolute; display: none;
+	top: 36px;
+	box-shadow: 0 0px 2px black;
+}
+.dropdown .dropdown-options .list{
+	overflow: scroll;
+	max-height: 300px;
+}
+
+.dropdown .dropdown-options input{border-radius: 4px; border: 1px solid #ccc; margin: 4px; padding: 8px 8px; width: 154px}
+.dropdown .dropdown-options a.current{background: url('../img/icon-selected.png') right center no-repeat}
+.dropdown .dropdown-options a:hover{background-color: white;}
+
+.dropdown .dropdown-options .list a.option:first-child, .dropdown .dropdown-options a.option.create-room{
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.dropdown .dropdown-options a.option:last-child{
+	-webkit-border-bottom-right-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+.dropdown .dropdown-options a.option.create-room{
+	background-image: -webkit-linear-gradient(#f1f1f1,  #ccc);
+	background-image: -moz-linear-gradient(#f1f1f1,  #ccc);
+	background-image: -o-linear-gradient(#f1f1f1,  #ccc);
+}
+.dropdown.dropdown-room {float: left; margin-right: 2.4em}
+.dropdown.dropdown-room .dropdown-options{width: 180px; }
+.dropdown.dropdown-room .dropdown-options a.current{background-position: 150px center}
+.dropdown.dropdown-status .dropdown-options a.current{background-position: 96px center}
+.dropdown.dropdown-status .dropdown-options{width: 120px; }
+
+.dropdown .dropdown-options .triangle{
+	position: absolute; top: -5px; left: 48%; display: block;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #f1f1f1;
+}
+.dropdown .dropdown-options a{display: block;	color: #333; padding: 1em 1em; border-bottom: 1px solid #ccc; box-shadow: 0 1px 0 rgba(255,255,255,.4)}
+.dropdown .dropdown-options a:last-child{border-bottom: 0; box-shadow: none}
+
+.dropdown {position: relative}
+.dropdown i{
+	position: absolute;
+	top: 8px;
+	right: 10px;
+	width: 12px;
+	height: 12px;
+	background:  url('../img/icon-dropdown.png') right center no-repeat;
+	display: block;
+	z-index: 1000;
+}
+
+.dropdown.dropdown-status{float: right; }
+.dropdown.dropdown-room{
+	background-image: -webkit-linear-gradient(#444 , #242424);
+	background-image: -moz-linear-gradient(#555 5.8%, #242424);
+	background-image: -o-linear-gradient(#555 5.8%, #242424);
+	float: left; 
+	width: 180px;
+}
+
+sidebar{width: 200px; height: auto; max-height: 100%; position: absolute; color: #f1f1f1; top: 4em; bottom: 0; font-size: .9em; border-right: 1px solid black; z-index: 400; background: #222 url('../img/bg-sidebar.png')}
+sidebar h3{
+	font-size: 1em;
+	text-transform: uppercase;
+	padding: .6em 1em;
+	background-image: -webkit-gradient(linear, 0 0, 0 23, from(#7e7e7e), color-stop(0.086, #616161), to(#3a3a3a));
+	background-image: -webkit-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
+	background-image: -moz-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
+	background-image: -o-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
+	color: white;
+	text-shadow: 0 1px 0 black;
+	margin-top: 0;
+}
+sidebar h4{text-transform: uppercase; color: #555; font-size: 1em; margin-top: 2em}
+
+sidebar a{color: white;}
+sidebar h4, sidebar div.online .people a{padding: 0 1em}
+sidebar div.online {overflow: scroll; height: 100%}
+sidebar div.files {height: 18%;  display: none; }
+/*sidebar div.online .people, sidebar div.files .files-container{  overflow-y: scroll; height: 100%}*/
+sidebar div.online .people a{display: block; padding: 1em;  border-bottom: 1px solid rgba(255,255,255,.04)}
+sidebar div.online .people a:hover{
+	background-image: -webkit-linear-gradient(#f1f1f1,  #ccc);
+	background-image: -moz-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
+	background-image: -o-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
+	color: black;
+	box-shadow: none;
+	border-color: transparent;
+}
+sidebar div.online{margin-bottom: 3em; }
+
+sidebar .files .files-container{padding: 1em}
+sidebar .files a {display: block; margin-bottom: 1.4em}
+sidebar .files a span{
+	background: white; margin-right: .8em; border-radius: 3px; float: left; margin-top: -4px; display: inline-block;
+	background-image: -webkit-linear-gradient(#f1f1f1,  #ccc);
+	background-image: -moz-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
+	background-image: -o-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
+}
+
+sidebar .files  a i{ margin: 4px; display: block; width: 12px; height: 12px}
+sidebar .files  a.picture i{background: url('../img/icons.png') no-repeat 0 1px;}
+sidebar .files  a.file i{background: url('../img/icons.png') no-repeat 0 -59px;}
+
+.content{position: absolute; bottom: 0; right: 0; top: 4.4em;  left: 201px;   }
+.content .chat{ z-index: 100; position: absolute; top: 0; left: 0; right: 0; bottom: 3em; overflow-y: scroll;  }
+.content .chat .notice{background: #fcfde6; font-size: .9em; font-style: italic; color: #666; padding: .8em 7em}
+.content .chat .chat-box{text-shadow: 0 1px 0 white; position: relative; padding:  1.4em 2em; display: block; border-bottom: 1px solid #eee;padding-left: 6.4em}
+.content .chat .chat-box:nth-child(2n){background-color: #f1f1f1}
+.content .chat .chat-box h5{margin-top: 0; font-size: 1em; margin-bottom: 1em}
+.content .chat .chat-box h5 .date{float: right; font-size: 0.8em; color: rgba(0,0,0,.6); font-weight: normal; font-style: italic;}
+.content .chat .chat-box .avatar{position: absolute; left: 1.4em; top: 1.4em; border-radius: 4px}
+.content .chat .chat-box p:last-child{margin-bottom: 0}
+.content .chat-input{ overflow: hidden; z-index: 500; bottom: 0; position: absolute; right: 0; left: 0;
+	border-top: 1px solid #ccc;
+  background-image: -webkit-gradient(linear, 0 0, 0 45, color-stop(0.044, #fdfdfd), to(#dfe2e9));
+  background-image: -webkit-linear-gradient(#eee 4.4%, #ccc);
+  background-image: -moz-linear-gradient(#fdfdfd 4.4%, #dfe2e9);
+  background-image: -o-linear-gradient(#fdfdfd 4.4%, #dfe2e9);	
+}
+.content .chat-input input.text{height: auto; max-height: 1.2em;  border-radius: 4px; width: 95%; padding: 1%; display: block; margin: 1% 1.5%}
+
+
+.modal-invite{width: 500px}
+.modal-content{padding: .5em 16px; overflow: hidden;}
+.modal-content p {line-height: 2em}
+.tweet-user{float: left; margin-bottom: 1em}
+.tweet-user input{border: none; border-bottom: 1px dashed #333; opacity: .5; width: 189px; padding: 1em 0 1em 20px; margin-right: 50px; background: url('../img/icon-twitter.png') left center no-repeat}
+.tweet-user input.error{border-bottom: 1px solid red; color: red}
+.tweet-user:nth-child(2n+1) input{margin-right: 0;}
+.tweet-user input:focus{opacity: 1; outline: none}
+.modal h2{
+	border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-topright: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom: 1px solid #b4b8c2;
+  background-image: -webkit-linear-gradient(#fdfdfd 4.4%, #dfe2e9);
+  background-image: -moz-linear-gradient(#fdfdfd 4.4%, #dfe2e9);
+  background-image: -o-linear-gradient(#fdfdfd 4.4%, #dfe2e9);
+  font-weight: bold;
+  padding: 16px;
+	margin: 0;
+  color: #606878;
+  text-shadow: 0 1px 0 white;
+  text-align: center;
+  position: relative; 
+	font-size: 1.2em;
+}
+.modal-footer{padding: 1.4em 2em; text-align: center; background: #eee; border-top: 1px solid #ccc; display: block; color: #333; 
+	-webkit-border-bottom-right-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;	
+}
+
+.fancybox-close{top: 16px; right: 16px; border: 1px solid #333; opacity: .3; background: url('../img/icon-close.png') center no-repeat; width: 20px; height: 20px; border-radius: 4px; }
+.fancybox-close:hover{opacity: .5}
+
+.inviting-people{background: url('../img/loading.gif') center left no-repeat; margin: auto; width: 200px;font-style: italic;}
+
+.button{
 	border: 1px solid #999;
-	color: #666;
+	color: #333;
+	display: inline-block;
 	box-shadow: 0 1px 2px rgba(0,0,0,.3);
-	border-radius: 5px;
-	font-weight: bold;
-	font-size: 12px;
-	padding: 6px 10px;
-	text-shadow: 0 1px 0 white;
-	background-image: -webkit-gradient(linear, 0 0, 0 26, color-stop(0.076, #f7f7f7), to(#d5d5d5));
 	background-image: -webkit-linear-gradient(#f7f7f7 7.6%, #d5d5d5);
 	background-image: -moz-linear-gradient(#f7f7f7 7.6%, #d5d5d5);
 	background-image: -o-linear-gradient(#f7f7f7 7.6%, #d5d5d5);
-}
-
-header{
-	background-image: -webkit-gradient(linear, 0 0, 0 48, color-stop(0.041, #4f545a), color-stop(0.5, #31363c));
-	background-image: -webkit-linear-gradient(#4f545a 4.1%, #31363c 50%);
-	background-image: -moz-linear-gradient(#4f545a 4.1%, #31363c 50%);
-	background-image: -o-linear-gradient(#4f545a 4.1%, #31363c 50%);
-	position: fixed;
-	width: 100%;
-	box-shadow: 0 2px 2px black;
-	z-index: 1000;
-	height: 42px;
-}
-
-header .dropdown-room{
-	text-shadow: 0 1px 1px black;
 	font-weight: bold;
-	background-image: -webkit-gradient(linear, 0 0, 0 27, color-stop(0.074, #555a60), to(#3c4147));
-	background-image: -webkit-linear-gradient(#555a60 7.4%, #3c4147);
-	background-image: -moz-linear-gradient(#555a60 7.4%, #3c4147);
-	background-image: -o-linear-gradient(#555a60 7.4%, #3c4147);
-	font-size: 14px; color: white; border: 1px solid #2C3037; width: 233px; float: left; list-style: none; margin: 6px; border-radius: 5px}
-
-.dropdown-room .dropdown{display: block; float: right; width: 18px; height: 19px; background: url('../img/dropdown.png') no-repeat 94% center ;   margin: 4px 6px 0 0;}
-.dropdown-room a{display: none;  padding: 5px 5px 5px 10px; border-radius: 5px;  text-shadow: none; text-decoration: none; color: white; }
-.dropdown-room:hover {background: white; box-shadow: 0 1px 2px rgba(0,0,0,.4)}
-.dropdown-room:hover .dropdown{display: none;}
-.dropdown-room:hover a{display: block;  padding: 5px 5px 5px 10px; color: black}
-.dropdown-room:hover a:hover{
-	color: white;
-	border-radius: 4px;
-	text-shadow: 0 -1px 1px black;
-	background:  -webkit-linear-gradient(#68B6EB 7.4%, #0486DD);
-	background:  -moz-linear-gradient(#68B6EB 7.4%, #0486DD);
-	background:  -o-linear-gradient(#68B6EB 7.4%, #0486DD);
-}
-.dropdown-room a.current{display: block; }
-.dropdown-room a:last-child{border-bottom: 0; }
-
-header .logged-box{display: none;float: right; width: 180px; margin: 4px 0}
-header .logged-box .avatar{float: left; margin-right: 10px}
-header .logged-box span{color: white; text-shadow: 0 1px 0 black; display: block;}
-header .logged-box .logged-as{font-size: 11px; margin: 3px 0}
-header .logout{float: right; margin: 6px 10px 0 0; box-shadow: 0 1px 2px black; background-color: #F5CFFF; background: url('../img/icon-logout.png') center no-repeat, -webkit-linear-gradient(#F5CFFF , #CC00FF);  background: url('../img/icon-logout.png') center no-repeat, -moz-linear-gradient(#F5CFFF , #CC00FF); text-indent: -1000em; border-radius: 100px; display: block; width: 30px; height: 30px; }
-header .logout:hover{
-background: url('../img/icon-logout.png') center no-repeat, -webkit-linear-gradient(#e582ff , #CC00FF);
-background: url('../img/icon-logout.png') center no-repeat, -moz-linear-gradient(#e582ff , #CC00FF);	
-}
-header .logout:active{box-shadow: none}
-
-img.avatar{background: white; padding: 2px; border: 1px solid #ccc; box-shadow: 0 1px 2px rgba(0,0,0,.1)}
-.content .username{font-weight: bold; }
-
-ul.chat-list{overflow: scroll; padding: 0; margin: 0; list-style: none; width: 240px;  background: #EFEFEF; position: absolute; top: 40px; padding-top: 4px; bottom: 0; border-right: 1px solid rgba(0,0,0,.4); box-shadow: 1px 0 0 rgba(255,255,255,.4) }
-ul.chat-list li{font-weight: bold; color: #666; position: relative; border-bottom: 1px solid #ccc}
-ul.chat-list li:hover{background-color: #f3f3f3}
-ul.chat-list li .status-bar{background-color: rgba(0,0,0,.05); width: 24px; float: left;  position: absolute; bottom: 0; top: 0}
-ul.chat-list li img.avatar{width: 30px; height: 30px; margin-right: 4px}
-ul.chat-list li .user-space{padding: 10px; margin-left: 20px}
-ul.chat-list li .status{border: 1px solid #333; width: 10px; height: 10px;display: block; border-radius: 100px; top: 22px; position: absolute; left: 5px}
-ul.chat-list li .status.available{border: 1px solid #486D14; background-image: -webkit-linear-gradient(bottom, #90D42F, #CBFF80)}
-ul.chat-list li .status.not-available{border: 1px solid #A64343; background-image: -webkit-linear-gradient(bottom, #DA3839, #FF8081)}
-ul.chat-list li .status.idle{border: 1px solid #807244; background-image: -webkit-linear-gradient(bottom, #FBC710, #FFE99C)}
-
-.content{left: 256px; right: 10px; top: 40px; position: absolute; bottom: 0;}
-
-.content .chats{padding-top: 10px; overflow: scroll; position: absolute; bottom: 180px; top: 0; right: 0; left: 0}
-.content .chats .chat-box{margin-bottom: 10px; }
-.content .chats .chat-box .user{width: 60px; }
-.content .chats .chat-box .message-box{line-break: strict ; position: relative; display: block; margin-left: 68px; margin-bottom: 16px; background: white; 
-	background-image: -webkit-linear-gradient(#fff 7.4%, #f3f3f3);
-	background-image: -moz-linear-gradient(#fff 7.4%, #f3f3f3);
-	background-image: -o-linear-gradient(#fff 7.4%, #f3f3f3);	
-padding: 10px; border-radius: 5px; box-shadow: 0 -1px 0 white inset, 0 2px 2px rgba(0,0,0,.2);  color: #666}
-.content .chats .chat-box .message-box .username{display: block; margin-bottom: 10px}
-.content .chats .chat-box .message-box .message-text{line-height: 24px}
-.content .chats .chat-box img.avatar{width: 46px; height: 46px; float: left;}
-
-.chat-corner{
-	background: white;
-	width: 12px;
-	height: 12px;
-	-webkit-transform:rotate(134deg);
-	position: absolute;
-	left: -4px;
+	border-radius: 5px;
+	padding: 10px 20px;
 }
 
-/* Type message */
-.type-message{box-shadow: 0 0 10px black inset, 0 2px 2px rgba(0,0,0,.4); height: 120px; background: #333; bottom: 10px; right: 0; left: 0; position: absolute; background: url('../img/bg-2.png'); padding: 14px; border-radius: 5px;}
-.type-message .user{position: absolute}
-.type-message .user img{width: 50px}
-.type-message textarea{ box-shadow: 0 2px 4px rgba(0,0,0,.4) inset; border: 1px solid black; left: 80px; position: absolute; bottom: 10px; padding: 4px; top: 10px; right: 10px; border-radius: 5px}
+.button:hover{
+	color: #000;
+	background-image: -webkit-linear-gradient(#f7f7f7 7.6%, #ccc);
+	background-image: -moz-linear-gradient(#f7f7f7 7.6%, #ccc);
+	background-image: -o-linear-gradient(#f7f7f7 7.6%, #ccc);
+}
 
-.send-message{
-	background: url('../img/icon-send.png') 16px 8px no-repeat, -webkit-linear-gradient(#68B6EB 7.4%, #0486DD);
-	background: url('../img/icon-send.png') 16px 8px no-repeat, -moz-linear-gradient(#68B6EB 7.4%, #0486DD);
-	background: url('../img/icon-send.png') 16px 8px no-repeat, -o-linear-gradient(#68B6EB 7.4%, #0486DD);
-	
-	padding: 8px 20px 8px 34px;
-	border-radius: 100px;
-	position: absolute;
-	bottom: 10px;
-	font-weight: bold;
+.button:active{
+	color: #000;
+	background-image: -webkit-linear-gradient(#ccc 7.6%, #f7f7f7);
+	background-image: -moz-linear-gradient(#ccc 7.6%, #f7f7f7);
+	background-image: -o-linear-gradient(#ccc 7.6%, #f7f7f7);
+}
+
+.fancy-theme .wrap{background: url('../img/wood.jpg');}
+.fancy-theme .chat-box{background-color: #e4eaec; text-shadow: 0 1px 0 white; position: relative; margin: 1.4em; border-radius: 4px;  border-radius: 4px; padding: 1em; padding-left: 6em}
+.fancy-theme .chat{ background: url('../img/bg-double-line.png') center; left: 1em; bottom: 5em;  right: 1em; }
+.fancy-theme .chat, .fancy-theme .line-chat{ box-shadow: 0 1px 1px rgba(0,0,0,.5)}
+.fancy-theme .line-chat{bottom: 4.8em; left: 1.2em; z-index: 50; right: 1.2em; background: white; position: absolute; height: 40px; }
+.fancy-theme .line-chat.second{bottom: 4.5em; z-index: 40; left: 1.4em; right: 1.4em}
+.fancy-theme .chat-input{background: url('../img/bg-purple.png'); border: 1px solid #000; box-shadow: 0 0 0 1px rgba(255,255,255,.1) inset,  0 0 10px 2px rgba(0,0,0,.65) inset ;}
+
+img{height: auto; width: auto;}
+body.home-page{background: #f1f1f1 url('../img/bg-site.png'); position: relative; }
+body.home-page .inner-padding{padding: 2em}
+body.home-page .homepage-container {width: 824px;  padding-top: 10em; overflow: hidden; margin: auto; position: relative}
+body.home-page .homepage-container .login-box{background: white; z-index: 100000; position: absolute; right: 0; text-align: center; width: 300px; }
+body.home-page .homepage-container .login-box .logo{height: 154px; margin: auto; display: block; margin-bottom: 2em; width: auto}
+body.home-page .homepage-container .login-box p{line-height: 2em}
+.box-container{ border-radius: 4px; background: white; border: 1px solid #ccc; }
+body.home-page .homepage-container .slideshow, .homepage-container .login-box{height: 350px;  border-radius: 4px; float: left; border: 1px solid #ccc; }
+body.home-page .homepage-container .slideshow{background: white; position: relative; width: 500px; margin-right: 20px; display: inline-block; float: left;}
+body.home-page .homepage-container .slideshow .slide{background: white; text-align: center; border-radius: 4px; min-height: 350px; width: 500px}
+body.home-page .homepage-container .slideshow #nav{bottom: 0;  width: auto; max-width: 100%; z-index: 10000; left: 0; right: 0; padding: 1em; text-align: center; position: absolute}
+body.home-page .homepage-container .slideshow #nav a{background: #999; border-radius: 100px; text-indent: -1000em; display: inline-block; margin-right: 6px; width: 10px; height: 10px}
+body.home-page .homepage-container .slideshow #nav a.activeSlide{background: #333}
+body.home-page .homepage-container h2{font-weight: 100; color: #666}
+
+body.home-page .homepage-container .slideshow{
+	-webkit-animation-name: slideshow;
+ -webkit-animation-duration: 2s;
+ -webkit-animation-timing-function: ease-out;
+}
+
+
+body.home-page .select-room-container {width: 300px;  margin: auto; margin-top: 5em; text-align: center;}
+body.home-page .select-room-container .logo{width: 120px; margin-bottom: 1em}
+
+body.home-page footer {font-size: 10px; font-weight: bold; bottom: 130px; text-transform: uppercase; padding: 1em;color: #999; right: 0; left: 0; text-align: center; position: absolute; }
+body.home-page footer a{color: #666}
+
+@-webkit-keyframes slideshow {
+  from {
+    left: 800px;
+		opacity: 0;
+  }
+  to {
+    left: 0;
+		opacity: 1;
+  }
+}
+
+
+.select-room-container .room-list{border: 1px solid #ccc; border-radius: 4px; margin-bottom: 3em}
+.select-room-container .room-list a{display: block; color: #333; text-align: left; padding: .6em 1em; font-size: 12px; border-bottom: 1px solid #ccc}
+.select-room-container .room-list a:hover{
 	color: #fff;
-	left: 80px;
-	text-decoration: none;
-	text-align: center;
-	box-shadow: 0 2px 2px black;
-	text-shadow: 0 1px 0 rgba(0,0,0,.4);
+	background: url('../img/icon-select-room.png') 226px center no-repeat, -webkit-linear-gradient(#7F95F8 , #4554F3);
+	background: url('../img/icon-select-room.png') 226px center no-repeat, -moz-linear-gradient(#7F95F8 , #4554F3);
+	background: url('../img/icon-select-room.png') 226px center no-repeat, -o-linear-gradient(#7F95F8 , #4554F3);
+	border-color: #4554F3;
+	box-shadow: 0 -1px 0 #4554F3 ;
+	text-shadow: 0 -1px 1px black;
+}
+.select-room-container .room-list 3px:first-child{
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
 }
 
-.login-box h4{text-align: center;}
-.sign-in-twitter {
-	background: url('../img/twitter_signin.png') no-repeat 0 0;
-	width: 151px;
-	height: 24px;
-	display: block;
-	margin: auto;
-	text-indent: -1000em;
+.select-room-container .room-list a:last-child{
+	-webkit-border-bottom-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+.select-room-container .room-list a:first-child{box-shadow: none}
+.select-room-container .room-list a:last-child{border-bottom: 0}
+.select-room-container em{color: #666; font-weight: normal; margin-right: 6px}
+.text-grey{border: 1px solid #999; background: #ccc; width: 200px; padding: 1em; text-align: center; color: #474C4E; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,.4) inset}
+.text-grey:focus{outline: none; border-color: black}
+input::-webkit-input-placeholder, input::-moz-input-placeholder		 {color: #333; text-align: center; font-style: italic; }
+
+
+/* ==|== media queries ======================================================
+   EXAMPLE Media Query for Responsive Design.
+   This example overrides the primary ('mobile first') styles
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
 }
 
-.white-box .logo{width: 189px; height: 37px; background: url('../img/logo.png'); display: block; text-indent: -1000em}
 
-.sign-in-twitter:hover{background-position: center}
-.sign-in-twitter:active{background-position: bottom center}
 
-.white-box{margin: auto; overflow: hidden; width: 300px; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 1px 2px rgba(0,0,0,.4); margin-top: 10%}
-.white-box.room-list{width: 500px}
-.white-box .half{width: 50%; float: left;}
-.white-box input[type="text"]{width: 96%; padding: 2%; border: 1px solid #ccc; }
+/* ==|== non-semantic helper classes ========================================
+   Please define your styles before this section.
+   ========================================================================== */
 
-/* ==|== non-semantic helper classes ======================================== */
-.ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; }
+/* For image replacement */
+.ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; *line-height: 0; }
 .ir br { display: none; }
+
+/* Hide from both screenreaders and browsers: h5bp.com/u */
 .hidden { display: none !important; visibility: hidden; }
+
+/* Hide only visually, but have it available for screenreaders: h5bp.com/v */
 .visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+
+/* Extends the .visuallyhidden class to allow the element to be focusable when navigated to via the keyboard: h5bp.com/p */
 .visuallyhidden.focusable:active, .visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+
+/* Hide visually and from screenreaders, but maintain layout */
 .invisible { visibility: hidden; }
+
+/* Contain floats: h5bp.com/q */
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
-.clearfix { zoom: 1; }
-
-
-/* ==|== media queries ====================================================== */
-
-@media only screen and (min-width: 480px) {
-
-
-}
-
-@media only screen and (min-width: 768px) {
-
-}
+.clearfix { *zoom: 1; }
 
 
 
-/* ==|== print styles ======================================================= */
- 
+/* ==|== print styles =======================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
 @media print {
-  * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } 
+  * { background: transparent !important; color: black !important; box-shadow:none !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } /* Black prints faster: h5bp.com/s */
   a, a:visited { text-decoration: underline; }
   a[href]:after { content: " (" attr(href) ")"; }
   abbr[title]:after { content: " (" attr(title) ")"; }
-  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; } 
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }  /* Don't show links for images, or javascript/internal links */
   pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
-  thead { display: table-header-group; }
+  thead { display: table-header-group; } /* h5bp.com/t */
   tr, img { page-break-inside: avoid; }
   img { max-width: 100% !important; }
   @page { margin: 0.5cm; }

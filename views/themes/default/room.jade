@@ -1,45 +1,138 @@
-#container
+.color-line
+.wrap
 	header
-		a.logout(href="/logout") Logout
-
-		!=partial('rooms_dropdown', {rooms: rooms});
+		.dropdown.dropdown-status
+			i
+			a.selected.available(href='#')
+				b
+				| Available
+			.dropdown-options
+				.triangle
+				.list
+					a.option.available.current(href='#')
+						b
+						| Available
+					a.option.away(href='#')
+						b
+						| Away
+					a.option.busy(href='#')
+						b
+						| Busy
+		// .dropdown dropdown-status
 		
-		div.logged-box
-			img.avatar(src=" http://img.tweetimag.es/i/"+username)
-			span.logged-as Logged in as:
-			span.username= username
+		!=partial('rooms_dropdown', {rooms: rooms});
 
-	!=partial('chat_list', {user_list: user_list});
-
-	div#main.content(role="main")
-		div.chats
-			div.chat-box
-
-		div.type-message
-			div.user
-				img.avatar(src="http://img.tweetimag.es/i/"+username)
-				a(href="#")
-
-			textarea#msgbox(name="Name",rows="8",cols="40")
-
-	footer
-
-	script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js")
-	script(defer,src="/js/plugins.js")
-	script(defer,src="/js/script.js")				
+		a.button-circle.invite.fancybox(href='#invite')
+			strong
+				span
+					i
+		#invite.modal.modal-invite(style='display: none')
+			h2 Invite people to join the room
+			.modal-content
+				p Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+				.tweet-user
+					input.(type='text', name='', value='')
+				.tweet-user
+					input.(type='text', name='', value='')
+				.tweet-user
+					input.error(type='text', name='', value='')
+				.tweet-user
+					input.(type='text', name='', value='')
+				.tweet-user
+					input.(type='text', name='', value='')
+				.tweet-user
+					input.(type='text', name='', value='')
+			// .modal-content 
+			.modal-footer
+				a.button.invite-people(href='#') Invite these people
+			// .modal-footers 
+		// #invite 
+		a.button-circle.lock(href='#')
+			strong
+				span
+					i
+	sidebar
+		!=partial('chat_list', {user_list: user_list});
+		!=partial('files_list');
 	
-	script()
-		// Change UA-XXXXX-X to be your site's ID
-		window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
-		Modernizr.load({
-			load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-		});
+	.content(role='main')
+		.chat
+			.chat-box
+				.avatar
+					img(src='http://placehold.it/45x45')
+				h5
+					span.date 11:00 PM
+					| Ricardo Rauch
+				p
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
+					| id congue nibh. Suspendisse potenti.
+			// .chat-box 
+			.chat-box
+				.avatar
+					img(src='http://placehold.it/45x45')
+				h5
+					span.date 11:00 PM
+					| Ricardo Rauch
+				p
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
+					| id congue nibh. Suspendisse potenti.
+			// .chat-box 
+			.notice
+				| Ricardo Rauch has left the room
+			.chat-box
+				.avatar
+					img(src='http://placehold.it/45x45')
+				h5
+					span.date 11:00 PM
+					| Ricardo Rauch
+				p
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
+					| id congue nibh. Suspendisse potenti.
+			// .chat-box 
+			.chat-box
+				.avatar
+					img(src='http://placehold.it/45x45')
+				h5
+					span.date 11:00 PM
+					| Ricardo Rauch
+				p
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
+					| id congue nibh. Suspendisse potenti.
+			// .chat-box 
+			.chat-box
+				.avatar
+					img(src='http://placehold.it/45x45')
+				h5
+					span.date 11:00 PM
+					| Ricardo Rauch
+				p
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
+					| id congue nibh. Suspendisse potenti.
+			// .chat-box 
+		// .chat 
+		.line-chat
+		.line-chat.second
+		.chat-input
+			input.text(type='text', name='', value='')
+		// .chat-input 
+// .wrap 
 
-	//if lt IE 7
-		html.no-js.ie6.oldie(lang="en")
-			script(src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js")
-			script()
-				window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})
+script(defer,src="/js/libs/fancy-box/jquery.fancybox.js")
+script(defer,src="/js/plugins.js")
+script(defer,src="/js/script.js")				
+
+script()
+	// Change UA-XXXXX-X to be your site's ID
+	window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
+	Modernizr.load({
+		load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+	});
+
+//if lt IE 7
+	html.no-js.ie6.oldie(lang="en")
+		script(src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js")
+		script()
+			window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})
 
 
 ul.user_list

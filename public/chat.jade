@@ -1,0 +1,257 @@
+!!! 5
+html.no-js(lang='en')
+  //<![endif]
+  head
+    meta(charset='utf-8')
+    // Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/i/378 
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    title Balloons.IO
+    meta(name='description', content='')
+    // Mobile viewport optimized: h5bp.com/viewport 
+    meta(name='viewport', content='width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0')
+    link(rel='stylesheet', href='js/libs/fancy-box/jquery.fancybox.css', type='text/css', media='screen', title='no title', charset='utf-8')
+    // Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons 
+    link(rel='stylesheet', href='css/style.css')
+    // More ideas for your <head> here: h5bp.com/d/head-Tips 
+    // All JavaScript at the bottom, except this Modernizr build.
+       Modernizr enables HTML5 elements & feature detects for optimal performance.
+       Create your own custom Modernizr build: www.modernizr.com/download/ 
+    script(src='js/libs/modernizr-2.5.3.min.js')
+  body
+    // Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started 
+    /if lt IE 7
+        p.chromeframe
+          | Your browser is
+          em ancient!
+          a(href='http://browsehappy.com/') Upgrade to a different browser
+          | or
+          a(href='http://www.google.com/chromeframe/?redirect=true') install Google Chrome Frame
+          | to experience this site.
+    .color-line
+    .wrap
+      header
+        .dropdown.dropdown-status
+          i
+          a.selected.available(href='#')
+            b
+            | Available
+          .dropdown-options
+            .triangle
+            .list
+              a.option.available.current(href='#')
+                b
+                | Available
+              a.option.away(href='#')
+                b
+                | Away
+              a.option.busy(href='#')
+                b
+                | Busy
+        // .dropdown dropdown-status 
+        .dropdown.dropdown-room
+          i
+          a.selected(href='#') Current Room
+          .dropdown-options
+            .triangle
+            a.option.create-room(href='#') Create a room
+            input.text(type='text', name='', value='', placeholder='Name of your room', style='display: none')
+            .list
+              a.option.current(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+              a.option(href='#') Room
+        // .dropdown-room 
+        a.button-circle.invite.fancybox(href='#invite')
+          strong
+            span
+              i
+        #invite.modal.modal-invite(style='display: none')
+          h2 Invite people to join the room
+          .modal-content
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            .tweet-user
+              input.(type='text', name='', value='')
+            .tweet-user
+              input.(type='text', name='', value='')
+            .tweet-user
+              input.error(type='text', name='', value='')
+            .tweet-user
+              input.(type='text', name='', value='')
+            .tweet-user
+              input.(type='text', name='', value='')
+            .tweet-user
+              input.(type='text', name='', value='')
+          // .modal-content 
+          .modal-footer
+            a.button.invite-people(href='#') Invite these people
+          // .modal-footers 
+        // #invite 
+        a.button-circle.lock(href='#')
+          strong
+            span
+              i
+      sidebar
+        .online
+          h4.inner-padding ONLINE
+          .people
+            a.available(href='#')
+              b
+              | Ricardo Rauch
+            a.available(href='#')
+              b
+              | Ricardo Rauch
+            a.available(href='#')
+              b
+              | Ricardo Rauch
+            a.available(href='#')
+              b
+              | Ricardo Rauch
+            a.away(href='#')
+              b
+              | Ricardo Rauch
+            a.away(href='#')
+              b
+              | Ricardo Rauch
+            a.busy(href='#')
+              b
+              | Ricardo Rauch
+            a.busy(href='#')
+              b
+              | Ricardo Rauch
+            a.busy(href='#')
+              b
+              | Ricardo Rauch
+            a.busy(href='#')
+              b
+              | Ricardo Rauch
+            a.busy(href='#')
+              b
+              | Ricardo Rauch
+            a.busy(href='#')
+              b
+              | Ricardo Ultimo
+          // .people 
+        // .online 
+        .files
+          h3 Files
+          .files-container
+            a.picture(href='#')
+              span
+                i
+              | filename-example.dmg
+            a.file(href='#')
+              span
+                i
+              | filename-example.dmg
+            a.picture(href='#')
+              span
+                i
+              | filename-example.dmg
+            a.file(href='#')
+              span
+                i
+              | filename-example.dmg
+          // .files-container 
+        // .files 
+      .content(role='main')
+        .chat
+          .chat-box
+            .avatar
+              img(src='http://placehold.it/45x45')
+            h5
+              span.date 11:00 PM
+              | Ricardo Rauch
+            p
+              | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
+              | id congue nibh. Suspendisse potenti.
+          // .chat-box 
+          .chat-box
+            .avatar
+              img(src='http://placehold.it/45x45')
+            h5
+              span.date 11:00 PM
+              | Ricardo Rauch
+            p
+              | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
+              | id congue nibh. Suspendisse potenti.
+          // .chat-box 
+          .notice
+            | Ricardo Rauch has left the room
+          .chat-box
+            .avatar
+              img(src='http://placehold.it/45x45')
+            h5
+              span.date 11:00 PM
+              | Ricardo Rauch
+            p
+              | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
+              | id congue nibh. Suspendisse potenti.
+          // .chat-box 
+          .chat-box
+            .avatar
+              img(src='http://placehold.it/45x45')
+            h5
+              span.date 11:00 PM
+              | Ricardo Rauch
+            p
+              | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
+              | id congue nibh. Suspendisse potenti.
+          // .chat-box 
+          .chat-box
+            .avatar
+              img(src='http://placehold.it/45x45')
+            h5
+              span.date 11:00 PM
+              | Ricardo Rauch
+            p
+              | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
+              | id congue nibh. Suspendisse potenti.
+          // .chat-box 
+        // .chat 
+        .line-chat
+        .line-chat.second
+        .chat-input
+          input.text(type='text', name='', value='')
+        // .chat-input 
+    // .wrap 
+    // JavaScript at the bottom for fast page loading 
+    // Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline 
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+    script
+      window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')
+    script(src='js/libs/fancy-box/jquery.fancybox.pack.js')
+    // scripts concatenated and minified via build script 
+    script(src='js/plugins.js')
+    script(src='js/script.js')
+    // end scripts 
+    // Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+       mathiasbynens.be/notes/async-analytics-snippet 
+    script
+          var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+          (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+          g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+          s.parentNode.insertBefore(g,s)}(document,'script'));
+        

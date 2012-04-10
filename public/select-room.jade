@@ -1,0 +1,65 @@
+!!! 5
+html.no-js(lang='en')
+  //<![endif]
+  head
+    meta(charset='utf-8')
+    // Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/i/378 
+    meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    title Balloons.IO
+    meta(name='description', content='')
+    // Mobile viewport optimized: h5bp.com/viewport 
+    meta(name='viewport', content='width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0')
+    link(rel='stylesheet', href='js/libs/fancy-box/jquery.fancybox.css', type='text/css', media='screen', title='no title', charset='utf-8')
+    // Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons 
+    link(rel='stylesheet', href='css/style.css')
+    // More ideas for your <head> here: h5bp.com/d/head-Tips 
+    // All JavaScript at the bottom, except this Modernizr build.
+       Modernizr enables HTML5 elements & feature detects for optimal performance.
+       Create your own custom Modernizr build: www.modernizr.com/download/ 
+    script(src='js/libs/modernizr-2.5.3.min.js')
+  body.home-page
+    .select-room-container.box-container
+      .inner-padding
+        img.logo(src='img/logo.png', width='217', height='239', alt='Logo')
+        h4 Select a room:
+        .room-list
+          a(href='#') Room name
+          a(href='#') Room name
+          a(href='#') Room name
+          a(href='#') Room name
+          a(href='#') Room name
+        // .room-list 
+        h4
+          em or
+          | Create a new one:
+        p
+          input.text-grey(type='text', name='', value='', placeholder='Name of your room')
+        input.button(type='submit', value='Create now')
+    // .homepage-container 
+    // JavaScript at the bottom for fast page loading 
+    // Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline 
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js')
+    script
+      window.jQuery || document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')
+    script(src='http://malsup.github.com/jquery.cycle.all.js')
+    script(type='text/javascript')
+      	$(function() {
+      	    $('#slideshow').cycle({
+      	        fx:     'fade',
+      					delay: '4',
+      	        speed:  'slow',
+      	        timeout: 3000,
+      	        pager:  '#nav',
+      					slideExpr: 'div.slide'
+      	    });
+      	});
+      	
+    // Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+       mathiasbynens.be/notes/async-analytics-snippet 
+    script
+          var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+          (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+          g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+          s.parentNode.insertBefore(g,s)}(document,'script'));
+        

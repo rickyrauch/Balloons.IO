@@ -1,22 +1,15 @@
-.white-box.room-list
-	
-	h1.logo Ballons.IO
-	
-	hr	
-	
-	.half
-		h3 Available rooms
-		p
-			ul#available_rooms
-			each room,key in rooms
-				li
+body.home-page
+	.select-room-container.box-container
+		.inner-padding
+			img.logo(src='/img/logo.png', width='217', height='239', alt='Logo')
+			h4 Select a room:
+			.room-list
+				each room,key in rooms
 					a(href='/rooms/'+room)= key
-
-	.half
-		h3 Create new room
-		form(method="POST",action="/create")
+			// .room-list 
+			h4
+				em or
+				| Create a new one:
 			p
-				input.text(type="text",name="room_name", placeholder="Enter the name")
-
-			p
-				input(type="submit",value="Create")
+				input.text-grey(type='text', name='', value='', placeholder='Name of your room')
+			input.button(type='submit', value='Create now')
