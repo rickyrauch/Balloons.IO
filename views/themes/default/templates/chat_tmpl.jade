@@ -1,0 +1,19 @@
+script#chat_box(type='text/html')
+	.chat-box
+		.avatar
+			img(src='http://img.tweetimag.es/i/{{ nickname }}')
+		h5
+			span.date {{ time.hr }}:{{ time.min }} {{ time.tt }}
+			| {{ nickname }}
+		p
+			| {{ msg }}
+
+script#chat_notice(type='text/html')
+	.notice
+		| {{ noticeMsg }}
+
+script#people_box(type='text/html')
+	.people
+		a(class='{{ status }}', href='#')
+			b
+			| {{ nickname }}

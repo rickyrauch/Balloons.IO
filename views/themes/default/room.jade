@@ -52,81 +52,24 @@
 				span
 					i
 	sidebar
-		!=partial('chat_list', {user_list: user_list});
+		!=partial('chat_list', { user_list: user_list });
 		!=partial('files_list');
 	
 	.content(role='main')
 		.chat
-			.chat-box
-				.avatar
-					img(src='http://placehold.it/45x45')
-				h5
-					span.date 11:00 PM
-					| Ricardo Rauch
-				p
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
-					| id congue nibh. Suspendisse potenti.
-			// .chat-box 
-			.chat-box
-				.avatar
-					img(src='http://placehold.it/45x45')
-				h5
-					span.date 11:00 PM
-					| Ricardo Rauch
-				p
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
-					| id congue nibh. Suspendisse potenti.
-			// .chat-box 
-			.notice
-				| Ricardo Rauch has left the room
-			.chat-box
-				.avatar
-					img(src='http://placehold.it/45x45')
-				h5
-					span.date 11:00 PM
-					| Ricardo Rauch
-				p
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
-					| id congue nibh. Suspendisse potenti.
-			// .chat-box 
-			.chat-box
-				.avatar
-					img(src='http://placehold.it/45x45')
-				h5
-					span.date 11:00 PM
-					| Ricardo Rauch
-				p
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
-					| id congue nibh. Suspendisse potenti.
-			// .chat-box 
-			.chat-box
-				.avatar
-					img(src='http://placehold.it/45x45')
-				h5
-					span.date 11:00 PM
-					| Ricardo Rauch
-				p
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis libero nisl,
-					| id congue nibh. Suspendisse potenti.
-			// .chat-box 
+			// chat-content
+
 		// .chat 
+
 		.line-chat
 		.line-chat.second
+
 		.chat-input
 			input.text(type='text', name='', value='')
-		// .chat-input 
-// .wrap 
+		// .chat-input
 
-script(defer,src="/js/libs/fancy-box/jquery.fancybox.js")
-script(defer,src="/js/plugins.js")
-script(defer,src="/js/script.js")				
+// .wrap
 
-script()
-	// Change UA-XXXXX-X to be your site's ID
-	window._gaq = [['_setAccount','UAXXXXXXXX1'],['_trackPageview'],['_trackPageLoadTime']];
-	Modernizr.load({
-		load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
-	});
 
 //if lt IE 7
 	html.no-js.ie6.oldie(lang="en")
@@ -135,15 +78,19 @@ script()
 			window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})
 
 
+//What with this??
 ul.user_list
-
 ul.log
-
-p
-	input#msgbox(type='text')
-p
-	button#msgbutton Enviar mensaje
+// So?
 
 span#room_id(style="display:none")= room_name
 span#username(style="display:none")= username
+
+!=partial('templates/chat_tmpl');
+
+script(defer, src="/js/libs/fancy-box/jquery.fancybox.js")
+script(defer, src="/js/plugins.js")
+script(defer, src="/js/libs/ICanHaz.min.js")
 script(src="/socket.io/socket.io.js")
+
+script(defer, src="/js/script.js")				
