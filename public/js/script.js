@@ -53,8 +53,11 @@ $(function() {
 	});
 
 	socket.on('user leave', function(data) {
-		$('.chat-list li').each(function(k,v) {
-			if($(v).last().last().text() == data.nickname) {
+		console.log("user is leaving");
+		$('.people').each(function(k, v) {
+			console.log("loking to one who leaved", k)
+			if($(v).data('username') == data.nickname) {
+				console.log("removed " + data.nickname)
 				$(v).remove();
 			}
 		});
@@ -73,7 +76,7 @@ $(function() {
 		}
 	});
 
-	//WHAT?
+	//THIS IS THE SAME AS NEW USER NOW
 	socket.on('ready', function(data) {
 		$.each(data.user_list, function(k,v) {
 			$('.chat-list').append('<li><div class="status-bar"><span class="status available"></span></div><div class="user-space"><img src="http://img.tweetimag.es/i/"+v class="avatar"><span class="username">' + v + '</span></div></li>');
