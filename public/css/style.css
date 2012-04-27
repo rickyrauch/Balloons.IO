@@ -545,6 +545,8 @@ body.home-page .homepage-container .slideshow #nav a{background: #999; border-ra
 body.home-page .homepage-container .slideshow #nav a.activeSlide{background: #333}
 body.home-page .homepage-container h2{font-weight: 100; color: #666}
 
+body.home-page .sign-in-twitter {background: url('../img/sign-in-with-twitter-l.png') no-repeat; margin: auto; width: 151px; height: 24px; display: block; text-indent: -1000em}
+
 body.home-page .homepage-container .slideshow{
 	-webkit-animation-name: slideshow;
  -webkit-animation-duration: 2s;
