@@ -13,7 +13,6 @@ script#chat_notice(type='text/html')
 		| {{ noticeMsg }}
 
 script#people_box(type='text/html')
-	.people(data-username='{{ nickname }}')
-		a(class='{{ status }}', href='#')
-			b
-			| {{ nickname }}
+	a(class='{{ status }}', href='#', data-username='{{ nickname }}')
+		b
+		| {{ nickname }}

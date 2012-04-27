@@ -2,7 +2,7 @@
 	h4.inner-padding ONLINE
 	.people
 		-user_list.forEach(function(username) {
-			a.available(href='#')
+			a(class='available', href='#', data-username='#{ username }')
 				b
 				= username
 		-});

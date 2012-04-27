@@ -128,10 +128,11 @@ io.sockets.on('connection', function (socket) {
         socket.set('nickname', data.nickname, function () {
             socket.set('room_id', data.room_id, function () {
                 client.sadd('rooms:' + data.room_id + ':online', data.nickname, function(err, added) {
-                    if(added)
+                    if(added) {
                         io.sockets.in(data.room_id).emit('new user', {
-                        nickname: data.nickname
-                    });
+                            nickname: data.nickname
+                        });
+                    }
             	});
             });
 		});
@@ -151,17 +152,25 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 
+
     socket.on('disconnect', function() {
+        var self = this;
         socket.get('room_id', function(err1, room_id) {
             socket.get('nickname', function(err2, nickname) {
-                client.srem('rooms:' + room_id + ':online', nickname);
-                io.sockets.in(room_id).emit('user leave', {
-                    nickname: nickname
-                });   
+                client.srem('rooms:' + room_id + ':online', nickname, function(err2, removed) {
+                    if (removed) {
+                        io.sockets.in(room_id).emit('user leave', {
+                            nickname: nickname
+                        });
+                    }
+                    return self;
+                });
             });
         });
     });
 });
+
+
 app.listen(3000);
 
 console.log('Balloons.io started at port %d', app.address().port);

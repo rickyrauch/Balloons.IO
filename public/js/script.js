@@ -1,4 +1,10 @@
 $(function() {
+	var USERS = window.USERS = {};
+
+	$('.people a').each(function(index, element) {
+		USERS[$(element).data('username')] = 1;
+	});
+
 	//View handlers
 	$(".dropdown a.selected").click(function() {
 		$('.create-room').show().next(".text").hide();
@@ -30,8 +36,11 @@ $(function() {
 	});
 
 	socket.on('new user', function(data) {
-		data.status = "available"; //this should be retrieved from server!!
-		$('.online').append(ich.people_box(data));
+		if(!USERS[data.nickname]) {
+			data.status = "available"; //this should be retrieved from server!!
+			$('.online .people').prepend(ich.people_box(data));
+			USERS[data.nickname] = 1;
+		}
 	});
 
 	socket.on('new msg', function(data) {
@@ -53,12 +62,13 @@ $(function() {
 	});
 
 	socket.on('user leave', function(data) {
-		console.log("user is leaving");
-		$('.people').each(function(k, v) {
-			console.log("loking to one who leaved", k)
-			if($(v).data('username') == data.nickname) {
-				console.log("removed " + data.nickname)
-				$(v).remove();
+		console.log("user " + data.nickname + " is leaving");
+		$('.people a').each(function(index, element) {
+			console.log("loking to one who leaved at index: ", index)
+			if($(element).data('username') == data.nickname) {
+				console.log("removed " + data.nickname + "at index: " + index)
+				$(element).remove();
+				USERS[data.nickname] = 0;
 			}
 		});
 	});
