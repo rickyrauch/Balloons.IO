@@ -12,7 +12,7 @@ var express = require('express')
   , utils = require('./utils');
 
 /*
- * Instanciate redis
+ * Instantiate redis
  */
 
 var client = redis.createClient();
@@ -124,16 +124,27 @@ io.configure(function() {
 
 io.sockets.on('connection', function (socket) {
 	socket.on('set nickname', function(data) {
-        socket.join(data.room_id);
-        socket.set('nickname', data.nickname, function () {
-            socket.set('room_id', data.room_id, function () {
-                client.sadd('rooms:' + data.room_id + ':online', data.nickname, function(err, added) {
-                    if(added) {
-                        io.sockets.in(data.room_id).emit('new user', {
-                            nickname: data.nickname
+        var nickname = data.nickname
+           , room_id = data.room_id;
+
+        socket.join(room_id);
+
+        socket.set('nickname', nickname, function () {
+            socket.set('room_id', room_id, function () {
+
+                client.sadd('users:' + nickname + ':sockets', socket.id, function(err1, socketAdded) {
+                    if(socketAdded) {
+                        console.log("socketID#", socket.id, "successfuly added to", nickname, "\'s sockets list!!");
+
+                        client.sadd('rooms:' + room_id + ':online', nickname, function(err2, userAdded) {
+                            if(userAdded) {
+                                io.sockets.in(data.room_id).emit('new user', {
+                                    nickname: nickname
+                                });
+                            }
                         });
                     }
-            	});
+                });
             });
 		});
 	});
@@ -152,21 +163,32 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 
-
     socket.on('disconnect', function() {
-        var self = this;
+
         socket.get('room_id', function(err1, room_id) {
             socket.get('nickname', function(err2, nickname) {
-                client.srem('rooms:' + room_id + ':online', nickname, function(err2, removed) {
-                    if (removed) {
-                        io.sockets.in(room_id).emit('user leave', {
-                            nickname: nickname
+
+                client.srem('users:' + nickname + ':sockets', socket.id, function(err3, removed) {
+                    if(removed) {
+                        console.info('socket#' + socket.id + ' successfuly removed from ' + nickname + '\'s sockets list!');
+                        
+                        client.scard('users:' + nickname + ':sockets', function(err4, members_no) {
+                            if(!members_no) {
+                                client.srem('rooms:' + room_id + ':online', nickname, function(err5, removed) {
+                                    if (removed) {
+                                        io.sockets.in(room_id).emit('user leave', {
+                                            nickname: nickname
+                                        });
+                                    }
+                                });
+                            }
                         });
                     }
-                    return self;
                 });
+
             });
         });
+
     });
 });
 

@@ -62,13 +62,20 @@ $(function() {
 	});
 
 	socket.on('user leave', function(data) {
-		console.log("user " + data.nickname + " is leaving");
+		var nickname = $('#username').text();
+
+		console.log("hey, " + nickname + "!! The user " + data.nickname + " is leaving somewhere!!");
+		
 		$('.people a').each(function(index, element) {
-			console.log("loking to one who leaved at index: ", index)
-			if($(element).data('username') == data.nickname) {
-				console.log("removed " + data.nickname + "at index: " + index)
-				$(element).remove();
-				USERS[data.nickname] = 0;
+			var checkUsername = $(element).data('username');
+
+			if(checkUsername == data.nickname) {
+				if (checkUsername != nickname ) {
+					$(element).remove();
+					USERS[data.nickname] = 0;
+
+					console.log(data.nickname + " was just removed from list at index: " + index);
+				};
 			}
 		});
 	});
@@ -87,9 +94,9 @@ $(function() {
 	});
 
 	//THIS IS THE SAME AS NEW USER NOW
-	socket.on('ready', function(data) {
-		$.each(data.user_list, function(k,v) {
-			$('.chat-list').append('<li><div class="status-bar"><span class="status available"></span></div><div class="user-space"><img src="http://img.tweetimag.es/i/"+v class="avatar"><span class="username">' + v + '</span></div></li>');
-		});
-	});
+	// socket.on('ready', function(data) {
+	// 	$.each(data.user_list, function(k,v) {
+	// 		$('.chat-list').append('<li><div class="status-bar"><span class="status available"></span></div><div class="user-space"><img src="http://img.tweetimag.es/i/"+v class="avatar"><span class="username">' + v + '</span></div></li>');
+	// 	});
+	// });
 });
