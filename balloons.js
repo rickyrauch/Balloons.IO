@@ -91,13 +91,23 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
     client.hgetall('rooms:' + req.params.id + ':info', function(err1, room) {
     	if(Object.keys(room).length) {
             client.smembers('rooms:' + req.params.id + ':online', function(err2, online_users) {
+                var users = [];
+                online_users.forEach(function(username, index) {
+                    client.get('users:' + username + ':status', function(err3, status) {
+                        users.push({
+                            username: username,
+                            status: status || 'available'
+                        });
+                    });
+                });
+
                 client.smembers("balloons:public:rooms", function(err3, rooms) {
                     res.locals({
                         rooms: rooms,
                         room_name: room.name,
                         room_id: req.params.id,
                         username: req.getAuthDetails().user.username,
-                        user_list: online_users
+                        users_list: users
                     });
                     res.render('room');
                 });
@@ -138,8 +148,11 @@ io.sockets.on('connection', function (socket) {
 
                         client.sadd('rooms:' + room_id + ':online', nickname, function(err2, userAdded) {
                             if(userAdded) {
-                                io.sockets.in(data.room_id).emit('new user', {
-                                    nickname: nickname
+                                client.get('users:' + nickname + ':status', function(err, status) {
+                                    io.sockets.in(data.room_id).emit('new user', {
+                                        nickname: nickname,
+                                        status: status || 'available'
+                                    });
                                 });
                             }
                         });
@@ -163,11 +176,22 @@ io.sockets.on('connection', function (socket) {
 		});
 	});
 
+    socket.on('set status', function(data) {
+        var status = data.status;
+
+        socket.get('nickname', function(err1, nickname) {
+
+            client.set('users:' + nickname + ':status', status, function(err1, statusSet) {
+                console.info(nickname, 'has setted', status);
+            });
+        });
+    });
+
     socket.on('disconnect', function() {
 
         socket.get('room_id', function(err1, room_id) {
             socket.get('nickname', function(err2, nickname) {
-
+                // 'sockets:at:' + room_id + ':for:' + nickname
                 client.srem('users:' + nickname + ':sockets', socket.id, function(err3, removed) {
                     if(removed) {
                         console.info('socket#' + socket.id + ' successfuly removed from ' + nickname + '\'s sockets list!');

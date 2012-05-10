@@ -37,7 +37,6 @@ $(function() {
 
 	socket.on('new user', function(data) {
 		if(!USERS[data.nickname]) {
-			data.status = "available"; //this should be retrieved from server!!
 			$('.online .people').prepend(ich.people_box(data));
 			USERS[data.nickname] = 1;
 		}
@@ -92,6 +91,33 @@ $(function() {
 			return false;
 		}
 	});
+
+	$('.dropdown-status .list a').click(function(e) {
+		var $this = $(this),
+			status = 'available';
+
+		$('.dropdown-status .list a').toggleClass('current', false);
+		$this.toggleClass('current', true);
+
+		$('.dropdown-status a.selected')
+			.removeClass('available')
+			.removeClass('away')
+			.removeClass('busy');
+
+		if($this.hasClass('away')) {
+			$('.dropdown-status a.selected').addClass('away').html('<b></b>away');
+			status = 'away';
+		} else if($this.hasClass('busy')) {
+			$('.dropdown-status a.selected').addClass('busy').html('<b></b>busy');
+			status = 'busy';
+		} else {
+			$('.dropdown-status a.selected').addClass('available').html('<b></b>available');
+		}
+
+		socket.emit('set status', {
+			status: status
+		});
+	})
 
 	//THIS IS THE SAME AS NEW USER NOW
 	// socket.on('ready', function(data) {

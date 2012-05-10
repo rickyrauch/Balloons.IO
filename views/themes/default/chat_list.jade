@@ -1,10 +1,10 @@
 .online
 	h4.inner-padding ONLINE
 	.people
-		-user_list.forEach(function(username) {
-			a(class='available', href='#', data-username='#{ username }')
+		-users_list.forEach(function(user) {
+			a(class='#{ user.status }', href='#', data-username='#{ user.username }')
 				b
-				= username
+				= user.username
 		-});
 	// .people 
 // .online 
