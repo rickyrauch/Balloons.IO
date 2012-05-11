@@ -1,26 +1,10 @@
 .color-line
 .wrap
 	header
-		.dropdown.dropdown-status
-			i
-			a.selected.available(href='#')
-				b
-				| Available
-			.dropdown-options
-				.triangle
-				.list
-					a.option.available.current(href='#')
-						b
-						| Available
-					a.option.away(href='#')
-						b
-						| Away
-					a.option.busy(href='#')
-						b
-						| Busy
-		// .dropdown dropdown-status
 		
-		!=partial('rooms_dropdown', {rooms: rooms});
+		!=partial('status_dropdown', { user_status: user_status });
+
+		!=partial('rooms_dropdown', { rooms: rooms });
 
 		a.button-circle.invite.fancybox(href='#invite')
 			strong

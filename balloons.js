@@ -91,9 +91,14 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
     client.hgetall('rooms:' + req.params.id + ':info', function(err1, room) {
     	if(Object.keys(room).length) {
             client.smembers('rooms:' + req.params.id + ':online', function(err2, online_users) {
-                var users = [];
+                var users = []
+                  , user_status = 'available';
+
                 online_users.forEach(function(username, index) {
-                    client.get('users:' + username + ':status', function(err3, status) {
+                    client.get('users:' + username + ':status', function(err4, status) {
+                        if(req.getAuthDetails().user.username == username) {
+                            user_status = status || 'available';
+                        }
                         users.push({
                             username: username,
                             status: status || 'available'
@@ -102,13 +107,16 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
                 });
 
                 client.smembers("balloons:public:rooms", function(err3, rooms) {
+
                     res.locals({
                         rooms: rooms,
                         room_name: room.name,
                         room_id: req.params.id,
                         username: req.getAuthDetails().user.username,
+                        user_status: user_status,
                         users_list: users
                     });
+
                     res.render('room');
                 });
             });
@@ -183,6 +191,10 @@ io.sockets.on('connection', function (socket) {
 
             client.set('users:' + nickname + ':status', status, function(err1, statusSet) {
                 console.info(nickname, 'has setted', status);
+                io.sockets.emit('user-info update', {
+                    username: nickname,
+                    status: status
+                });
             });
         });
     });

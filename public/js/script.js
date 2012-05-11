@@ -42,6 +42,22 @@ $(function() {
 		}
 	});
 
+	socket.on('user-info update', function(data) {
+		// Update dropdown
+		$('.dropdown-status .list a').toggleClass('current', false);
+		$('.dropdown-status .list a.' + data.status).toggleClass('current', true);
+
+		$('.dropdown-status a.selected')
+			.removeClass('available away busy');
+
+		$('.dropdown-status a.selected').addClass(data.status).html('<b></b>' + data.status);
+
+		// Update users list
+		$('.people a[data-username=' + data.username + ']')
+			.removeClass('available away busy')
+			.addClass(data.status);
+	});
+
 	socket.on('new msg', function(data) {
 		var now = new Date(),
 			hours = now.getHours(),
@@ -93,29 +109,8 @@ $(function() {
 	});
 
 	$('.dropdown-status .list a').click(function(e) {
-		var $this = $(this),
-			status = 'available';
-
-		$('.dropdown-status .list a').toggleClass('current', false);
-		$this.toggleClass('current', true);
-
-		$('.dropdown-status a.selected')
-			.removeClass('available')
-			.removeClass('away')
-			.removeClass('busy');
-
-		if($this.hasClass('away')) {
-			$('.dropdown-status a.selected').addClass('away').html('<b></b>away');
-			status = 'away';
-		} else if($this.hasClass('busy')) {
-			$('.dropdown-status a.selected').addClass('busy').html('<b></b>busy');
-			status = 'busy';
-		} else {
-			$('.dropdown-status a.selected').addClass('available').html('<b></b>available');
-		}
-
 		socket.emit('set status', {
-			status: status
+			status: $(this).data('status')
 		});
 	})
 
