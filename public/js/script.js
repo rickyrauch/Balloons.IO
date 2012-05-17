@@ -36,26 +36,49 @@ $(function() {
 	});
 
 	socket.on('new user', function(data) {
+		var message = "User $username has joined the room.";
+
 		if(!USERS[data.nickname]) {
 			$('.online .people').prepend(ich.people_box(data));
 			USERS[data.nickname] = 1;
+
+			// Chat notice
+			message = message
+						.replace('$username', data.nickname);
+
+			$('.chat').append(ich.chat_notice({
+				noticeMsg: message
+			})).scrollTop($('.chat').height());
 		}
 	});
 
 	socket.on('user-info update', function(data) {
+		var message = "User $username is now $status.";
+
 		// Update dropdown
-		$('.dropdown-status .list a').toggleClass('current', false);
-		$('.dropdown-status .list a.' + data.status).toggleClass('current', true);
+		if(data.username == $('#username').text()) {
+			$('.dropdown-status .list a').toggleClass('current', false);
+			$('.dropdown-status .list a.' + data.status).toggleClass('current', true);
 
-		$('.dropdown-status a.selected')
-			.removeClass('available away busy');
+			$('.dropdown-status a.selected')
+				.removeClass('available away busy');
 
-		$('.dropdown-status a.selected').addClass(data.status).html('<b></b>' + data.status);
+			$('.dropdown-status a.selected').addClass(data.status).html('<b></b>' + data.status);
+		}
 
 		// Update users list
 		$('.people a[data-username=' + data.username + ']')
 			.removeClass('available away busy')
 			.addClass(data.status);
+
+		// Chat notice
+		message = message
+					.replace('$username', data.username)
+					.replace('$status', data.status);
+
+		$('.chat').append(ich.chat_notice({
+			noticeMsg: message
+		})).scrollTop($('.chat').height());
 	});
 
 	socket.on('new msg', function(data) {
@@ -77,7 +100,8 @@ $(function() {
 	});
 
 	socket.on('user leave', function(data) {
-		var nickname = $('#username').text();
+		var nickname = $('#username').text(),
+			message = "$username has left the room.";
 
 		console.log("hey, " + nickname + "!! The user " + data.nickname + " is leaving somewhere!!");
 		
@@ -90,6 +114,13 @@ $(function() {
 					USERS[data.nickname] = 0;
 
 					console.log(data.nickname + " was just removed from list at index: " + index);
+					// Chat notice
+					message = message
+								.replace('$username', data.nickname);
+
+					$('.chat').append(ich.chat_notice({
+						noticeMsg: message
+					})).scrollTop($('.chat').height());
 				};
 			}
 		});
