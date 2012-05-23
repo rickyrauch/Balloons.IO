@@ -35,8 +35,42 @@ $(function() {
 		nickname: $('#username').text()
 	});
 
+	socket.on('ready', function(data) {
+		//If chat is empty, request for history!
+		if($('.chat .chat-box').length == 0) {
+			socket.emit('history request');
+		}
+	});
+
+	socket.on('history response', function(data) {
+		if(data.history && data.history.length) {
+			data.history.forEach(function(historyLine) {
+				console.log(historyLine);
+				var time = new Date(historyLine.atTime),
+					hours = time.getHours(),
+					minutes = time.getMinutes(),
+					seconds = time.getSeconds(),
+					tt = hours > 12 ? "PM" : "AM";
+
+				chatBoxData = {
+					nickname: historyLine.username,
+					msg: historyLine.message,
+					time: {
+						hr: hours > 12 ? hours - 12 : hours,
+						min: minutes < 10 ? "0" + minutes : minutes,
+						sec: seconds < 10 ? "0" + seconds : seconds,
+						tt: tt
+					}
+				};
+
+				$('.chat').append(ich.chat_box(chatBoxData));
+				$('.chat').scrollTop($('.chat').height());
+			});
+		}
+	});
+
 	socket.on('new user', function(data) {
-		var message = "User $username has joined the room.";
+		var message = "$username has joined the room.";
 
 		if(!USERS[data.nickname]) {
 			$('.online .people').prepend(ich.people_box(data));
@@ -53,7 +87,7 @@ $(function() {
 	});
 
 	socket.on('user-info update', function(data) {
-		var message = "User $username is now $status.";
+		var message = "$username is now $status.";
 
 		// Update dropdown
 		if(data.username == $('#username').text()) {

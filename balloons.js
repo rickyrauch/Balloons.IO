@@ -9,7 +9,8 @@ var express = require('express')
   , redis = require('redis')
   , RedisStore = require('connect-redis')(express)
   , config = require('./config.json')
-  , utils = require('./utils');
+  , utils = require('./utils')
+  , fs = require('fs');
 
 /*
  * Instantiate redis
@@ -55,6 +56,7 @@ client.smembers('socketio:sockets', function(err, sockets) {
         });
     });
 });
+
 
 /*
  * Create and config server
@@ -180,11 +182,25 @@ io.configure(function() {
 
 
 io.sockets.on('connection', function (socket) {
+    var chatlogFileName,
+        chatlogWriteStream;
+
 	socket.on('set nickname', function(data) {
         var nickname = data.nickname
-           , room_id = data.room_id;
+           , room_id = data.room_id
+           , now = new Date();
 
         socket.join(room_id);
+
+        /*
+         * Chat Log handler
+         *
+         * Use of {'flags': 'a'} to append
+         * and {'flags': 'w'} to erase and write
+         *
+         */
+        chatlogFileName = room_id + (now.getDate()) + (now.getMonth() + 1) + (now.getFullYear()) + ".txt"
+        chatlogWriteStream = fs.createWriteStream(chatlogFileName, {'flags': 'a'});
 
         socket.set('nickname', nickname, function () {
             socket.set('room_id', room_id, function () {
@@ -199,6 +215,7 @@ io.sockets.on('connection', function (socket) {
                         client.sadd('rooms:' + room_id + ':online', nickname, function(err, userAdded) {
                             if(userAdded) {
                                 client.get('users:' + nickname + ':status', function(err, status) {
+                                    socket.emit('ready');
                                     io.sockets.in(data.room_id).emit('new user', {
                                         nickname: nickname,
                                         status: status || 'available'
@@ -217,6 +234,14 @@ io.sockets.on('connection', function (socket) {
 			socket.get('room_id', function(err, room_id) {	
 				var no_empty = data.msg.replace("\n","");
 				if(no_empty.length > 0) {
+                    var log = 'BalloonsIO.LOG:: ',
+                        now = new Date();
+
+                    log += 'CHAT_MESSAGE:: FROM::' + nickname;
+                    log += ' AT::' + now;
+                    log += ' WITH::' + data.msg;
+
+                    chatlogWriteStream.write(log + "\n");
                     io.sockets.in(room_id).emit('new msg', {
                         nickname: nickname,
                         msg: data.msg
@@ -241,8 +266,29 @@ io.sockets.on('connection', function (socket) {
         });
     });
 
-    socket.on('disconnect', function() {
+    socket.on('history request', function() {
+        var history = [];
+        var tail = require('child_process').spawn('tail', ['-n', 5, chatlogFileName]);
+        tail.stdout.on('data', function (data) {
+            var lines = data.toString('utf-8').split("\n");
+            lines.forEach(function(line, index) {
+                if(line.length) {
+                    var historyLine = {
+                        username: line.substring(line.indexOf('FROM::') + 'FROM::'.length, line.indexOf('AT::') - 1),
+                        atTime: line.substring(line.indexOf('AT::') + 'AT::'.length, line.indexOf('WITH::') - 1),
+                        message: line.substring(line.indexOf('WITH::') + 'WITH::'.length)
+                    }
 
+                    history.push(historyLine);
+                }
+            });
+            socket.emit('history response', {
+                history: history
+            });
+        });
+    });
+
+    socket.on('disconnect', function() {
         socket.get('room_id', function(err, room_id) {
             socket.get('nickname', function(err, nickname) {
                 // 'sockets:at:' + room_id + ':for:' + nickname
@@ -256,6 +302,7 @@ io.sockets.on('connection', function (socket) {
                             if(!members_no) {
                                 client.srem('rooms:' + room_id + ':online', nickname, function(err, removed) {
                                     if (removed) {
+                                        chatlogWriteStream.destroySoon();
                                         io.sockets.in(room_id).emit('user leave', {
                                             nickname: nickname
                                         });
@@ -265,10 +312,8 @@ io.sockets.on('connection', function (socket) {
                         });
                     }
                 });
-
             });
         });
-
     });
 });
 
