@@ -5,7 +5,7 @@ It’s build with the help of node.JS, Express, Socket.IO and Redis.
 
 ![image][]
 
-  [image]: https://github.com/gravityonmars/Balloons.IO/raw/master/public/img/Chat.png
+  [image]: http://gravityonmars.com/wp-content/themes/gom3/images/projects/balloons-io/app-1.png
 
 ## Installation
 
