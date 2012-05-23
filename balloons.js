@@ -24,8 +24,8 @@ var client = redis.createClient();
 // Delete all users sockets from their lists
 client.keys('users:*:sockets', function(err, keys) {
     keys.forEach(function(key, index) {
-        client.del(key, function(err2, deleted) {
-            console.log('Deleted', key, deleted, err2);
+        client.del(key, function(err, deleted) {
+            console.log('Deleted', key, deleted, err);
         })
     });
     console.log('Deleted all user\'s sockets lists', err);
@@ -34,8 +34,8 @@ client.keys('users:*:sockets', function(err, keys) {
 // No one is online when starting up
 client.keys('rooms:*:online', function(err, keys) {
     keys.forEach(function(key, index) {
-        client.del(key, function(err2, deleted) {
-            console.log('Deleted', key, deleted, err2);
+        client.del(key, function(err, deleted) {
+            console.log('Deleted', key, deleted, err);
         })
     });
     console.log('Deleted all rooms\'s online users lists', err);
@@ -45,11 +45,11 @@ client.keys('rooms:*:online', function(err, keys) {
 client.smembers('socketio:sockets', function(err, sockets) {
     var num = sockets.length;
     sockets.forEach(function(socketId, index) {
-        client.del(socketId, function(err2, deleted) {
-            console.log('Socket.io\'s socket data removed from database', deleted, err2);
+        client.del(socketId, function(err, deleted) {
+            console.log('Socket.io\'s socket data removed from database', deleted, err);
             if(index == num - 1) {
-                client.del('socketio:sockets', function(err3, deleted) {
-                    console.log('Deletion of sockets Done!', deleted, err3);
+                client.del('socketio:sockets', function(err, deleted) {
+                    console.log('Deletion of sockets Done!', deleted, err);
                 });
             }
         });
@@ -102,7 +102,7 @@ app.get('/rooms/list', utils.restrict, function(req, res) {
 
 app.post('/create', utils.restrict, function(req, res) {
     if(req.body.room_name.length <= 30) {
-        client.hgetall('rooms:' + req.body.room_name + ':info', function(err1, room) {
+        client.hgetall('rooms:' + req.body.room_name + ':info', function(err, room) {
             if(Object.keys(room).length) {
                 res.redirect( '/rooms/' + room.name );
 
@@ -113,8 +113,8 @@ app.post('/create', utils.restrict, function(req, res) {
                     locked: 0
                 };
 
-                client.hmset('rooms:' + req.body.room_name + ':info', room, function(err2, id) {
-                    if(!err2) {
+                client.hmset('rooms:' + req.body.room_name + ':info', room, function(err, id) {
+                    if(!err) {
                         res.redirect('/rooms/' + encodeURIComponent(req.body.room_name));
                         client.sadd('balloons:public:rooms', req.body.room_name);
                     }
@@ -127,14 +127,14 @@ app.post('/create', utils.restrict, function(req, res) {
 });
 
 app.get('/rooms/:id', utils.restrict, function(req, res) {
-    client.hgetall('rooms:' + req.params.id + ':info', function(err1, room) {
+    client.hgetall('rooms:' + req.params.id + ':info', function(err, room) {
     	if(Object.keys(room).length) {
-            client.smembers('rooms:' + req.params.id + ':online', function(err2, online_users) {
+            client.smembers('rooms:' + req.params.id + ':online', function(err, online_users) {
                 var users = []
                   , user_status = 'available';
 
                 online_users.forEach(function(username, index) {
-                    client.get('users:' + username + ':status', function(err4, status) {
+                    client.get('users:' + username + ':status', function(err, status) {
                         if(req.getAuthDetails().user.username == username) {
                             user_status = status || 'available';
                         }
@@ -145,7 +145,7 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
                     });
                 });
 
-                client.smembers("balloons:public:rooms", function(err3, rooms) {
+                client.smembers("balloons:public:rooms", function(err, rooms) {
 
                     res.locals({
                         rooms: rooms,
@@ -189,14 +189,14 @@ io.sockets.on('connection', function (socket) {
         socket.set('nickname', nickname, function () {
             socket.set('room_id', room_id, function () {
 
-                client.sadd('users:' + nickname + ':sockets', socket.id, function(err1, socketAdded) {
+                client.sadd('users:' + nickname + ':sockets', socket.id, function(err, socketAdded) {
                     if(socketAdded) {
                         console.log("socketID#", socket.id, "successfuly added to", nickname, "\'s sockets list!!");
-                        client.sadd('socketio:sockets', socket.id, function(err2, added) {
+                        client.sadd('socketio:sockets', socket.id, function(err, added) {
                             console.log("socketID#", socket.id, "successfuly added to socket.io sockets list");
                         });
 
-                        client.sadd('rooms:' + room_id + ':online', nickname, function(err2, userAdded) {
+                        client.sadd('rooms:' + room_id + ':online', nickname, function(err, userAdded) {
                             if(userAdded) {
                                 client.get('users:' + nickname + ':status', function(err, status) {
                                     io.sockets.in(data.room_id).emit('new user', {
@@ -213,8 +213,8 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('my msg', function(data) {
-		socket.get('nickname', function(err1, nickname) {
-			socket.get('room_id', function(err2, room_id) {	
+		socket.get('nickname', function(err, nickname) {
+			socket.get('room_id', function(err, room_id) {	
 				var no_empty = data.msg.replace("\n","");
 				if(no_empty.length > 0) {
                     io.sockets.in(room_id).emit('new msg', {
@@ -229,9 +229,9 @@ io.sockets.on('connection', function (socket) {
     socket.on('set status', function(data) {
         var status = data.status;
 
-        socket.get('nickname', function(err1, nickname) {
+        socket.get('nickname', function(err, nickname) {
 
-            client.set('users:' + nickname + ':status', status, function(err1, statusSet) {
+            client.set('users:' + nickname + ':status', status, function(err, statusSet) {
                 console.info(nickname, 'has setted', status);
                 io.sockets.emit('user-info update', {
                     username: nickname,
@@ -243,18 +243,18 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('disconnect', function() {
 
-        socket.get('room_id', function(err1, room_id) {
-            socket.get('nickname', function(err2, nickname) {
+        socket.get('room_id', function(err, room_id) {
+            socket.get('nickname', function(err, nickname) {
                 // 'sockets:at:' + room_id + ':for:' + nickname
-                client.srem('users:' + nickname + ':sockets', socket.id, function(err3, removed) {
+                client.srem('users:' + nickname + ':sockets', socket.id, function(err, removed) {
                     if(removed) {
                         console.info('socket#' + socket.id + ' successfuly removed from ' + nickname + '\'s sockets list!');
-                        client.srem('socketio:sockets', socket.id, function(err4, removed) {
+                        client.srem('socketio:sockets', socket.id, function(err, removed) {
                             console.log("socketID#", socket.id, "successfuly removed from socket.io sockets list");
                         });
-                        client.scard('users:' + nickname + ':sockets', function(err4, members_no) {
+                        client.scard('users:' + nickname + ':sockets', function(err, members_no) {
                             if(!members_no) {
-                                client.srem('rooms:' + room_id + ':online', nickname, function(err5, removed) {
+                                client.srem('rooms:' + room_id + ':online', nickname, function(err, removed) {
                                     if (removed) {
                                         io.sockets.in(room_id).emit('user leave', {
                                             nickname: nickname
