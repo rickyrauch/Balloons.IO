@@ -105,7 +105,7 @@ app.get('/rooms/list', utils.restrict, function(req, res) {
 app.post('/create', utils.restrict, function(req, res) {
     if(req.body.room_name.length <= 30) {
         client.hgetall('rooms:' + req.body.room_name + ':info', function(err, room) {
-            if(Object.keys(room).length) {
+            if(room && Object.keys(room).length) {
                 res.redirect( '/rooms/' + room.name );
 
             } else {
