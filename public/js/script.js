@@ -46,7 +46,6 @@ $(function() {
 		if(data.history && data.history.length) {
 			data.history.reverse()
 			data.history.forEach(function(historyLine) {
-				console.log(historyLine);
 				var time = new Date(historyLine.atTime),
 					hours = time.getHours(),
 					minutes = time.getMinutes(),
@@ -137,8 +136,6 @@ $(function() {
 	socket.on('user leave', function(data) {
 		var nickname = $('#username').text(),
 			message = "$username has left the room.";
-
-		console.log("hey, " + nickname + "!! The user " + data.nickname + " is leaving somewhere!!");
 		
 		$('.people a').each(function(index, element) {
 			var checkUsername = $(element).data('username');
@@ -148,7 +145,6 @@ $(function() {
 					$(element).remove();
 					USERS[data.nickname] = 0;
 
-					console.log(data.nickname + " was just removed from list at index: " + index);
 					// Chat notice
 					message = message
 								.replace('$username', data.nickname);
