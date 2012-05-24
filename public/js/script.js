@@ -44,6 +44,7 @@ $(function() {
 
 	socket.on('history response', function(data) {
 		if(data.history && data.history.length) {
+			data.history.reverse()
 			data.history.forEach(function(historyLine) {
 				console.log(historyLine);
 				var time = new Date(historyLine.atTime),
@@ -63,7 +64,7 @@ $(function() {
 					}
 				};
 
-				$('.chat').append(ich.chat_box(chatBoxData));
+				$('.chat').prepend(ich.chat_box(chatBoxData));
 				$('.chat').scrollTop($('.chat').height());
 			});
 		}
