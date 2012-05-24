@@ -199,7 +199,7 @@ io.sockets.on('connection', function (socket) {
          * and {'flags': 'w'} to erase and write
          *
          */
-        chatlogFileName = room_id + (now.getDate()) + (now.getMonth() + 1) + (now.getFullYear()) + ".txt"
+        chatlogFileName = room_id + (now.getFullYear()) + (now.getMonth() + 1) + (now.getDate()) + ".txt"
         chatlogWriteStream = fs.createWriteStream(chatlogFileName, {'flags': 'a'});
 
         socket.set('nickname', nickname, function () {
