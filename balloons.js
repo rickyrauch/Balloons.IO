@@ -25,9 +25,7 @@ var client = redis.createClient();
 // Delete all users sockets from their lists
 client.keys('users:*:sockets', function(err, keys) {
     keys.forEach(function(key, index) {
-        client.del(key, function(err, deleted) {
-            console.log('Deleted', key, deleted, err);
-        })
+        client.del(key);
     });
     console.log('Deleted all user\'s sockets lists', err);
 });
@@ -35,9 +33,7 @@ client.keys('users:*:sockets', function(err, keys) {
 // No one is online when starting up
 client.keys('rooms:*:online', function(err, keys) {
     keys.forEach(function(key, index) {
-        client.del(key, function(err, deleted) {
-            console.log('Deleted', key, deleted, err);
-        })
+        client.del(key);
     });
     console.log('Deleted all rooms\'s online users lists', err);
 });
@@ -47,10 +43,9 @@ client.smembers('socketio:sockets', function(err, sockets) {
     var num = sockets.length;
     sockets.forEach(function(socketId, index) {
         client.del(socketId, function(err, deleted) {
-            console.log('Socket.io\'s socket data removed from database', deleted, err);
             if(index == num - 1) {
                 client.del('socketio:sockets', function(err, deleted) {
-                    console.log('Deletion of sockets Done!', deleted, err);
+                    console.log('Deletion of socket.io storage Done!', deleted, err);
                 });
             }
         });
@@ -207,10 +202,8 @@ io.sockets.on('connection', function (socket) {
 
                 client.sadd('users:' + nickname + ':sockets', socket.id, function(err, socketAdded) {
                     if(socketAdded) {
-                        console.log("socketID#", socket.id, "successfuly added to", nickname, "\'s sockets list!!");
-                        client.sadd('socketio:sockets', socket.id, function(err, added) {
-                            console.log("socketID#", socket.id, "successfuly added to socket.io sockets list");
-                        });
+
+                        client.sadd('socketio:sockets', socket.id);
 
                         client.sadd('rooms:' + room_id + ':online', nickname, function(err, userAdded) {
                             if(userAdded) {
@@ -257,7 +250,6 @@ io.sockets.on('connection', function (socket) {
         socket.get('nickname', function(err, nickname) {
 
             client.set('users:' + nickname + ':status', status, function(err, statusSet) {
-                console.info(nickname, 'has setted', status);
                 io.sockets.emit('user-info update', {
                     username: nickname,
                     status: status
@@ -294,10 +286,8 @@ io.sockets.on('connection', function (socket) {
                 // 'sockets:at:' + room_id + ':for:' + nickname
                 client.srem('users:' + nickname + ':sockets', socket.id, function(err, removed) {
                     if(removed) {
-                        console.info('socket#' + socket.id + ' successfuly removed from ' + nickname + '\'s sockets list!');
-                        client.srem('socketio:sockets', socket.id, function(err, removed) {
-                            console.log("socketID#", socket.id, "successfuly removed from socket.io sockets list");
-                        });
+                        client.srem('socketio:sockets', socket.id);
+
                         client.scard('users:' + nickname + ':sockets', function(err, members_no) {
                             if(!members_no) {
                                 client.srem('rooms:' + room_id + ':online', nickname, function(err, removed) {
