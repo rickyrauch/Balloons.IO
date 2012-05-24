@@ -80,9 +80,25 @@ $(function() {
 			message = message
 						.replace('$username', data.nickname);
 
-			$('.chat').append(ich.chat_notice({
+			// Check update time
+			var now = new Date(),
+				hours = now.getHours(),
+				minutes = now.getMinutes(),
+				seconds = now.getSeconds(),
+				tt = hours > 12 ? "PM" : "AM";
+
+			var chatNoticeBox = {
+				time: {
+					hr: hours > 12 ? hours - 12 : hours,
+					min: minutes < 10 ? "0" + minutes : minutes,
+					sec: seconds < 10 ? "0" + seconds : seconds,
+					tt: tt
+				},
 				noticeMsg: message
-			})).scrollTop($('.chat').height());
+			};
+
+			$('.chat').append(ich.chat_notice(chatNoticeBox));
+			$('.chat').scrollTop($('.chat').height());
 		}
 	});
 
@@ -110,9 +126,25 @@ $(function() {
 					.replace('$username', data.username)
 					.replace('$status', data.status);
 
-		$('.chat').append(ich.chat_notice({
+		// Check update time
+		var now = new Date(),
+			hours = now.getHours(),
+			minutes = now.getMinutes(),
+			seconds = now.getSeconds(),
+			tt = hours > 12 ? "PM" : "AM";
+
+		var chatNoticeBox = {
+			time: {
+				hr: hours > 12 ? hours - 12 : hours,
+				min: minutes < 10 ? "0" + minutes : minutes,
+				sec: seconds < 10 ? "0" + seconds : seconds,
+				tt: tt
+			},
 			noticeMsg: message
-		})).scrollTop($('.chat').height());
+		};
+
+		$('.chat').append(ich.chat_notice(chatNoticeBox));
+		$('.chat').scrollTop($('.chat').height());
 	});
 
 	socket.on('new msg', function(data) {

@@ -248,7 +248,6 @@ io.sockets.on('connection', function (socket) {
         var status = data.status;
 
         socket.get('nickname', function(err, nickname) {
-
             client.set('users:' + nickname + ':status', status, function(err, statusSet) {
                 io.sockets.emit('user-info update', {
                     username: nickname,

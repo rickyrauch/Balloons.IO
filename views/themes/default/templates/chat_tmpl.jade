@@ -10,6 +10,7 @@ script#chat_box(type='text/html')
 
 script#chat_notice(type='text/html')
 	.notice
+		span.date {{ time.hr }}:{{ time.min }} {{ time.tt }}
 		| {{ noticeMsg }}
 
 script#people_box(type='text/html')
