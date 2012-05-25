@@ -47,21 +47,12 @@ $(function() {
 			data.history.reverse()
 			data.history.forEach(function(historyLine) {
 				var time = new Date(historyLine.atTime),
-					hours = time.getHours(),
-					minutes = time.getMinutes(),
-					seconds = time.getSeconds(),
-					tt = hours > 12 ? "PM" : "AM";
-
-				chatBoxData = {
-					nickname: historyLine.username,
-					msg: historyLine.message,
-					time: {
-						hr: hours > 12 ? hours - 12 : hours,
-						min: minutes < 10 ? "0" + minutes : minutes,
-						sec: seconds < 10 ? "0" + seconds : seconds,
-						tt: tt
-					}
-				};
+					chatBoxData = {
+						nickname: historyLine.from,
+						msg: historyLine.withData,
+						time: time,
+						tt: time.getHours() > 12 ? "PM" : "AM"
+					};
 
 				$('.chat').prepend(ich.chat_box(chatBoxData));
 				$('.chat').scrollTop($('.chat').height());
@@ -81,23 +72,14 @@ $(function() {
 						.replace('$username', data.nickname);
 
 			// Check update time
-			var now = new Date(),
-				hours = now.getHours(),
-				minutes = now.getMinutes(),
-				seconds = now.getSeconds(),
-				tt = hours > 12 ? "PM" : "AM";
+			var time = new Date(),
+				noticeBoxData = {
+					noticeMsg: message,
+					time: time,
+					tt: time.getHours() > 12 ? "PM" : "AM"
+				};
 
-			var chatNoticeBox = {
-				time: {
-					hr: hours > 12 ? hours - 12 : hours,
-					min: minutes < 10 ? "0" + minutes : minutes,
-					sec: seconds < 10 ? "0" + seconds : seconds,
-					tt: tt
-				},
-				noticeMsg: message
-			};
-
-			$('.chat').append(ich.chat_notice(chatNoticeBox));
+			$('.chat').append(ich.chat_notice(noticeBoxData));
 			$('.chat').scrollTop($('.chat').height());
 		}
 	});
@@ -127,39 +109,22 @@ $(function() {
 					.replace('$status', data.status);
 
 		// Check update time
-		var now = new Date(),
-			hours = now.getHours(),
-			minutes = now.getMinutes(),
-			seconds = now.getSeconds(),
-			tt = hours > 12 ? "PM" : "AM";
+		var time = new Date(),
+			noticeBoxData = {
+				noticeMsg: message,
+				time: time,
+				tt: time.getHours() > 12 ? "PM" : "AM"
+			};
 
-		var chatNoticeBox = {
-			time: {
-				hr: hours > 12 ? hours - 12 : hours,
-				min: minutes < 10 ? "0" + minutes : minutes,
-				sec: seconds < 10 ? "0" + seconds : seconds,
-				tt: tt
-			},
-			noticeMsg: message
-		};
-
-		$('.chat').append(ich.chat_notice(chatNoticeBox));
+		$('.chat').append(ich.chat_notice(noticeBoxData));
 		$('.chat').scrollTop($('.chat').height());
 	});
 
 	socket.on('new msg', function(data) {
-		var now = new Date(),
-			hours = now.getHours(),
-			minutes = now.getMinutes(),
-			seconds = now.getSeconds(),
-			tt = hours > 12 ? "PM" : "AM";
+		var time = new Date();
 
-		data.time = {
-			hr: hours > 12 ? hours - 12 : hours,
-			min: minutes < 10 ? "0" + minutes : minutes,
-			sec: seconds < 10 ? "0" + seconds : seconds,
-			tt: tt
-		};
+		data.time = time;
+		data.tt = time.getHours() > 12 ? "PM" : "AM";
 
 		$('.chat').append(ich.chat_box(data));
 		$('.chat').scrollTop($('.chat').height());
@@ -207,11 +172,4 @@ $(function() {
 			status: $(this).data('status')
 		});
 	})
-
-	//THIS IS THE SAME AS NEW USER NOW
-	// socket.on('ready', function(data) {
-	// 	$.each(data.user_list, function(k,v) {
-	// 		$('.chat-list').append('<li><div class="status-bar"><span class="status available"></span></div><div class="user-space"><img src="http://img.tweetimag.es/i/"+v class="avatar"><span class="username">' + v + '</span></div></li>');
-	// 	});
-	// });
 });

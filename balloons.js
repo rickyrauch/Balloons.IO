@@ -227,14 +227,15 @@ io.sockets.on('connection', function (socket) {
 			socket.get('room_id', function(err, room_id) {	
 				var no_empty = data.msg.replace("\n","");
 				if(no_empty.length > 0) {
-                    var log = 'BalloonsIO.LOG:: ',
-                        now = new Date();
+                    var chatlogRegistry = {
+                        type: 'message',
+                        from: nickname,
+                        atTime: new Date(),
+                        withData: data.msg
+                    }
 
-                    log += 'CHAT_MESSAGE:: FROM::' + nickname;
-                    log += ' AT::' + now;
-                    log += ' WITH::' + data.msg;
-
-                    chatlogWriteStream.write(log + "\n");
+                    chatlogWriteStream.write(JSON.stringify(chatlogRegistry) + "\n");
+                    
                     io.sockets.in(room_id).emit('new msg', {
                         nickname: nickname,
                         msg: data.msg
@@ -262,17 +263,14 @@ io.sockets.on('connection', function (socket) {
         var tail = require('child_process').spawn('tail', ['-n', 5, chatlogFileName]);
         tail.stdout.on('data', function (data) {
             var lines = data.toString('utf-8').split("\n");
+            
             lines.forEach(function(line, index) {
                 if(line.length) {
-                    var historyLine = {
-                        username: line.substring(line.indexOf('FROM::') + 'FROM::'.length, line.indexOf('AT::') - 1),
-                        atTime: line.substring(line.indexOf('AT::') + 'AT::'.length, line.indexOf('WITH::') - 1),
-                        message: line.substring(line.indexOf('WITH::') + 'WITH::'.length)
-                    }
-
+                    var historyLine = JSON.parse(line);
                     history.push(historyLine);
                 }
             });
+
             socket.emit('history response', {
                 history: history
             });
