@@ -24,9 +24,7 @@ var client = redis.createClient();
 
 // Delete all users sockets from their lists
 client.keys('users:*:sockets', function(err, keys) {
-    keys.forEach(function(key, index) {
-        client.del(key);
-    });
+    client.del(keys);
     console.log('Deleted all user\'s sockets lists', err);
 });
 
