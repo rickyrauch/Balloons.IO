@@ -30,9 +30,7 @@ client.keys('users:*:sockets', function(err, keys) {
 
 // No one is online when starting up
 client.keys('rooms:*:online', function(err, keys) {
-    keys.forEach(function(key, index) {
-        client.del(key);
-    });
+    client.del(keys);
     console.log('Deleted all rooms\'s online users lists', err);
 });
 
