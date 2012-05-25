@@ -36,16 +36,8 @@ client.keys('rooms:*:online', function(err, keys) {
 
 // Delete all socket.io's sockets data from Redis
 client.smembers('socketio:sockets', function(err, sockets) {
-    var num = sockets.length;
-    sockets.forEach(function(socketId, index) {
-        client.del(socketId, function(err, deleted) {
-            if(index == num - 1) {
-                client.del('socketio:sockets', function(err, deleted) {
-                    console.log('Deletion of socket.io storage Done!', deleted, err);
-                });
-            }
-        });
-    });
+    client.del(sockets);
+    console.log('Deletion of socket.io storage Done!', err);
 });
 
 
