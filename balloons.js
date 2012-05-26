@@ -25,19 +25,19 @@ var client = redis.createClient();
 // Delete all users sockets from their lists
 client.keys('users:*:sockets', function(err, keys) {
   client.del(keys);
-  console.log('Deleted all user\'s sockets lists', err);
+  console.log('Deletion of sockets reference for each user >> ', err || "Done!");
 });
 
 // No one is online when starting up
 client.keys('rooms:*:online', function(err, keys) {
   client.del(keys);
-  console.log('Deleted all rooms\'s online users lists', err);
+  console.log('Deletion of online users from rooms >> ', err || "Done!");
 });
 
 // Delete all socket.io's sockets data from Redis
 client.smembers('socketio:sockets', function(err, sockets) {
   client.del(sockets);
-  console.log('Deletion of socket.io storage Done!', err);
+  console.log('Deletion of socket.io stored sockets data >> ', err || "Done!");
 });
 
 
