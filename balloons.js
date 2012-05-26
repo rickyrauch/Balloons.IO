@@ -24,19 +24,19 @@ var client = redis.createClient();
 
 // Delete all users sockets from their lists
 client.keys('users:*:sockets', function(err, keys) {
-  client.del(keys);
+  if(keys.length) client.del(keys);
   console.log('Deletion of sockets reference for each user >> ', err || "Done!");
 });
 
 // No one is online when starting up
 client.keys('rooms:*:online', function(err, keys) {
-  client.del(keys);
+  if(keys.length) client.del(keys);
   console.log('Deletion of online users from rooms >> ', err || "Done!");
 });
 
 // Delete all socket.io's sockets data from Redis
 client.smembers('socketio:sockets', function(err, sockets) {
-  client.del(sockets);
+  if(sockets.length) client.del(sockets);
   console.log('Deletion of socket.io stored sockets data >> ', err || "Done!");
 });
 
@@ -120,9 +120,6 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
 
         online_users.forEach(function(username, index) {
           client.get('users:' + username + ':status', function(err, status) {
-            if(req.getAuthDetails().user.username == username) {
-              user_status = status || 'available';
-            }
             users.push({
               username: username,
               status: status || 'available'
@@ -131,17 +128,18 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
         });
 
         client.smembers("balloons:public:rooms", function(err, rooms) {
+          client.get('users:' + req.getAuthDetails().user.username + ':status', function(err, user_status) {
+            res.locals({
+              rooms: rooms,
+              room_name: room.name,
+              room_id: req.params.id,
+              username: req.getAuthDetails().user.username,
+              user_status: user_status,
+              users_list: users
+            });
 
-          res.locals({
-            rooms: rooms,
-            room_name: room.name,
-            room_id: req.params.id,
-            username: req.getAuthDetails().user.username,
-            user_status: user_status,
-            users_list: users
-          });
-
-          res.render('room');
+            res.render('room');
+          })
         });
       });
     } else {
