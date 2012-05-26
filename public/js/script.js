@@ -131,8 +131,8 @@ $(function() {
   });
 
   socket.on('user leave', function(data) {
-    var nickname = $('#username').text(),
-      message = "$username has left the room.";
+    var nickname = $('#username').text()
+      , message = "$username has left the room.";
     
     $('.people a').each(function(index, element) {
       var checkUsername = $(element).data('username');
@@ -146,9 +146,16 @@ $(function() {
           message = message
                 .replace('$username', data.nickname);
 
-          $('.chat').append(ich.chat_notice({
-            noticeMsg: message
-          })).scrollTop($('.chat').height());
+          // Check update time
+          var time = new Date(),
+            noticeBoxData = {
+              noticeMsg: message,
+              time: time,
+              tt: time.getHours() > 12 ? "PM" : "AM"
+            };
+
+          $('.chat').append(ich.chat_notice(noticeBoxData));
+          $('.chat').scrollTop($('.chat').height());
         };
       }
     });
