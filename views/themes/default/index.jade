@@ -1,43 +1,43 @@
 body.home-page
-	.homepage-container
-		.slideshow
-			#slideshow
-				.slide
-					h2 Realtime & Free
-				.slide
-					h2 Open or Private
-				.slide
-					h2 Collaborative Chat
-				#nav
-			// #slideshow
-			
-		.login-box
-			.inner-padding
-				img.logo(src='img/logo.png', width='217', height='239', alt='Logo')
-				h3 Free & ready to go web chat room.
-				p	
-					strong \Ballons.IO 
-					\is build with the help of node.JS, Socket\.IO and Redis.
-				div
-					a#twitbutt.sign-in-twitter(href="#") sign in
-		// #login-box 
-	// .homepage-container
-	
-	footer
-		| Balloons.IO is an
-		a(href='https://github.com/gravityonmars/Balloons.IO') Open Source project
-		| .
+  .homepage-container
+    .slideshow
+      #slideshow
+        .slide
+          h2 Realtime & Free
+        .slide
+          h2 Open or Private
+        .slide
+          h2 Collaborative Chat
+        #nav
+      // #slideshow
+      
+    .login-box
+      .inner-padding
+        img.logo(src='img/logo.png', width='217', height='239', alt='Logo')
+        h3 Free & ready to go web chat room.
+        p 
+          strong \Ballons.IO 
+          \is build with the help of node.JS, Socket\.IO and Redis.
+        div
+          a#twitbutt.sign-in-twitter(href="#") sign in
+    // #login-box 
+  // .homepage-container
+  
+  footer
+    | Balloons.IO is an
+    a(href='https://github.com/gravityonmars/Balloons.IO') Open Source project
+    | .
 
-	// JavaScript at the bottom for fast page loading 
-	script(src='http://malsup.github.com/jquery.cycle.all.js')
-	script(type='text/javascript')
-		$(function() {
-			$('#slideshow').cycle({
-					fx:     'fade',
-					delay: '4',
-					speed:  'slow',
-					timeout: 3000,
-					pager:  '#nav',
-					slideExpr: 'div.slide'
-			});
-		});
+  // JavaScript at the bottom for fast page loading 
+  script(src='http://malsup.github.com/jquery.cycle.all.js')
+  script(type='text/javascript')
+    $(function() {
+      $('#slideshow').cycle({
+          fx:     'fade',
+          delay: '4',
+          speed:  'slow',
+          timeout: 3000,
+          pager:  '#nav',
+          slideExpr: 'div.slide'
+      });
+    });

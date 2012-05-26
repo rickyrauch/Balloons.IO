@@ -1,19 +1,19 @@
 script#chat_box(type='text/html')
-	.chat-box
-		.avatar
-			img(src='http://img.tweetimag.es/i/{{ nickname }}')
-		h5
-			span.date {{ time.getHours }}:{{ time.getMinutes }} {{ tt }}
-			| {{ nickname }}
-		p
-			| {{ msg }}
+  .chat-box
+    .avatar
+      img(src='http://img.tweetimag.es/i/{{ nickname }}')
+    h5
+      span.date {{ time.getHours }}:{{ time.getMinutes }} {{ tt }}
+      | {{ nickname }}
+    p
+      | {{ msg }}
 
 script#chat_notice(type='text/html')
-	.notice
-		span.date {{ time.getHours }}:{{ time.getMinutes }} {{ tt }}
-		| {{ noticeMsg }}
+  .notice
+    span.date {{ time.getHours }}:{{ time.getMinutes }} {{ tt }}
+    | {{ noticeMsg }}
 
 script#people_box(type='text/html')
-	a(class='{{ status }}', href='#', data-username='{{ nickname }}')
-		b
-		| {{ nickname }}
+  a(class='{{ status }}', href='#', data-username='{{ nickname }}')
+    b
+    | {{ nickname }}

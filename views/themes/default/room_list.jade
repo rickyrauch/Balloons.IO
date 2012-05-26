@@ -1,16 +1,16 @@
 body.home-page
-	.select-room-container.box-container
-		.inner-padding
-			img.logo(src='/img/logo.png', width='217', height='239', alt='Logo')
-			h4 Select a room:
-			.room-list
-				each room,key in rooms
-					a(href='/rooms/'+room)= room
-			// .room-list 
-			h4
-				em or
-				| Create a new one:
-			form(method="POST",action="/create")
-				p
-					input.text-grey(type='text', name='room_name', value='', placeholder='Name of your room')
-				input.button(type='submit', value='Create now')
+  .select-room-container.box-container
+    .inner-padding
+      img.logo(src='/img/logo.png', width='217', height='239', alt='Logo')
+      h4 Select a room:
+      .room-list
+        each room,key in rooms
+          a(href='/rooms/'+room)= room
+      // .room-list 
+      h4
+        em or
+        | Create a new one:
+      form(method="POST",action="/create")
+        p
+          input.text-grey(type='text', name='room_name', value='', placeholder='Name of your room')
+        input.button(type='submit', value='Create now')

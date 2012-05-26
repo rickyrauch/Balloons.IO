@@ -1,21 +1,21 @@
 - var fullStatus = ['available', 'away', 'busy']
 - var current;
 .dropdown.dropdown-status
-	i
-	a.selected(class='#{user_status}', href='#')
-		b
-		| #{user_status}
-	.dropdown-options
-		.triangle
-		.list
-			- fullStatus.forEach(function(status) {
-				- if (status == user_status)
-					- current = 'current'
-				- else
-					- current = ''
-				a(class='option #{status} #{current}', data-status='#{status}', href='#')
-					b
-					| #{status}
+  i
+  a.selected(class='#{user_status}', href='#')
+    b
+    | #{user_status}
+  .dropdown-options
+    .triangle
+    .list
+      - fullStatus.forEach(function(status) {
+        - if (status == user_status)
+          - current = 'current'
+        - else
+          - current = ''
+        a(class='option #{status} #{current}', data-status='#{status}', href='#')
+          b
+          | #{status}
 
-			- })
+      - })
 // .dropdown dropdown-status
