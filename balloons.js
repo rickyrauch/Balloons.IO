@@ -113,7 +113,7 @@ app.post('/create', utils.restrict, function(req, res) {
 
 app.get('/rooms/:id', utils.restrict, function(req, res) {
     client.hgetall('rooms:' + req.params.id + ':info', function(err, room) {
-    	if(Object.keys(room).length) {
+        if(Object.keys(room).length) {
             client.smembers('rooms:' + req.params.id + ':online', function(err, online_users) {
                 var users = []
                   , user_status = 'available';
@@ -144,9 +144,9 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
                     res.render('room');
                 });
             });
-    	} else {
-    		res.redirect('back');
-    	}
+        } else {
+            res.redirect('back');
+        }
     });
 });
 
@@ -158,9 +158,9 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
 var io = sio.listen(app);
 
 io.configure(function() {
-	io.set('store', new sio.RedisStore);
-	io.enable('browser client minification');
-	io.enable('browser client gzip');
+    io.set('store', new sio.RedisStore);
+    io.enable('browser client minification');
+    io.enable('browser client gzip');
 });
 
 
@@ -168,7 +168,7 @@ io.sockets.on('connection', function (socket) {
     var chatlogFileName,
         chatlogWriteStream;
 
-	socket.on('set nickname', function(data) {
+    socket.on('set nickname', function(data) {
         var nickname = data.nickname
            , room_id = data.room_id
            , now = new Date();
@@ -207,14 +207,14 @@ io.sockets.on('connection', function (socket) {
                     }
                 });
             });
-		});
-	});
+        });
+    });
 
-	socket.on('my msg', function(data) {
-		socket.get('nickname', function(err, nickname) {
-			socket.get('room_id', function(err, room_id) {	
-				var no_empty = data.msg.replace("\n","");
-				if(no_empty.length > 0) {
+    socket.on('my msg', function(data) {
+        socket.get('nickname', function(err, nickname) {
+            socket.get('room_id', function(err, room_id) {  
+                var no_empty = data.msg.replace("\n","");
+                if(no_empty.length > 0) {
                     var chatlogRegistry = {
                         type: 'message',
                         from: nickname,
@@ -228,10 +228,10 @@ io.sockets.on('connection', function (socket) {
                         nickname: nickname,
                         msg: data.msg
                     });        
-                }	
-			});
-		});
-	});
+                }   
+            });
+        });
+    });
 
     socket.on('set status', function(data) {
         var status = data.status;
