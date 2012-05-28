@@ -311,15 +311,16 @@ header .button-circle.lock.active span i{background:  url('../img/icon-locked.pn
 }
 .dropdown .selected.active{border: 1px solid rgba(255,255,255,.6); box-shadow: 0 0 4px rgba(255,255,255,.2)}
 .dropdown .dropdown-options{
-	background-image: -webkit-linear-gradient(#f1f1f1,  #ccc);
-	background-image: -moz-linear-gradient(#f1f1f1,  #ccc);
-	background-image: -o-linear-gradient(#f1f1f1,  #ccc);
+	background-image: -webkit-linear-gradient(#fff,  #f1f1f1);
+	background-image: -moz-linear-gradient(#f9f9f9,  #f1f1f1);
+	background-image: -o-linear-gradient(#f9f9f9,  #f1f1f1);
 	border-radius: 4px; position: absolute; display: none;
 	top: 36px;
 	box-shadow: 0 0px 2px black;
+	overflow: hidden;
 }
 .dropdown .dropdown-options .list{
-	overflow: scroll;
+	overflow: hidden;
 	max-height: 300px;
 }
 
@@ -405,7 +406,7 @@ sidebar h4{text-transform: uppercase; color: #555; font-size: 1em; margin-top: 2
 
 sidebar a{color: white;}
 sidebar h4, sidebar div.online .people a{padding: 0 1em}
-sidebar div.online {overflow: scroll; height: 100%}
+sidebar div.online {overflow: hidden;  height: 100%}
 sidebar div.files {height: 18%;  display: none; }
 /*sidebar div.online .people, sidebar div.files .files-container{  overflow-y: scroll; height: 100%}*/
 sidebar div.online .people a{display: block; padding: 1em;  border-bottom: 1px solid rgba(255,255,255,.04)}
