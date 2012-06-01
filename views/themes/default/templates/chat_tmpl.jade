@@ -11,7 +11,7 @@ script#chat_box(type='text/html')
 script#chat_notice(type='text/html')
   .notice
     span.date {{ time.getHours }}:{{ time.getMinutes }} {{ tt }}
-    | {{ noticeMsg }}
+    |  {{ noticeMsg }}
 
 script#people_box(type='text/html')
   a(class='{{ status }}', href='#', data-username='{{ nickname }}')
