@@ -1,15 +1,15 @@
 .dropdown.dropdown-room
-  i
-  a.selected(href='#') Current Room
-  .dropdown-options
-    .triangle
-    a.option.create-room(href='#') Create a room
-    input.text(type='text', name='', value='', placeholder='Name of your room', style='display: none')
-    .list
-      a.option.current(href='#')= room_name
-      each room,index in rooms  
-        -if(room != room_id){
-          li
-            a.option(href="/rooms/"+room)= room
-        -}
+	i
+	a.selected(href='#') Current Room
+	.dropdown-options
+		.triangle
+		a.option.create-room(href='#') Create a room
+		.list
+			input.text(type='text', name='', value='', placeholder='Name of your room', style='display: none')
+			a.option.current(href='#')= room_name
+			each room,index in rooms	
+				-if(room != room_id){
+					li
+						a.option(href="/rooms/"+room)= room
+				-}
 // .dropdown-room 
