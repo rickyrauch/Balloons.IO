@@ -50,7 +50,7 @@ app.get('/', function(req,res,next){
 
 app.get('/rooms/list', utils.restrict, function(req, res){
   client.hgetall('rooms', function(err, rooms){
-    res.locals({'rooms' : rooms});
+    res.locals({'rooms' : rooms || []});
     res.render('room_list');
   });
 });
