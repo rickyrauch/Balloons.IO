@@ -55,7 +55,7 @@ $(function() {
           };
 
         $('.chat').prepend(ich.chat_box(chatBoxData));
-        $('.chat').scrollTop($('.chat').height());
+        $('.chat').scrollTop(chatHeight());
       });
     }
   });
@@ -80,7 +80,7 @@ $(function() {
         };
 
       $('.chat').append(ich.chat_notice(noticeBoxData));
-      $('.chat').scrollTop($('.chat').height());
+      $('.chat').scrollTop(chatHeight());
     }
   });
 
@@ -117,7 +117,7 @@ $(function() {
       };
 
     $('.chat').append(ich.chat_notice(noticeBoxData));
-    $('.chat').scrollTop($('.chat').height());
+    $('.chat').scrollTop(chatHeight());
   });
 
   socket.on('new msg', function(data) {
@@ -127,7 +127,7 @@ $(function() {
     data.tt = time.getHours() > 12 ? "PM" : "AM";
 
     $('.chat').append(ich.chat_box(data));
-    $('.chat').scrollTop($('.chat').height());
+    $('.chat').scrollTop(chatHeight());
   });
 
   socket.on('user leave', function(data) {
@@ -155,7 +155,7 @@ $(function() {
             };
 
           $('.chat').append(ich.chat_notice(noticeBoxData));
-          $('.chat').scrollTop($('.chat').height());
+          $('.chat').scrollTop(chatHeight());
         };
       }
     });
@@ -178,5 +178,12 @@ $(function() {
     socket.emit('set status', {
       status: $(this).data('status')
     });
-  })
+  });
+
+  var chatHeight = function() {
+    var elementsNo = $('.chat').children().length
+      , maxHeight = $('.chat-box').outerHeight() || 80;
+
+    return elementsNo * maxHeight;
+  }
 });
