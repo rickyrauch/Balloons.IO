@@ -5,7 +5,7 @@
 		!=partial('rooms_dropdown', {rooms: rooms});
 		
 		div.logged-box
-			img.avatar(src=" http://img.tweetimag.es/i/"+username)
+			img.avatar(src=" http://twitter.com/api/users/profile_image/"+username)
 			span.logged-as Logged in as:
 			span.username= username
 
@@ -17,7 +17,7 @@
 
 		div.type-message
 			div.user
-				img.avatar(src="http://img.tweetimag.es/i/"+username)
+				img.avatar(src="http://twitter.com/api/users/profile_image/"+username)
 				a(href="#")
 
 			textarea#msgbox(name="Name",rows="8",cols="40")
