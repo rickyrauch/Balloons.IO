@@ -36,6 +36,6 @@ the keys that twitter gives you in the file config.sample.json
 Rename config.sample.json to config.json
 
 Run `node balloons`
-Point your browser to `http://localhost:3000`
+Point your browser to `http://127.0.0.1:3000`
 
 Enjoy!
