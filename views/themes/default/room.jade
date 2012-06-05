@@ -5,7 +5,7 @@
 
     !=partial('rooms_dropdown', { rooms: rooms });
 
-    a.button-circle.invite.fancybox(href='#invite')
+    a.button-circle.invite.fancybox(href='#invite', style="display:none;")
       strong
         span
           i
@@ -30,7 +30,7 @@
         a.button.invite-people(href='#') Invite these people
       // .modal-footers 
     // #invite 
-    a.button-circle.lock(href='#')
+    a.button-circle.lock(href='#', style="display:none;")
       strong
         span
           i
