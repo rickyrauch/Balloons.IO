@@ -7,7 +7,7 @@ $(function() {
 
   //View handlers
   $(".dropdown a.selected").click(function() {
-    $('.create-room').show().next(".text").hide();
+    $('.create-room').show().next("form .text").hide();
     $(this).toggleClass("active");
     $(this).next(".dropdown-options").toggle();
   });
