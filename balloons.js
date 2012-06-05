@@ -12,7 +12,7 @@ var express = require('express')
 	, utils = require('./utils');
 
 /*
- * Instanciate redis
+ * Instantiate redis
  */
 
 var client = redis.createClient();
