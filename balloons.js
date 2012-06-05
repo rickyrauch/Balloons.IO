@@ -12,6 +12,7 @@ var express = require('express')
   , utils = require('./utils')
   , fs = require('fs');
 
+
 /*
  * Instantiate redis
  */
@@ -40,10 +41,12 @@ client.smembers('socketio:sockets', function(err, sockets) {
   console.log('Deletion of socket.io stored sockets data >> ', err || "Done!");
 });
 
+
 /*
  * Create 'chats' dir
  */
 fs.mkdir('chats');
+
 
 /*
  * Create and config server
@@ -64,6 +67,7 @@ app.configure(function() {
   app.use(easyoauth(config.auth));
   app.use(app.router);
 });
+
 
 /*
  * Routes
@@ -104,8 +108,8 @@ app.post('/create', utils.restrict, function(req, res) {
 
         client.hmset('rooms:' + req.body.room_name + ':info', room, function(err, id) {
           if(!err) {
-            res.redirect('/rooms/' + encodeURIComponent(req.body.room_name));
             client.sadd('balloons:public:rooms', req.body.room_name);
+            res.redirect('/rooms/' + encodeURIComponent(req.body.room_name));
           }
         });
       }
@@ -151,10 +155,10 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
   });
 });
 
+
 /*
  * Socket.io
  */
-
 
 var io = sio.listen(app);
 
@@ -176,13 +180,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.join(room_id);
 
-    /*
-     * Chat Log handler
-     *
-     * Use of {'flags': 'a'} to append
-     * and {'flags': 'w'} to erase and write
-     *
-     */
+    // Chat Log handler
     chatlogFileName = 'chats/' + room_id + (now.getFullYear()) + (now.getMonth() + 1) + (now.getDate()) + ".txt"
     chatlogWriteStream = fs.createWriteStream(chatlogFileName, {'flags': 'a'});
 
