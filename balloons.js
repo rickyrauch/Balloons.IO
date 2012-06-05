@@ -40,6 +40,10 @@ client.smembers('socketio:sockets', function(err, sockets) {
   console.log('Deletion of socket.io stored sockets data >> ', err || "Done!");
 });
 
+/*
+ * Create 'chats' dir
+ */
+fs.mkdir('chats');
 
 /*
  * Create and config server
@@ -162,8 +166,8 @@ io.configure(function() {
 
 
 io.sockets.on('connection', function (socket) {
-  var chatlogFileName,
-    chatlogWriteStream;
+  var chatlogFileName
+    , chatlogWriteStream;
 
   socket.on('set nickname', function(data) {
     var nickname = data.nickname
@@ -179,7 +183,7 @@ io.sockets.on('connection', function (socket) {
      * and {'flags': 'w'} to erase and write
      *
      */
-    chatlogFileName = room_id + (now.getFullYear()) + (now.getMonth() + 1) + (now.getDate()) + ".txt"
+    chatlogFileName = 'chats/' + room_id + (now.getFullYear()) + (now.getMonth() + 1) + (now.getDate()) + ".txt"
     chatlogWriteStream = fs.createWriteStream(chatlogFileName, {'flags': 'a'});
 
     socket.set('nickname', nickname, function () {
