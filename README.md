@@ -5,8 +5,6 @@ It’s build with the help of node.JS, Express, Socket.IO and Redis. [Follow us 
 
   [Follow us on twitter]: http://twitter.com/gravityonmars
 
-![image][]
-
   [image]: http://gravityonmars.com/wp-content/themes/gom3/images/projects/balloons-io/app-1.png
 
 ## Installation
@@ -35,6 +33,6 @@ Log in with your account https://dev.twitter.com/.
 Create a new application (https://dev.twitter.com/apps/new) and then copy 
 the keys that twitter gives you in the file config.json
 
-Point your browser to `http://local.host:3000`
+Point your browser to `http://localhost:6789`
 
 Enjoy!
