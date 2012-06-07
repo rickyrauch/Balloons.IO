@@ -44,16 +44,18 @@ $(function() {
 
   socket.on('history response', function(data) {
     if(data.history && data.history.length) {
-      data.history.reverse()
-      data.history.forEach(function(historyLine) {
-        var time = new Date(historyLine.atTime),
-          chatBoxData = {
-            nickname: historyLine.from,
-            msg: historyLine.withData,
-            time: time,
-            tt: time.getHours() > 12 ? "PM" : "AM"
-          };
 
+      data.history.reverse();
+
+      data.history.forEach(function(historyLine) {
+        var time = new Date(historyLine.atTime)
+          , chatBoxData = {
+              nickname: historyLine.from,
+              msg: historyLine.withData,
+              time: time,
+              tt: time.getHours() > 12 ? "PM" : "AM"
+            };
+        
         $('.chat').prepend(ich.chat_box(chatBoxData));
         $('.chat').scrollTop(chatHeight());
       });
@@ -121,12 +123,19 @@ $(function() {
   });
 
   socket.on('new msg', function(data) {
-    var time = new Date();
+    var time = new Date(),
+        $lastInput = $('.chat-box').last(),
+        lastInputUser = $lastInput.data('user');
 
     data.time = time;
     data.tt = time.getHours() > 12 ? "PM" : "AM";
 
-    $('.chat').append(ich.chat_box(data));
+    if(lastInputUser == data.nickname) {
+      $lastInput.append(ich.chat_box_text(data));
+    } else {
+      $('.chat').append(ich.chat_box(data));
+    }
+
     $('.chat').scrollTop(chatHeight());
   });
 

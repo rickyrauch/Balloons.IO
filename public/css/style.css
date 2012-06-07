@@ -449,8 +449,8 @@ sidebar .files  a.file i{background: url('../img/icons.png') no-repeat 0 -59px;}
 .content .chat .chat-box{text-shadow: 0 1px 0 white; position: relative; padding:  16px 22px; display: block; border-bottom: 1px solid #eee;padding-left: 6.4em}
 .content .chat .chat-box:nth-child(2n){background-color: #f1f1f1}
 .content .chat .chat-box h5{margin-top: 0; font-size: 1em; margin-bottom: 1em}
-.content .chat .chat-box h5 .date{float: right; font-size: 0.8em; color: rgba(0,0,0,.6); font-weight: normal; font-style: italic;}
 .content .chat .chat-box .avatar{position: absolute; left: 1.4em; top: 1.4em; border-radius: 4px}
+.content .chat .chat-box p .date{float: right; font-size: 0.8em; color: rgba(0,0,0,.6); font-weight: normal; font-style: italic;}
 .content .chat .chat-box p:last-child{margin-bottom: 0}
 .content .chat-input{ overflow: hidden; z-index: 500; bottom: 0; position: absolute; right: 0; left: 0;
 	border-top: 1px solid #ccc;

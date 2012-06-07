@@ -1,12 +1,15 @@
 script#chat_box(type='text/html')
-  .chat-box
+  .chat-box(data-user='{{ nickname }}')
     .avatar
       img(src='http://twitter.com/api/users/profile_image/{{ nickname }}')
     h5
-      span.date {{ time.getHours }}:{{ time.getMinutes }} {{ tt }}
       | {{ nickname }}
-    p
-      | {{ msg }}
+    {{> chat_box_text }}
+
+script#chat_box_text(type='text/html')
+  p
+    span.date {{ time.getHours }}:{{ time.getMinutes }} {{ tt }}
+    | {{ msg }}
 
 script#chat_notice(type='text/html')
   .notice
