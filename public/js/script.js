@@ -44,6 +44,8 @@ $(function() {
 
   socket.on('history response', function(data) {
     if(data.history && data.history.length) {
+      var $firstInput
+        , firstInputUser;
 
       data.history.reverse();
 
@@ -52,11 +54,20 @@ $(function() {
           , chatBoxData = {
               nickname: historyLine.from,
               msg: historyLine.withData,
+              type: 'history',
               time: time,
               tt: time.getHours() > 12 ? "PM" : "AM"
             };
-        
-        $('.chat').prepend(ich.chat_box(chatBoxData));
+
+        if(firstInputUser == chatBoxData.nickname) {
+          $firstInput.find('h5').after(ich.chat_box_text(chatBoxData));
+        } else {
+          $('.chat').prepend(ich.chat_box(chatBoxData));
+
+          $firstInput = $('.chat-box[data-type="history"]');
+          firstInputUser = chatBoxData.nickname;
+        }
+
         $('.chat').scrollTop(chatHeight());
       });
     }
@@ -74,12 +85,12 @@ $(function() {
             .replace('$username', data.nickname);
 
       // Check update time
-      var time = new Date(),
-        noticeBoxData = {
-          noticeMsg: message,
-          time: time,
-          tt: time.getHours() > 12 ? "PM" : "AM"
-        };
+      var time = new Date()
+        , noticeBoxData = {
+            noticeMsg: message,
+            time: time,
+            tt: time.getHours() > 12 ? "PM" : "AM"
+          };
 
       $('.chat').append(ich.chat_notice(noticeBoxData));
       $('.chat').scrollTop(chatHeight());
@@ -111,12 +122,12 @@ $(function() {
           .replace('$status', data.status);
 
     // Check update time
-    var time = new Date(),
-      noticeBoxData = {
-        noticeMsg: message,
-        time: time,
-        tt: time.getHours() > 12 ? "PM" : "AM"
-      };
+    var time = new Date()
+      , noticeBoxData = {
+          noticeMsg: message,
+          time: time,
+          tt: time.getHours() > 12 ? "PM" : "AM"
+        };
 
     $('.chat').append(ich.chat_notice(noticeBoxData));
     $('.chat').scrollTop(chatHeight());
@@ -124,9 +135,10 @@ $(function() {
 
   socket.on('new msg', function(data) {
     var time = new Date(),
-        $lastInput = $('.chat-box').last(),
+        $lastInput = $('.chat-box[data-type="chat"]').last(),
         lastInputUser = $lastInput.data('user');
 
+    data.type = 'chat';
     data.time = time;
     data.tt = time.getHours() > 12 ? "PM" : "AM";
 
