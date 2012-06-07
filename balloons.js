@@ -292,6 +292,6 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-app.listen(3000);
+app.listen(6789);
 
 console.log('Balloons.io started at port %d', app.address().port);
