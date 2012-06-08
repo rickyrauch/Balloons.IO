@@ -444,7 +444,7 @@ sidebar .files  a.file i{background: url('../img/icons.png') no-repeat 0 -59px;}
 
 .content{position: absolute; bottom: 0; right: 0; top: 4.4em;  left: 201px;   }
 .content .chat{ z-index: 100; position: absolute; top: 0; left: 0; right: 0; bottom: 60px; overflow-y: scroll;  }
-.content .chat .notice{background: #fcfde6; font-size: .9em; font-style: italic; color: #666; padding: 14px 22px 14px 80px}
+.content .chat .notice{background: #fcfde6; font-size: 11px; font-style: italic; color: #595d07; padding: 8px 22px 8px 80px}
 .content .chat .notice span.date{float: right;}
 .content .chat .chat-box{text-shadow: 0 1px 0 white; position: relative; padding:  16px 22px; display: block; border-bottom: 1px solid #eee;padding-left: 6.4em}
 .content .chat .chat-box:nth-child(2n){background-color: #f1f1f1}
