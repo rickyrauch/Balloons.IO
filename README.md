@@ -24,17 +24,18 @@ If you have these 2 tools installed, go to terminal and type:
 
 `npm install`
 
-Balloons uses easy-OAuth for authentication with Twitter. You can easily
-change this code to authenticate with Facebook.
+Balloons uses easy-OAuth for authentication with Twitter. For now, this is the only authentication method we provide.
 
-To connect Balloons with Twitter follow these steps:
+To set up Balloons with Twitter follow these few steps:
 
-Log in with your account https://dev.twitter.com/. 
-Create a new application (https://dev.twitter.com/apps/new) and then copy 
-the keys that twitter gives you in the file config.sample.json
-Rename config.sample.json to config.json
+* Copy 'config.sample.json' to 'config.json'.
+* Log in with your account at https://dev.twitter.com/. 
+* Create a new application (https://dev.twitter.com/apps/new) and copy 
+the keys that Twitter gives you into 'config.json'.
+* Update the callback url to the one you provided to Twitter.
+* Go to terminal and run `node balloons`.
 
-Run `node balloons`
-Point your browser to `http://127.0.0.1:6789`
+Point your browser to `http://127.0.0.1:6789`.
+(You can also change the port from 'config.json')
 
 Enjoy!
