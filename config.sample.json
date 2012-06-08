@@ -3,7 +3,7 @@
 		"twitter": {
 			"consumerkey" : "yourConsumerKey",
 			"consumersecret" : "yourSecretKey",
-			"callback" : "http://local.host:3000/auth/twitter_callback"
+			"callback" : "http://127.0.0.1:6789/auth/twitter_callback"
 		}
 	},
 	"theme": {
@@ -11,5 +11,8 @@
 	},
 	"session" : {
 		"secret" : "vivaperon"
+	},
+	"app": {
+		"port": 6789
 	}
 }
