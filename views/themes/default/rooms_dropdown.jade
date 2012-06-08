@@ -10,7 +10,6 @@
       a.option.current(href='#')= room_name
       each room,index in rooms  
         -if(room != room_id){
-          li
-            a.option(href="/rooms/"+room)= room
+           a.option(href="/rooms/"+room)= room
         -}
 // .dropdown-room 
