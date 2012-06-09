@@ -138,7 +138,7 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
           client.get('users:' + req.getAuthDetails().user.username + ':status', function(err, user_status) {
             res.locals({
               rooms: rooms,
-              room_name: room.name,
+              room_name: decodeURIComponent(room.name),
               room_id: req.params.id,
               username: req.getAuthDetails().user.username,
               user_status: user_status || 'available',
