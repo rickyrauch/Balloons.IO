@@ -327,7 +327,7 @@ header .button-circle.lock.active span i{background:  url('../img/icon-locked.pn
 	overflow: hidden;
 }
 .dropdown .dropdown-options .list{
-	overflow: hidden;
+	overflow-y: auto;
 	max-height: 300px;
 }
 
@@ -361,7 +361,7 @@ header .button-circle.lock.active span i{background:  url('../img/icon-locked.pn
 }
 .dropdown.dropdown-room {float: left; margin-right: 2.4em}
 .dropdown.dropdown-room .dropdown-options{width: 180px; }
-.dropdown.dropdown-room .dropdown-options .list{width: 200px;}
+.dropdown.dropdown-room .dropdown-options .list{width: 180px;}
 .dropdown.dropdown-room .dropdown-options a.current{background-position: 150px center}
 .dropdown.dropdown-status .dropdown-options a.current{background-position: 96px center}
 .dropdown.dropdown-status .dropdown-options{width: 120px; text-transform: capitalize;  }
