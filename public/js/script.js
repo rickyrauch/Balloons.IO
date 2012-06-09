@@ -55,8 +55,7 @@ $(function() {
               nickname: historyLine.from,
               msg: historyLine.withData,
               type: 'history',
-              time: time,
-              tt: time.getHours() > 12 ? "PM" : "AM"
+              time: timeParser(time)
             };
 
         if(firstInputUser == chatBoxData.nickname) {
@@ -91,8 +90,7 @@ $(function() {
         , noticeBoxData = {
             user: data.nickname,
             noticeMsg: message,
-            time: time,
-            tt: time.getHours() > 12 ? "PM" : "AM"
+            time: timeParser(time)
           };
       
       var $lastChatInput = $('.chat').children().last();
@@ -138,8 +136,7 @@ $(function() {
       , noticeBoxData = {
           user: data.username,
           noticeMsg: message,
-          time: time,
-          tt: time.getHours() > 12 ? "PM" : "AM"
+          time: timeParser(time)
         };
 
       var $lastChatInput = $('.chat').children().last();
@@ -158,8 +155,7 @@ $(function() {
         lastInputUser = $lastInput.data('user');
 
     data.type = 'chat';
-    data.time = time;
-    data.tt = time.getHours() > 12 ? "PM" : "AM";
+    data.time = timeParser(time)
 
     if($lastInput.hasClass('chat-box') && lastInputUser == data.nickname) {
       $lastInput.append(ich.chat_box_text(data));
@@ -195,8 +191,7 @@ $(function() {
               noticeBoxData = {
                 user: data.nickname,
                 noticeMsg: message,
-                time: time,
-                tt: time.getHours() > 12 ? "PM" : "AM"
+                time: timeParser(time)
               };
 
             var $lastChatInput = $('.chat').children().last();
@@ -232,4 +227,15 @@ $(function() {
     });
   });
 
+  var timeParser = function(date) {
+    var hours = date.getHours()
+      , minutes = date.getMinutes()
+      , seconds = date.getSeconds();
+    return {
+      hours: hours > 12 ? hours - 12 : hours,
+      minutes: minutes > 10 ? minutes : '0' + minutes,
+      seconds: seconds > 10 ? seconds : '0' + seconds,
+      meridiem: hours > 12 ? 'PM' : 'AM'
+    }
+  }
 });
