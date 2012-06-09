@@ -330,7 +330,7 @@ header .button-circle.lock.active span i{background:  url('../img/icon-locked.pn
 	overflow: hidden;
 }
 .dropdown .dropdown-options .list{
-	overflow-y: auto;
+	overflow-y: scroll;
 	max-height: 300px;
 }
 
@@ -590,7 +590,7 @@ body.home-page footer a{color: #666}
 
 .rooms-block, .create-room-block{float: left; width: 260px}
 .select-room-container .rooms-block{ margin-right: 30px}
-.select-room-container .room-list{box-shadow: 0 0 0 1px #ccc inset; height: 200px; overflow-y: auto; border-radius: 4px;}
+.select-room-container .room-list{box-shadow: 0 0 0 1px #ccc inset; max-height: 200px; overflow-y: auto; border-radius: 4px;}
 .select-room-container .room-list a{display: block; color: #333; text-align: left; padding: 10px 14px; font-size: 12px; border-bottom: 1px solid #ccc}
 .select-room-container .room-list a:hover{
 	color: #fff;
