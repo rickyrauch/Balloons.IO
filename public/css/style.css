@@ -344,6 +344,7 @@ header .button-circle.lock.active span i{background:  url('../img/icon-locked.pn
 	border-top-right-radius: 4px;
 }
 
+.dropdown .dropdown-options a.option.logout{background-color: #eee}
 .dropdown .dropdown-options a.option:last-child{
 	-webkit-border-bottom-right-radius: 4px;
 	-webkit-border-bottom-left-radius: 4px;
