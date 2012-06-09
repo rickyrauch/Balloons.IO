@@ -364,8 +364,8 @@ header .button-circle.lock.active span i{background:  url('../img/icon-locked.pn
 .dropdown.dropdown-room .dropdown-options .list{width: 180px;}
 .dropdown.dropdown-room .dropdown-options a.current{background-position: 150px center}
 .dropdown.dropdown-status .dropdown-options a.current{background-position: 96px center}
-.dropdown.dropdown-status .dropdown-options{width: 120px; text-transform: capitalize;  }
-.dropdown.dropdown-status .selected{width: 80px; }
+.dropdown.dropdown-status .dropdown-options{width: 125px; text-transform: capitalize;  }
+.dropdown.dropdown-status .selected{width: 84px; }
 
 
 .dropdown .dropdown-options .triangle{
@@ -585,7 +585,7 @@ body.home-page footer a{color: #666}
   }
 }*/
 
-.rooms-block, .create-room-block{float: left; width: 261px}
+.rooms-block, .create-room-block{float: left; width: 260px}
 .select-room-container .rooms-block{ margin-right: 30px}
 .select-room-container .room-list{box-shadow: 0 0 0 1px #ccc inset; height: 200px; overflow-y: auto; border-radius: 4px;}
 .select-room-container .room-list a{display: block; color: #333; text-align: left; padding: 10px 14px; font-size: 12px; border-bottom: 1px solid #ccc}
