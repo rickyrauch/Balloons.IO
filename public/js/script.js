@@ -68,7 +68,7 @@ $(function() {
           firstInputUser = chatBoxData.nickname;
         }
 
-        $('.chat').scrollTop(chatHeight());
+        $('.chat').scrollTop($('.chat').prop('scrollHeight'));
       });
     }
   });
@@ -101,7 +101,7 @@ $(function() {
         $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
       } else {
         $('.chat').append(ich.chat_notice(noticeBoxData));
-        $('.chat').scrollTop(chatHeight());
+        $('.chat').scrollTop($('.chat').prop('scrollHeight'));
       }
     } else {
       //Instead, just check him as 'back'
@@ -148,7 +148,7 @@ $(function() {
         $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
       } else {
         $('.chat').append(ich.chat_notice(noticeBoxData));
-        $('.chat').scrollTop(chatHeight());
+        $('.chat').scrollTop($('.chat').prop('scrollHeight'));
       }
   });
 
@@ -167,7 +167,7 @@ $(function() {
       $('.chat').append(ich.chat_box(data));
     }
 
-    $('.chat').scrollTop(chatHeight());
+    $('.chat').scrollTop($('.chat').prop('scrollHeight'));
   });
 
   socket.on('user leave', function(data) {
@@ -205,7 +205,7 @@ $(function() {
               $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
             } else {
               $('.chat').append(ich.chat_notice(noticeBoxData));
-              $('.chat').scrollTop(chatHeight());
+              $('.chat').scrollTop($('.chat').prop('scrollHeight'));
             }
           };
         }, 2000);
@@ -232,10 +232,4 @@ $(function() {
     });
   });
 
-  var chatHeight = function() {
-    var elementsNo = $('.chat').children().length
-      , maxHeight = $('.chat-box').outerHeight() || 80;
-
-    return elementsNo * maxHeight;
-  }
 });
