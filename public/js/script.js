@@ -144,7 +144,7 @@ $(function() {
 
       var $lastChatInput = $('.chat').children().last();
       
-      if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') == data.nickname) {
+      if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') == data.username) {
         $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
       } else {
         $('.chat').append(ich.chat_notice(noticeBoxData));
