@@ -257,9 +257,12 @@ input[type=password].text:focus, textarea:focus{
 }
 
 a b{background: red; height: 8px;  width: 8px; border: 1px solid black; margin-bottom: -1px; margin-right: 6px; border-radius: 100px; display: inline-block;}
-a.available b{background: -webkit-radial-gradient(50% top, circle,  #B5D8A6, #58854B);}
-a.busy b{background: -webkit-radial-gradient(50% top, circle,  #DCCACC, #8C4F55);}
-a.away b{background: -webkit-radial-gradient(50% top, circle,  #DCDBCA, #908C51);}
+a.available b{
+	background: -webkit-radial-gradient(50% top, circle,  #B5D8A6, #58854B);
+	background: -moz-radial-gradient(50% top, circle,  #B5D8A6, #58854B);
+}
+a.busy b{background: -webkit-radial-gradient(50% top, circle,  #DCCACC, #8C4F55);background: -moz-radial-gradient(50% top, circle,  #DCCACC, #8C4F55);}
+a.away b{background: -webkit-radial-gradient(50% top, circle,  #DCDBCA, #908C51);background: -moz-radial-gradient(50% top, circle,  #DCDBCA, #908C51);}
 
 .color-line{
 	width: 100%;
