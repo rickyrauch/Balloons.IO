@@ -12,7 +12,7 @@ script#chat_box_text(type='text/html')
     | {{ msg }}
 
 script#chat_notice(type='text/html')
-  .notice
+  .notice(data-user="{{ user }}")
     span.date {{ time.getHours }}:{{ time.getMinutes }} {{ tt }}
     |  {{ noticeMsg }}
 

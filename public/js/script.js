@@ -76,7 +76,9 @@ $(function() {
   socket.on('new user', function(data) {
     var message = "$username has joined the room.";
 
-    if(!USERS[data.nickname]) {
+    //If user is not 'there'
+    if(!$('.people a[data-username="' + data.nickname + '"]').length) {
+      //Then add it
       $('.online .people').prepend(ich.people_box(data));
       USERS[data.nickname] = 1;
 
@@ -87,13 +89,23 @@ $(function() {
       // Check update time
       var time = new Date()
         , noticeBoxData = {
+            user: data.nickname,
             noticeMsg: message,
             time: time,
             tt: time.getHours() > 12 ? "PM" : "AM"
           };
-
-      $('.chat').append(ich.chat_notice(noticeBoxData));
-      $('.chat').scrollTop(chatHeight());
+      
+      var $lastChatInput = $('.chat').children().last();
+      
+      if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') == data.nickname) {
+        $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
+      } else {
+        $('.chat').append(ich.chat_notice(noticeBoxData));
+        $('.chat').scrollTop(chatHeight());
+      }
+    } else {
+      //Instead, just check him as 'back'
+      USERS[data.nickname] = 1;
     }
   });
 
@@ -124,25 +136,32 @@ $(function() {
     // Check update time
     var time = new Date()
       , noticeBoxData = {
+          user: data.username,
           noticeMsg: message,
           time: time,
           tt: time.getHours() > 12 ? "PM" : "AM"
         };
 
-    $('.chat').append(ich.chat_notice(noticeBoxData));
-    $('.chat').scrollTop(chatHeight());
+      var $lastChatInput = $('.chat').children().last();
+      
+      if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') == data.username) {
+        $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
+      } else {
+        $('.chat').append(ich.chat_notice(noticeBoxData));
+        $('.chat').scrollTop(chatHeight());
+      }
   });
 
   socket.on('new msg', function(data) {
     var time = new Date(),
-        $lastInput = $('.chat-box[data-type="chat"]').last(),
+        $lastInput = $('.chat').children().last(),
         lastInputUser = $lastInput.data('user');
 
     data.type = 'chat';
     data.time = time;
     data.tt = time.getHours() > 12 ? "PM" : "AM";
 
-    if(lastInputUser == data.nickname) {
+    if($lastInput.hasClass('chat-box') && lastInputUser == data.nickname) {
       $lastInput.append(ich.chat_box_text(data));
     } else {
       $('.chat').append(ich.chat_box(data));
@@ -155,31 +174,43 @@ $(function() {
     var nickname = $('#username').text()
       , message = "$username has left the room.";
     
-    $('.people a').each(function(index, element) {
-      var checkUsername = $(element).data('username');
+    for (var username in USERS) {
+      if(username == data.nickname && username != nickname) {
+        //Mark user as leaving
+        USERS[username] = 0;
 
-      if(checkUsername == data.nickname) {
-        if (checkUsername != nickname ) {
-          $(element).remove();
-          USERS[data.nickname] = 0;
+        //Wait a little before removing user
+        setTimeout(function() {
+          //If not connected
+          if (!USERS[username]) {
+            //Remove it and notify
+            $('.people a[data-username="' + username + '"]').remove();
 
-          // Chat notice
-          message = message
-                .replace('$username', data.nickname);
+            // Chat notice
+            message = message
+                  .replace('$username', data.nickname);
 
-          // Check update time
-          var time = new Date(),
-            noticeBoxData = {
-              noticeMsg: message,
-              time: time,
-              tt: time.getHours() > 12 ? "PM" : "AM"
-            };
+            // Check update time
+            var time = new Date(),
+              noticeBoxData = {
+                user: data.nickname,
+                noticeMsg: message,
+                time: time,
+                tt: time.getHours() > 12 ? "PM" : "AM"
+              };
 
-          $('.chat').append(ich.chat_notice(noticeBoxData));
-          $('.chat').scrollTop(chatHeight());
-        };
+            var $lastChatInput = $('.chat').children().last();
+            
+            if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') == data.nickname) {
+              $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
+            } else {
+              $('.chat').append(ich.chat_notice(noticeBoxData));
+              $('.chat').scrollTop(chatHeight());
+            }
+          };
+        }, 2000);
       }
-    });
+    }
   });
 
   $(".chat-input input").keypress(function(e) {
