@@ -8,12 +8,12 @@ script#chat_box(type='text/html')
 
 script#chat_box_text(type='text/html')
   p
-    span.date {{ time.getHours }}:{{ time.getMinutes }} {{ tt }}
+    span.date {{ time.hours }}:{{ time.minutes }} {{ time.meridiem }}
     | {{ msg }}
 
 script#chat_notice(type='text/html')
   .notice(data-user="{{ user }}")
-    span.date {{ time.getHours }}:{{ time.getMinutes }} {{ tt }}
+    span.date {{ time.hours }}:{{ time.minutes }} {{ time.meridiem }}
     |  {{ noticeMsg }}
 
 script#people_box(type='text/html')
