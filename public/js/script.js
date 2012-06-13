@@ -221,7 +221,7 @@ $(function() {
     }
   });
 
-  $('.dropdown-status .list a').click(function(e) {
+  $('.dropdown-status .list a.status').click(function(e) {
     socket.emit('set status', {
       status: $(this).data('status')
     });
