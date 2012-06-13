@@ -6,7 +6,7 @@ It’s build with the help of node.JS, Express, Socket.IO and Redis. [Follow us 
   [Follow us on twitter]: http://twitter.com/gravityonmars
  
  ![image][]
-  [image]: http://gravityonmars.com/wp-content/themes/gom3/images/projects/balloons-io/app-1.png
+  [image]: http://www.gravityonmars.com/wp-content/themes/gom3/images/projects/balloons-io/app-1.png
 
 ## Installation
 
