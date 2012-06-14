@@ -28,15 +28,14 @@ $(function() {
   });
 
   //Socket.io
-  var socket = io.connect('http://localhost');
+  var socket = io.connect();
 
-  socket.emit('set nickname', {
-    room_id: $('#room_id').text(),
-    nickname: $('#username').text()
+  socket.on('error', function (reason){
+    console.error('Unable to connect Socket.IO', reason);
   });
 
-  socket.on('ready', function(data) {
-    //If chat is empty, request for history!
+  socket.on('connect', function (){
+    console.info('successfully established a working connection');
     if($('.chat .chat-box').length == 0) {
       socket.emit('history request');
     }
@@ -58,7 +57,7 @@ $(function() {
               time: timeParser(time)
             };
 
-        if(firstInputUser == chatBoxData.nickname) {
+        if(firstInputUser === chatBoxData.nickname) {
           $firstInput.find('h5').after(ich.chat_box_text(chatBoxData));
         } else {
           $('.chat').prepend(ich.chat_box(chatBoxData));
@@ -95,7 +94,7 @@ $(function() {
       
       var $lastChatInput = $('.chat').children().last();
       
-      if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') == data.nickname) {
+      if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') === data.nickname) {
         $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
       } else {
         $('.chat').append(ich.chat_notice(noticeBoxData));
@@ -111,7 +110,7 @@ $(function() {
     var message = "$username is now $status.";
 
     // Update dropdown
-    if(data.username == $('#username').text()) {
+    if(data.username === $('#username').text()) {
       $('.dropdown-status .list a').toggleClass('current', false);
       $('.dropdown-status .list a.' + data.status).toggleClass('current', true);
 
@@ -141,7 +140,7 @@ $(function() {
 
       var $lastChatInput = $('.chat').children().last();
       
-      if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') == data.username) {
+      if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') === data.username) {
         $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
       } else {
         $('.chat').append(ich.chat_notice(noticeBoxData));
@@ -157,7 +156,7 @@ $(function() {
     data.type = 'chat';
     data.time = timeParser(time)
 
-    if($lastInput.hasClass('chat-box') && lastInputUser == data.nickname) {
+    if($lastInput.hasClass('chat-box') && lastInputUser === data.nickname) {
       $lastInput.append(ich.chat_box_text(data));
     } else {
       $('.chat').append(ich.chat_box(data));
@@ -171,7 +170,7 @@ $(function() {
       , message = "$username has left the room.";
     
     for (var username in USERS) {
-      if(username == data.nickname && username != nickname) {
+      if(username === data.nickname && username != nickname) {
         //Mark user as leaving
         USERS[username] = 0;
 
@@ -196,7 +195,7 @@ $(function() {
 
             var $lastChatInput = $('.chat').children().last();
             
-            if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') == data.nickname) {
+            if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') === data.nickname) {
               $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
             } else {
               $('.chat').append(ich.chat_notice(noticeBoxData));
@@ -211,8 +210,7 @@ $(function() {
   $(".chat-input input").keypress(function(e) {
     if(e.which == 13) {
       socket.emit('my msg', {
-        msg: $(this).val(),
-        room_id: $('#room_id').text()
+        msg: $(this).val()
       });
 
       $(this).val('');
