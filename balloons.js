@@ -73,10 +73,7 @@ app.get('/', utils.restrict, function(req, res, next) {
 
 app.get('/rooms/list', utils.restrict, function(req, res) {
   client.smembers('balloons:public:rooms', function(err, rooms) {
-    res.locals({
-      rooms: rooms
-    });
-    res.render('room_list');
+    res.render('room_list', { rooms: rooms });
   });
 });
 
@@ -84,30 +81,13 @@ app.get('/rooms/list', utils.restrict, function(req, res) {
  * Create a rooom
  */
 
-app.post('/create', utils.restrict, function(req, res) {
-  if(req.body.room_name.length <= 30) {
-    client.hgetall('rooms:' + req.body.room_name + ':info', function(err, room) {
-      if(room && Object.keys(room).length) {
+app.post('/create', utils.restrict, utils.validRoomName, function(req, res) {
+  client.hgetall('rooms:' + req.body.room_name + ':info', function(err, room) {
+    if(room && Object.keys(room).length) 
         res.redirect( '/rooms/' + room.name );
-
-      } else {
-        var room = {
-          name: encodeURIComponent(req.body.room_name),
-          admin: req.getAuthDetails().user.username,
-          locked: 0
-        };
-
-        client.hmset('rooms:' + req.body.room_name + ':info', room, function(err, id) {
-          if(!err) {
-            client.sadd('balloons:public:rooms', req.body.room_name);
-            res.redirect('/rooms/' + encodeURIComponent(req.body.room_name));
-          }
-        });
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
+    else
+        utils.createRoom(client, room, req);
+  });
 });
 
 /*
