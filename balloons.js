@@ -95,38 +95,10 @@ app.post('/create', utils.restrict, utils.validRoomName, function(req, res) {
  */
 
 app.get('/rooms/:id', utils.restrict, function(req, res) {
-  client.hgetall('rooms:' + req.params.id + ':info', function(err, room) {
-    if(!err && room && Object.keys(room).length) {
-      client.smembers('rooms:' + req.params.id + ':online', function(err, online_users) {
-        var users = [];
-
-        online_users.forEach(function(username, index) {
-          client.get('users:' + username + ':status', function(err, status) {
-            users.push({
-              username: username,
-              status: status || 'available'
-            });
-          });
-        });
-
-        client.smembers("balloons:public:rooms", function(err, rooms) {
-          client.get('users:' + req.getAuthDetails().user.username + ':status', function(err, user_status) {
-            res.locals({
-              rooms: rooms,
-              room_name: decodeURIComponent(room.name),
-              room_id: req.params.id,
-              username: req.getAuthDetails().user.username,
-              user_status: user_status || 'available',
-              users_list: users
-            });
-
-            res.render('room');
-          })
-        });
-      });
-    } else {
-      res.redirect('back');
-    }
+  utils.isValidRoom(function(){
+    utils.addUserToRoom(function(online_users, users){
+      utils.enterRoom(client, rooms, room, user_status, users, req, res);
+    });
   });
 });
 
