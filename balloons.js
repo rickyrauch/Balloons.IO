@@ -125,7 +125,7 @@ app.post('/create', utils.restrict, function(req, res) {
 
 app.get('/rooms/:id', utils.restrict, function(req, res) {
   client.hgetall('rooms:' + req.params.id + ':info', function(err, room) {
-    if(Object.keys(room).length) {
+    if(!err && room && Object.keys(room).length) {
       client.smembers('rooms:' + req.params.id + ':online', function(err, online_users) {
         var users = [];
 
