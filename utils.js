@@ -83,7 +83,7 @@ exports.addUserToRoom = function(client, req, fn) {
  * Enter to a room
  */
 
-exports.enterRoom = function(client, rooms, room, user_status, userst , req, res){
+exports.enterRoom = function(client, rooms, room, user_status, users , req, res){
       client.smembers("balloons:public:rooms", function(err, rooms) {
         client.get('users:' + req.getAuthDetails().user.username + ':status', function(err, user_status) {
           res.locals({

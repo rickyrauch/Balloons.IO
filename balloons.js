@@ -60,11 +60,18 @@ app.configure(function() {
  */
 
 app.get('/', utils.restrict, function(req, res, next) {
-  client.hmset(
-      'users:' + req.getAuthDetails().user.username
-     , req.getAuthDetails().user
-  );
-  res.redirect('/rooms/list');
+  req.authenticate(['oauth'], function(error, authenticated){ 
+    if(authenticated){
+      client.hmset(
+          'users:' + req.getAuthDetails().user.username
+        , req.getAuthDetails().user
+      );
+      res.redirect('/rooms/list');
+    }
+    else{
+      res.render('index');
+    }
+  });
 });
 
 /*
