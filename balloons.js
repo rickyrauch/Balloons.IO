@@ -13,7 +13,8 @@ var express = require('express')
   , sessionStore = new RedisStore
   , config = require('./config.json')
   , utils = require('./utils')
-  , fs = require('fs');
+  , fs = require('fs')
+  , init = require('./init');
 
 
 /*
@@ -23,33 +24,10 @@ var express = require('express')
 var client = redis.createClient();
 
 /*
- * Clean all forgoten sockets in Redis.io
+ * Clean db and create folder
  */
 
-// Delete all users sockets from their lists
-client.keys('users:*:sockets', function(err, keys) {
-  if(keys.length) client.del(keys);
-  console.log('Deletion of sockets reference for each user >> ', err || "Done!");
-});
-
-// No one is online when starting up
-client.keys('rooms:*:online', function(err, keys) {
-  if(keys.length) client.del(keys);
-  console.log('Deletion of online users from rooms >> ', err || "Done!");
-});
-
-// Delete all socket.io's sockets data from Redis
-client.smembers('socketio:sockets', function(err, sockets) {
-  if(sockets.length) client.del(sockets);
-  console.log('Deletion of socket.io stored sockets data >> ', err || "Done!");
-});
-
-
-/*
- * Create 'chats' dir
- */
-fs.mkdir('chats');
-
+init(client);
 
 /*
  * Create and config server
