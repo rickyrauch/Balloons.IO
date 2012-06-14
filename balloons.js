@@ -55,16 +55,21 @@ app.configure(function() {
  * Routes
  */
 
-app.get('/', function(req, res, next) {
-  req.authenticate(['oauth'], function(error, authenticated) { 
-    if(authenticated) {
-      client.hmset('users:' + req.getAuthDetails().user.username, req.getAuthDetails().user);
-      res.redirect('/rooms/list');
-    } else {
-      res.render('index');
-    } 
-  });
+/*
+ * Homepage
+ */
+
+app.get('/', utils.restrict, function(req, res, next) {
+  client.hmset(
+      'users:' + req.getAuthDetails().user.username
+     , req.getAuthDetails().user
+  );
+  res.redirect('/rooms/list');
 });
+
+/*
+ * Rooms list
+ */
 
 app.get('/rooms/list', utils.restrict, function(req, res) {
   client.smembers('balloons:public:rooms', function(err, rooms) {
@@ -74,6 +79,10 @@ app.get('/rooms/list', utils.restrict, function(req, res) {
     res.render('room_list');
   });
 });
+
+/*
+ * Create a rooom
+ */
 
 app.post('/create', utils.restrict, function(req, res) {
   if(req.body.room_name.length <= 30) {
@@ -100,6 +109,10 @@ app.post('/create', utils.restrict, function(req, res) {
     res.redirect('back');
   }
 });
+
+/*
+ * Join a room
+ */
 
 app.get('/rooms/:id', utils.restrict, function(req, res) {
   client.hgetall('rooms:' + req.params.id + ':info', function(err, room) {
