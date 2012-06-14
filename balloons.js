@@ -1,4 +1,3 @@
-
 /*
  * Module dependencies
  */
@@ -59,7 +58,7 @@ app.configure(function() {
  * Homepage
  */
 
-app.get('/', utils.restrict, function(req, res, next) {
+app.get('/', function(req, res, next) {
   req.authenticate(['oauth'], function(error, authenticated){ 
     if(authenticated){
       client.hmset(
