@@ -17,7 +17,7 @@ exports.restrict = function(req, res, next){
 /*
  * Create a room
  */       
-exports.createRoom = function(client, room, req) {
+exports.createRoom = function(req, res, client, room) {
   var room = {
       name: encodeURIComponent(req.body.room_name)
     , admin: req.getAuthDetails().user.username
@@ -50,18 +50,18 @@ exports.validRoomName = function(req, res, next) {
  * Is a valid room
  */
 
-exports.isValidRoom = function(client, req, fn) { 
+exports.isValidRoom = function(req, res, client, fn) { 
   client.hgetall('rooms:' + req.params.id + ':info', function(err, room) {
-    if(!err && room && Object.keys(room).length) fn();
+    if(!err && room && Object.keys(room).length) fn(room);
     else res.redirect('back');
   });
 };
 
 /*
- * Add user to room
+ * Get connected users at room
  */
 
-exports.addUserToRoom = function(client, req, fn) {
+exports.getUsersInRoom = function(req, res, client, room, fn) {
   client.smembers('rooms:' + req.params.id + ':online', function(err, online_users) {
     var users = [];
 
@@ -74,28 +74,43 @@ exports.addUserToRoom = function(client, req, fn) {
       });
     });
 
-    fn(online_users, users);
+    fn(users);
 
   });
 };
 
 /*
+ * Get public rooms
+ */
+
+exports.getPublicRooms = function(client, fn){
+  client.smembers("balloons:public:rooms", function(err, rooms) {
+    if (!err && rooms) fn(rooms);
+    else fn([]);
+  });
+};
+/*
+ * Get User status
+ */
+
+exports.getUserStatus = function(username, client, fn){
+  client.get('users:' + username + ':status', function(err, status) {
+    if (!err && status) fn(status);
+    else fn('available');
+  });
+};
+/*
  * Enter to a room
  */
 
-exports.enterRoom = function(client, rooms, room, user_status, users , req, res){
-      client.smembers("balloons:public:rooms", function(err, rooms) {
-        client.get('users:' + req.getAuthDetails().user.username + ':status', function(err, user_status) {
-          res.locals({
-            rooms: rooms,
-            room_name: decodeURIComponent(room.name),
-            room_id: req.params.id,
-            username: req.getAuthDetails().user.username,
-            user_status: user_status || 'available',
-            users_list: users
-          });
-          res.render('room');
-        });
-      });
-
+exports.enterRoom = function(req, res, room, users, rooms, status){
+  res.locals({
+    rooms: rooms,
+    room_name: decodeURIComponent(room.name),
+    room_id: req.params.id,
+    username: req.getAuthDetails().user.username,
+    user_status: status,
+    users_list: users
+  });
+  res.render('room');
 };
