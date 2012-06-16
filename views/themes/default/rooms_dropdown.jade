@@ -1,15 +1,16 @@
 .dropdown.dropdown-room
   i
-  a.selected(href='#')= room_name
+  a.selected(href='#')= room.name
   .dropdown-options
     .triangle
     form(method="POST",action="/create")
       a.option.create-room(href='#') Create a room
       input.text(type='text', name='room_name', value='', placeholder='Name of your room', style='display: none')
     .list
-      a.option.current(href='#')= room_name
-      each room,index in rooms  
-        -if(room != room_id){
-           a.option(href="/rooms/"+room)= room
+      a.option.current(href='#')= room.name
+      each r,index in rooms  
+        -if(r.key != room.key){
+          a.option(href="/rooms/"+r.key)
+            | #{r.name}
         -}
 // .dropdown-room 

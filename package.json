@@ -2,12 +2,12 @@
     "name": "Balloons.io"
   , "version": "0.0.1"
   , "dependencies": {
-      "express": "2.5.1"
+      "express": ">=2.5.1"
     , "jade": ">= 0.0.1"
     , "socket.io": "0.9.6"
     , "easy-oauth": "0.2.1"
     , "redis": ">= 0.7.1"
-    , "connect-redis": "1.3.0"
+    , "connect-redis": "1.4.0"
   }
 }
 

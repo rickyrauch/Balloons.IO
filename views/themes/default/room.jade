@@ -1,7 +1,7 @@
 .color-line
 .wrap
   header
-    !=partial('status_dropdown', { user_status: user_status });
+    !=partial('status_dropdown', { user_status: user.status });
 
     !=partial('rooms_dropdown', { rooms: rooms });
 
@@ -53,8 +53,8 @@
 
 // .wrap
 
-span#room_id(style="display:none")= room_name
-span#username(style="display:none")= username
+span#room_id(style="display:none")= room.name
+span#username(style="display:none")= user.nickname
 
 !=partial('templates/chat_tmpl');
 

@@ -15,19 +15,59 @@ exports.restrict = function(req, res, next){
 };
 
 /*
- * Create a room
+ * Generates a URI Like key for a room
  */       
-exports.createRoom = function(req, res, client, room) {
+
+exports.genRoomKey = function(roomName) {
+  return roomName.replace(/[^a-zA-Z0-9-_]/g, '');
+};
+
+/*
+ * Room name is valid
+ */
+
+exports.validRoomName = function(req, res, fn) {
+  var roomKey = exports.genRoomKey(req.body.room_name)
+    , keyLen = roomKey.length
+    , nameLen = req.body.room_name.length;
+
+  if(nameLen < 255 && keyLen >0) {
+    fn(roomKey);
+  } else {
+    res.redirect('back');
+  }
+};
+
+/*
+ * Checks if room exists
+ */
+
+exports.roomExists = function(req, res, client, roomKey, fn) {
+  client.exists('rooms:' + req.body.roomKey + ':info', function(err, exists) {
+    if(!err && exists) {
+      res.redirect( '/rooms/' + req.body.roomKey );
+    } else {
+      fn()
+    }
+  });
+};
+
+/*
+ * Creates a room
+ */       
+exports.createRoom = function(req, res, client, roomKey) {
   var room = {
-      name: encodeURIComponent(req.body.room_name)
-    , admin: req.getAuthDetails().user.username
-    , locked: 0
+    key: roomKey,
+    name: req.body.room_name,
+    admin: req.getAuthDetails().user.username,
+    locked: 0,
+    online: 0
   };
 
-  client.hmset('rooms:' + req.body.room_name + ':info', room, function(err, id) {
-    if(!err) {
-    client.sadd('balloons:public:rooms', req.body.room_name);
-    res.redirect('/rooms/' + encodeURIComponent(req.body.room_name));
+  client.hmset('rooms:' + roomKey + ':info', room, function(err, ok) {
+    if(!err && ok) {
+      client.sadd('balloons:public:rooms', roomKey);
+      res.redirect('/rooms/' + roomKey);
     } else {
       res.send(500);
     }
@@ -35,28 +75,45 @@ exports.createRoom = function(req, res, client, room) {
 };
 
 /*
- * Room name is valid
+ * Get Room Info
  */
 
-exports.validRoomName = function(req, res, next) {
-  if(req.body.room_name.length <= 30)
-    next();
-  else
-    res.redirect('back');
-};
-
-
-/*
- * Is a valid room
- */
-
-exports.isValidRoom = function(req, res, client, fn) { 
+exports.getRoomInfo = function(req, res, client, fn) { 
   client.hgetall('rooms:' + req.params.id + ':info', function(err, room) {
     if(!err && room && Object.keys(room).length) fn(room);
     else res.redirect('back');
   });
 };
 
+exports.getPublicRoomsInfo = function(client, fn) {
+  client.smembers('balloons:public:rooms', function(err, publicRooms) {
+    var rooms = []
+      , len = publicRooms.length;
+    if(!len) fn([]);
+    
+    publicRooms.sort();
+
+    publicRooms.forEach(function(roomKey, index) {
+      client.hgetall('rooms:' + roomKey + ':info', function(err, room) {
+        // prevent for a room info deleted before this check
+        if(!err && room && Object.keys(room).length) {
+          // add room info
+          rooms.push({
+            key: room.key || room.name, // temp
+            name: room.name,
+            online: room.online
+          });
+
+          // check if last room
+          if(rooms.length == len) fn(rooms);
+        } else {
+          // reduce check length
+          len -= 1;
+        }
+      });
+    });
+  });
+};
 /*
  * Get connected users at room
  */
@@ -105,11 +162,12 @@ exports.getUserStatus = function(username, client, fn){
 
 exports.enterRoom = function(req, res, room, users, rooms, status){
   res.locals({
+    room: room,
     rooms: rooms,
-    room_name: decodeURIComponent(room.name),
-    room_id: req.params.id,
-    username: req.getAuthDetails().user.username,
-    user_status: status,
+    user: {
+      nickname: req.getAuthDetails().user.username,
+      status: status
+    },
     users_list: users
   });
   res.render('room');

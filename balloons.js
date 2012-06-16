@@ -78,7 +78,7 @@ app.get('/', function(req, res, next) {
  */
 
 app.get('/rooms/list', utils.restrict, function(req, res) {
-  client.smembers('balloons:public:rooms', function(err, rooms) {
+  utils.getPublicRoomsInfo(client, function(rooms) {
     res.render('room_list', { rooms: rooms });
   });
 });
@@ -87,12 +87,11 @@ app.get('/rooms/list', utils.restrict, function(req, res) {
  * Create a rooom
  */
 
-app.post('/create', utils.restrict, utils.validRoomName, function(req, res) {
-  client.hgetall('rooms:' + req.body.room_name + ':info', function(err, room) {
-    if(room && Object.keys(room).length) 
-        res.redirect( '/rooms/' + room.name );
-    else
-        utils.createRoom(req, res, client, room);
+app.post('/create', utils.restrict, function(req, res) {
+  utils.validRoomName(req, res, function(roomKey) {
+    utils.roomExists(req, res, client, roomKey, function() {
+      utils.createRoom(req, res, client, roomKey);
+    });
   });
 });
 
@@ -101,13 +100,13 @@ app.post('/create', utils.restrict, utils.validRoomName, function(req, res) {
  */
 
 app.get('/rooms/:id', utils.restrict, function(req, res) {
-  utils.isValidRoom(req, res, client, function(room) {
+  utils.getRoomInfo(req, res, client, function(room) {
     utils.getUsersInRoom(req, res, client, room, function(users) {
-      utils.getPublicRooms(client, function(rooms) {
+      utils.getPublicRoomsInfo(client, function(rooms) {
         utils.getUserStatus(req.getAuthDetails().user.usarname, client, function(status) {
           utils.enterRoom(req, res, room, users, rooms, status);
-        })
-      })
+        });
+      });
     });
   });
 });
@@ -162,11 +161,10 @@ io.sockets.on('connection', function (socket) {
 
   client.sadd('users:' + nickname + ':sockets', socket.id, function(err, socketAdded) {
     if(socketAdded) {
-
       client.sadd('socketio:sockets', socket.id);
-
       client.sadd('rooms:' + room_id + ':online', nickname, function(err, userAdded) {
         if(userAdded) {
+          client.hincrby('rooms:' + room_id + ':info', 'online', 1);
           client.get('users:' + nickname + ':status', function(err, status) {
             io.sockets.in(room_id).emit('new user', {
               nickname: nickname,
@@ -232,11 +230,11 @@ io.sockets.on('connection', function (socket) {
     client.srem('users:' + nickname + ':sockets', socket.id, function(err, removed) {
       if(removed) {
         client.srem('socketio:sockets', socket.id);
-
         client.scard('users:' + nickname + ':sockets', function(err, members_no) {
           if(!members_no) {
             client.srem('rooms:' + room_id + ':online', nickname, function(err, removed) {
               if (removed) {
+                client.hincrby('rooms:' + room_id + ':info', 'online', -1);
                 chatlogWriteStream.destroySoon();
                 io.sockets.in(room_id).emit('user leave', {
                   nickname: nickname
