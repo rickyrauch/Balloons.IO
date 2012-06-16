@@ -91,7 +91,7 @@ exports.getPublicRoomsInfo = function(client, fn) {
       , len = publicRooms.length;
     if(!len) fn([]);
     
-    publicRooms.sort();
+    publicRooms.sort(function(a, b) { return a > b; });
 
     publicRooms.forEach(function(roomKey, index) {
       client.hgetall('rooms:' + roomKey + ':info', function(err, room) {
