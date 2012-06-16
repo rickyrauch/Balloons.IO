@@ -209,9 +209,14 @@ $(function() {
 
   $(".chat-input input").keypress(function(e) {
     if(e.which == 13) {
-      socket.emit('my msg', {
-        msg: $(this).val()
-      });
+      var chunks = $(this).val().match(/.{1,1024}/g)
+        , len = chunks.length;
+
+      for(var i = 0; i<len; i++) {
+        socket.emit('my msg', {
+          msg: chunks[i]
+        });
+      }
 
       $(this).val('');
 
