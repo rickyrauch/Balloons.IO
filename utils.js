@@ -90,8 +90,8 @@ exports.getPublicRoomsInfo = function(client, fn) {
     var rooms = []
       , len = publicRooms.length;
     if(!len) fn([]);
-    
-    publicRooms.sort(function(a, b) { return a > b; });
+
+    publicRooms.sort(exports.caseInsensitiveSort);
 
     publicRooms.forEach(function(roomKey, index) {
       client.hgetall('rooms:' + roomKey + ':info', function(err, room) {
@@ -156,6 +156,7 @@ exports.getUserStatus = function(username, client, fn){
     else fn('available');
   });
 };
+
 /*
  * Enter to a room
  */
@@ -171,4 +172,20 @@ exports.enterRoom = function(req, res, room, users, rooms, status){
     users_list: users
   });
   res.render('room');
+};
+
+/*
+ * Sort Case Insensitive
+ */
+
+exports.caseInsensitiveSort = function (a, b) { 
+   var ret = 0;
+
+   a = a.toLowerCase();
+   b = b.toLowerCase();
+
+   if(a > b) ret = 1;
+   if(a < b) ret = -1; 
+
+   return ret;
 };
