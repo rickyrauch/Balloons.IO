@@ -56,6 +56,7 @@ $(function() {
             };
 
         $lastInput = $('.chat .history').children().last();
+        lastInputUser = $lastInput.data('user');
 
         if($lastInput.hasClass('chat-box') && lastInputUser === chatBoxData.nickname) {
           $lastInput.append(ich.chat_box_text(chatBoxData));
