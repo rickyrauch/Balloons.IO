@@ -416,7 +416,7 @@ sidebar a{color: white;}
 sidebar h4, sidebar div.online .people a{padding: 0 10px}
 sidebar div.online {overflow: hidden;  height: 100%}
 sidebar div.files {height: 18%;  display: none; }
-sidebar div.online .people a{display: block; padding: 7px 14px;  border-bottom: 1px solid rgba(255,255,255,.04)}
+sidebar div.online .people a{display: block; padding: 7px 10px;  border-bottom: 1px solid rgba(255,255,255,.04)}
 sidebar div.online .people a:hover{
 	background-image: -webkit-linear-gradient(#f1f1f1,  #ccc);
 	background-image: -moz-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
@@ -590,7 +590,8 @@ body.home-page footer a{color: #666}
 .inactive{margin-top: 10px}
 .inactive input{margin-right: 5px; }
 .inactive label{ font-style: italic; color: #666}
-.users-online{font-size: 11px; opacity: .4; float: right; margin-right: 24px; font-style: italic;}
+span.users-online{font-size: 11px; opacity: .4; float: right; padding-right: 24px; font-style: italic;}
+span.dropdown-users-online{background: #999; background: rgba(0,0,0,.2); margin-top: -2px; float: right; border-radius: 100px; min-width: 10px; text-align: center; color: white; display: inline-block; padding: 2px 4px; margin-left: 10px}
 .select-room-container .rooms-block{ margin-right: 30px}
 .select-room-container .room-list{box-shadow: 0 0 0 1px #ccc inset; max-height: 200px; overflow-y: auto; border-radius: 4px;}
 .select-room-container .room-list a{display: block; color: #333; text-align: left; padding: 10px 14px; font-size: 12px; border-bottom: 1px solid #ccc}
