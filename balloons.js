@@ -154,7 +154,7 @@ io.sockets.on('connection', function (socket) {
     , room_id = hs.balloons.room
     , now = new Date()
     // Chat Log handler
-    , chatlogFileName = 'chats/' + room_id + (now.getFullYear()) + (now.getMonth() + 1) + (now.getDate()) + ".txt"
+    , chatlogFileName = './chats/' + room_id + (now.getFullYear()) + (now.getMonth() + 1) + (now.getDate()) + ".txt"
     , chatlogWriteStream = fs.createWriteStream(chatlogFileName, {'flags': 'a'});
 
   socket.join(room_id);
