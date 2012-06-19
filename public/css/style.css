@@ -416,7 +416,7 @@ sidebar a{color: white;}
 sidebar h4, sidebar div.online .people a{padding: 0 10px}
 sidebar div.online {overflow: hidden;  height: 100%}
 sidebar div.files {height: 18%;  display: none; }
-sidebar div.online .people a{display: block; padding: 7px 14px;  border-bottom: 1px solid rgba(255,255,255,.04)}
+sidebar div.online .people a{display: block; padding: 7px 10px;  border-bottom: 1px solid rgba(255,255,255,.04)}
 sidebar div.online .people a:hover{
 	background-image: -webkit-linear-gradient(#f1f1f1,  #ccc);
 	background-image: -moz-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
