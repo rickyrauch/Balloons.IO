@@ -87,11 +87,9 @@ app.get('/rooms/list', utils.restrict, function(req, res) {
  * Create a rooom
  */
 
-app.post('/create', utils.restrict, function(req, res) {
-  utils.validRoomName(req, res, function(roomKey) {
-    utils.roomExists(req, res, client, roomKey, function() {
-      utils.createRoom(req, res, client, roomKey);
-    });
+app.post('/create', utils.restrict, utils.validRoomName, function(req, res) {
+  utils.roomExists(req, res, client, function() {
+    utils.createRoom(req, res, client);
   });
 });
 
