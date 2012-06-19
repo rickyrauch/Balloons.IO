@@ -8,10 +8,11 @@ body.home-page
 				.room-list.hide-inactive
 					each room,index in rooms
 						- var roomClass = room.online > 0 ? "room-active" : "room-inactive";
+						- var word = room.online == 1 ? "user" : "users";
 						a(href='/rooms/' + room.key, class="#{roomClass}")
 							| #{room.name}
 							span.users-online
-								| #{room.online} users
+								| #{room.online} #{word}
 				.inactive
 					input(type='checkbox', id="hide-inactive", checked) 
 					label(for="hide-inactive") Hide inactive
