@@ -101,7 +101,7 @@ exports.getPublicRoomsInfo = function(client, fn) {
           rooms.push({
             key: room.key || room.name, // temp
             name: room.name,
-            online: room.online
+            online: room.online || 0
           });
 
           // check if last room
