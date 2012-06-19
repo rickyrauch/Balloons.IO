@@ -450,8 +450,10 @@ sidebar .files  a.file i{background: url('../img/icons.png') no-repeat 0 -59px;}
 .content .chat .chat-box h5{margin-top: 0; font-size: 1em; margin-bottom: 1em}
 .content .chat .chat-box .avatar{position: absolute; left: 1.4em; top: 1.4em; border-radius: 4px}
 .content .chat .chat-box .avatar img{max-width: 48px}
-.content .chat .chat-box p:first-child {background: red; display: block;}
-.content .chat .chat-box p .date{display: block; float: right; font-size: 0.8em; color: rgba(0,0,0,.6); font-weight: normal; font-style: italic;}
+.content .chat .chat-box p .date{display: none; float: right; font-size: 0.8em; color: rgba(0,0,0,.6); font-weight: normal; font-style: italic;}
+.content .chat .chat-box p:first-of-type .date{display: block;}
+.content .chat .chat-box p:hover .date{display: block;}
+
 .content .chat .chat-box p:last-child{margin-bottom: 0}
 .content .chat-input{ overflow: hidden; z-index: 500; bottom: 0; position: absolute; right: 0; left: 0;
 	border-top: 1px solid #ccc;
