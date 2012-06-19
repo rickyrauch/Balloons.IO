@@ -7,7 +7,8 @@ body.home-page
 				h4 Select a room:
 				.room-list
 					each room,index in rooms
-						a(href='/rooms/' + room.key)
+						- var roomClass = room.online > 0 ? "room-active" : "room-inactive";
+						a(href='/rooms/' + room.key, class="#{roomClass}")
 							| #{room.name}
 							span.users-online
 								| #{room.online} users
