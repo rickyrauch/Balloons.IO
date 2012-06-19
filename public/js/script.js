@@ -43,10 +43,8 @@ $(function() {
 
   socket.on('history response', function(data) {
     if(data.history && data.history.length) {
-      var $firstInput
-        , firstInputUser;
-
-      data.history.reverse();
+      var $lastInput
+        , lastInputUser;
 
       data.history.forEach(function(historyLine) {
         var time = new Date(historyLine.atTime)
@@ -57,13 +55,12 @@ $(function() {
               time: timeParser(time)
             };
 
-        if(firstInputUser === chatBoxData.nickname) {
-          $firstInput.find('h5').after(ich.chat_box_text(chatBoxData));
-        } else {
-          $('.chat').prepend(ich.chat_box(chatBoxData));
+        $lastInput = $('.chat .history').children().last();
 
-          $firstInput = $('.chat-box[data-type="history"]');
-          firstInputUser = chatBoxData.nickname;
+        if($lastInput.hasClass('chat-box') && lastInputUser === chatBoxData.nickname) {
+          $lastInput.append(ich.chat_box_text(chatBoxData));
+        } else {
+          $('.chat .history').append(ich.chat_box(chatBoxData));
         }
 
         $('.chat').scrollTop($('.chat').prop('scrollHeight'));
@@ -138,19 +135,19 @@ $(function() {
           time: timeParser(time)
         };
 
-      var $lastChatInput = $('.chat').children().last();
+      var $lastChatInput = $('.chat .current').children().last();
       
       if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') === data.username) {
         $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
       } else {
-        $('.chat').append(ich.chat_notice(noticeBoxData));
+        $('.chat .current').append(ich.chat_notice(noticeBoxData));
         $('.chat').scrollTop($('.chat').prop('scrollHeight'));
       }
   });
 
   socket.on('new msg', function(data) {
     var time = new Date(),
-        $lastInput = $('.chat').children().last(),
+        $lastInput = $('.chat .current').children().last(),
         lastInputUser = $lastInput.data('user');
 
     data.type = 'chat';
@@ -159,7 +156,7 @@ $(function() {
     if($lastInput.hasClass('chat-box') && lastInputUser === data.nickname) {
       $lastInput.append(ich.chat_box_text(data));
     } else {
-      $('.chat').append(ich.chat_box(data));
+      $('.chat .current').append(ich.chat_box(data));
     }
 
     $('.chat').scrollTop($('.chat').prop('scrollHeight'));
@@ -193,12 +190,12 @@ $(function() {
                 time: timeParser(time)
               };
 
-            var $lastChatInput = $('.chat').children().last();
+            var $lastChatInput = $('.chat .current').children().last();
             
             if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') === data.nickname) {
               $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
             } else {
-              $('.chat').append(ich.chat_notice(noticeBoxData));
+              $('.chat .current').append(ich.chat_notice(noticeBoxData));
               $('.chat').scrollTop($('.chat').prop('scrollHeight'));
             }
           };
