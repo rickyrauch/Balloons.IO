@@ -90,12 +90,12 @@ $(function() {
             time: timeParser(time)
           };
       
-      var $lastChatInput = $('.chat').children().last();
+      var $lastChatInput = $('.chat .current').children().last();
       
       if($lastChatInput.hasClass('notice') && $lastChatInput.data('user') === data.nickname) {
         $lastChatInput.replaceWith(ich.chat_notice(noticeBoxData));
       } else {
-        $('.chat').append(ich.chat_notice(noticeBoxData));
+        $('.chat .current').append(ich.chat_notice(noticeBoxData));
         $('.chat').scrollTop($('.chat').prop('scrollHeight'));
       }
     } else {
