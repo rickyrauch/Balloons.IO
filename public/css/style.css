@@ -416,15 +416,20 @@ sidebar a{color: white;}
 sidebar h4, sidebar div.online .people a{padding: 0 10px}
 sidebar div.online {overflow: hidden;  height: 100%}
 sidebar div.files {height: 18%;  display: none; }
-sidebar div.online .people a{display: block; padding: 7px 10px;  border-bottom: 1px solid rgba(255,255,255,.04)}
-sidebar div.online .people a:hover{
+sidebar div.online .people a{display: block; padding: 8px 10px;  border-bottom: 1px solid rgba(255,255,255,.04)}
+sidebar div.online .people a:hover{color: white; cursor: text}
+
+/*
+	---- Hide until multichat
+	sidebar div.online .people a:hover{
+	background: white;
+	
 	background-image: -webkit-linear-gradient(#f1f1f1,  #ccc);
-	background-image: -moz-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
-	background-image: -o-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
+	background-image: -moz-linear-gradient(#f1f1f1,  #ccc);
+	background-image: -o-linear-gradient(#f1f1f1,  #ccc);
 	color: black;
-	box-shadow: none;
-	 border-bottom: 1px solid transparent;
-}
+	 border-bottom: 1px solid #ccc;
+}*/
 sidebar div.online{margin-bottom: 3em; }
 sidebar div.online .people a b{margin-bottom: -2px}
 
