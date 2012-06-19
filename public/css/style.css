@@ -624,6 +624,7 @@ body.home-page footer a{color: #666}
 }
 .select-room-container .room-list a:first-child{box-shadow: none}
 .select-room-container .room-list a:last-child{border-bottom: 0}
+.select-room-container .room-list.hide-inactive > a.room-inactive{display:none;}
 .select-room-container em{color: #666; font-weight: normal; margin-right: 6px}
 .text-grey{border: 1px solid rgba(0,0,0,.3); background: #f9f9f9; width: 200px; padding: 1em; color: #666; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,.4) inset}
 .text-grey:focus{outline: none; border-color: #999}

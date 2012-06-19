@@ -5,7 +5,7 @@ body.home-page
 			.clear
 			.rooms-block
 				h4 Select a room:
-				.room-list
+				.room-list.hide-inactive
 					each room,index in rooms
 						- var roomClass = room.online > 0 ? "room-active" : "room-inactive";
 						a(href='/rooms/' + room.key, class="#{roomClass}")
@@ -31,3 +31,7 @@ body.home-page
 		a(href='https://github.com/gravityonmars/Balloons.IO', target="_blank") Open Source project 
 		| developed by 
 		a(href='http://twitter.com/gravityonmars', target="_blank") Gravity On Mars.
+	script
+		$('#hide-inactive').click(function(ev) {
+			$('.room-list').toggleClass('hide-inactive');
+		});
