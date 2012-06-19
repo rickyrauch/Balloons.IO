@@ -229,12 +229,6 @@ html, body{
 
 body{position: relative; font-size: 78%; }
 a{ text-decoration: none; font-weight: bold; color: white}
-.online a:hover{
-	-webkit-transition: all .2s linear;
-	-moz-transition: all .2s linear; 
-	-o-transition: all .2s linear;
-	transition: all .2s linear;
-}
 
 input.text{border: 1px solid #ccc; border-radius: 4px; padding: .6em; border: 1px solid #666; box-shadow: 0 1px 2px rgba(0,0,0,.6) inset; width: 200px}
 input[type=text].text:focus,
@@ -256,7 +250,7 @@ input[type=password].text:focus, textarea:focus{
 	max-width: 100%;
 }
 
-a b{background: red; height: 8px;  width: 8px; border: 1px solid black; margin-bottom: -1px; margin-right: 6px; border-radius: 100px; display: inline-block;}
+a b{background: red; height: 8px;  width: 8px; border: 1px solid rgba(0,0,0,.7); margin-bottom: -1px; margin-right: 6px; border-radius: 100px; display: inline-block;}
 a.available b{
 	background: -webkit-radial-gradient(50% top, circle,  #B5D8A6, #58854B);
 	background: -moz-radial-gradient(50% top, circle,  #B5D8A6, #58854B);
@@ -419,20 +413,20 @@ sidebar h3{
 sidebar h4{text-transform: uppercase; color: #555; font-size: 1em; margin-top: 2em}
 
 sidebar a{color: white;}
-sidebar h4, sidebar div.online .people a{padding: 0 1em}
+sidebar h4, sidebar div.online .people a{padding: 0 10px}
 sidebar div.online {overflow: hidden;  height: 100%}
 sidebar div.files {height: 18%;  display: none; }
-/*sidebar div.online .people, sidebar div.files .files-container{  overflow-y: scroll; height: 100%}*/
-sidebar div.online .people a{display: block; padding: 1em;  border-bottom: 1px solid rgba(255,255,255,.04)}
+sidebar div.online .people a{display: block; padding: 7px 14px;  border-bottom: 1px solid rgba(255,255,255,.04)}
 sidebar div.online .people a:hover{
 	background-image: -webkit-linear-gradient(#f1f1f1,  #ccc);
 	background-image: -moz-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
 	background-image: -o-linear-gradient(#7e7e7e, #616161 8.6%, #3a3a3a);
 	color: black;
 	box-shadow: none;
-	border-color: transparent;
+	 border-bottom: 1px solid transparent;
 }
 sidebar div.online{margin-bottom: 3em; }
+sidebar div.online .people a b{margin-bottom: -2px}
 
 sidebar .files .files-container{padding: 1em}
 sidebar .files a {display: block; margin-bottom: 1.4em}
@@ -455,7 +449,9 @@ sidebar .files  a.file i{background: url('../img/icons.png') no-repeat 0 -59px;}
 .content .chat .chat-box:nth-child(2n){background-color: #f1f1f1}
 .content .chat .chat-box h5{margin-top: 0; font-size: 1em; margin-bottom: 1em}
 .content .chat .chat-box .avatar{position: absolute; left: 1.4em; top: 1.4em; border-radius: 4px}
-.content .chat .chat-box p .date{float: right; font-size: 0.8em; color: rgba(0,0,0,.6); font-weight: normal; font-style: italic;}
+.content .chat .chat-box .avatar img{max-width: 48px}
+.content .chat .chat-box p:first-child {background: red; display: block;}
+.content .chat .chat-box p .date{display: block; float: right; font-size: 0.8em; color: rgba(0,0,0,.6); font-weight: normal; font-style: italic;}
 .content .chat .chat-box p:last-child{margin-bottom: 0}
 .content .chat-input{ overflow: hidden; z-index: 500; bottom: 0; position: absolute; right: 0; left: 0;
 	border-top: 1px solid #ccc;
