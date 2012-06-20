@@ -306,15 +306,12 @@ $(function() {
     } else if (evt.type == "blur" || evt.type == "focusout") {
       windowStatus = "hidden";
     } else {
-      if (this[hidden]) {
-        windowStatus = "hidden";
-      } else {
-        windowStatus = "visible";
-        if(afkDeliveredMessages) {
-          afkDeliveredMessages = 0;
-          updateTitle();
-        }
-      };
+      windowStatus = this[hidden] ? "hidden" : "visible";
+    }
+
+    if(windowStatus == "visible" && afkDeliveredMessages) {
+      afkDeliveredMessages = 0;
+      updateTitle();
     }
   }
 
