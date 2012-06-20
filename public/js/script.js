@@ -59,9 +59,9 @@ $(function() {
         lastInputUser = $lastInput.data('user');
 
         if($lastInput.hasClass('chat-box') && lastInputUser === chatBoxData.nickname) {
-          $lastInput.append(ich.chat_box_text(chatBoxData));
+          $lastInput.append(parseChatBoxMsg(ich.chat_box_text(chatBoxData)));
         } else {
-          $('.chat .history').append(ich.chat_box(chatBoxData));
+          $('.chat .history').append(parseChatBox(ich.chat_box(chatBoxData)));
         }
 
         $('.chat').scrollTop($('.chat').prop('scrollHeight'));
@@ -155,9 +155,9 @@ $(function() {
     data.time = timeParser(time)
 
     if($lastInput.hasClass('chat-box') && lastInputUser === data.nickname) {
-      $lastInput.append(ich.chat_box_text(data));
+      $lastInput.append(parseChatBoxMsg(ich.chat_box_text(data)));
     } else {
-      $('.chat .current').append(ich.chat_box(data));
+      $('.chat .current').append(parseChatBox(ich.chat_box(data)));
     }
 
     $('.chat').scrollTop($('.chat').prop('scrollHeight'));
@@ -238,5 +238,22 @@ $(function() {
       seconds: seconds > 10 ? seconds : '0' + seconds,
       meridiem: hours > 12 ? 'PM' : 'AM'
     }
-  }
+  };
+
+  var textParser = function(text) {
+    return text
+      .replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,"<a href=\"$1\" target='_blank'>$1</a>")
+      .replace(/(@)([a-zA-Z0-9_]+)/g, "<a href=\"http://twitter.com/$2\" target=\"_blank\">$1$2</a>");
+  };
+
+  var parseChatBox = function(chatBox) {
+    var chatBoxMsg = chatBox.find('p');
+    parseChatBoxMsg(chatBoxMsg);
+    return chatBox;
+  };
+
+  var parseChatBoxMsg = function(chatBoxMsg) {
+    var msg = chatBoxMsg.html();
+    return chatBoxMsg.html(textParser(msg));
+  };
 });
