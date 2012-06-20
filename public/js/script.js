@@ -4,6 +4,10 @@ $(function() {
     , afkDeliveredMessages = 0
     , roomName = $('#room_name').text();
 
+  // First update the title with room's name
+  updateTitle();
+
+  // Then check users online!
   $('.people a').each(function(index, element) {
     USERS[$(element).data('username')] = 1;
   });
@@ -170,7 +174,7 @@ $(function() {
       afkDeliveredMessages +=1;
       updateTitle();
     }
-    
+
   });
 
   socket.on('user leave', function(data) {
