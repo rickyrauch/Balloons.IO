@@ -314,7 +314,9 @@ $(function() {
     if(windowStatus == "visible" && afkDeliveredMessages) {
       afkDeliveredMessages = 0;
       updateTitle();
-    } else if (windowStatus == "visible") {
+    }
+
+    if (windowStatus == "visible") {
       focusInput();
     }
   }
