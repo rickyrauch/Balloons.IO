@@ -1,5 +1,8 @@
 $(function() {
-  var USERS = window.USERS = {};
+  var USERS = window.USERS = {}
+    , windowStatus
+    , afkDeliveredMessages = 0
+    , roomName = $('#room_name').text();
 
   $('.people a').each(function(index, element) {
     USERS[$(element).data('username')] = 1;
@@ -161,6 +164,13 @@ $(function() {
     }
 
     $('.chat').scrollTop($('.chat').prop('scrollHeight'));
+    
+    //update title if window is hidden
+    if(windowStatus == "hidden") {
+      afkDeliveredMessages +=1;
+      updateTitle();
+    }
+    
   });
 
   socket.on('user leave', function(data) {
@@ -256,4 +266,58 @@ $(function() {
     var msg = chatBoxMsg.html();
     return chatBoxMsg.html(textParser(msg));
   };
+
+  // TITLE notifications
+  var hidden
+    , change
+    , vis = {
+        hidden: "visibilitychange",
+        mozHidden: "mozvisibilitychange",
+        webkitHidden: "webkitvisibilitychange",
+        msHidden: "msvisibilitychange",
+        oHidden: "ovisibilitychange" /* not currently supported */
+    };             
+  
+  for (var hidden in vis) {
+    if (vis.hasOwnProperty(hidden) && hidden in document) {
+        change = vis[hidden];
+        break;
+    }
+  }
+  
+  if (change) {
+    document.addEventListener(change, onchange);
+  } else if (/*@cc_on!@*/false) { // IE 9 and lower
+    document.onfocusin = document.onfocusout = onchange
+  } else {
+    window.onfocus = window.onblur = onchange;
+  }
+
+  function onchange (evt) {
+    var body = document.body;
+    evt = evt || window.event;
+
+    if (evt.type == "focus" || evt.type == "focusin") {
+      windowStatus = "visible";
+    } else if (evt.type == "blur" || evt.type == "focusout") {
+      windowStatus = "hidden";
+    } else {
+      if (this[hidden]) {
+        windowStatus = "hidden";
+      } else {
+        windowStatus = "visible";
+        if(afkDeliveredMessages) {
+          afkDeliveredMessages = 0;
+          updateTitle();
+        }
+      };
+    }
+  }
+
+  function updateTitle() {
+    $('title').html(ich.title_template({
+      count: afkDeliveredMessages,
+      roomName: roomName
+    }, true));
+  }
 });

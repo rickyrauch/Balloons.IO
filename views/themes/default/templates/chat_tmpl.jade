@@ -20,3 +20,6 @@ script#people_box(type='text/html')
   a(class='{{ status }}', href='#', data-username='{{ nickname }}')
     b
     | {{ nickname }}
+
+script#title_template(type='text/html')
+  | {{#count}} ({{ count }}) {{/count}} {{ roomName }} - Balloons.IO
