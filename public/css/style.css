@@ -458,8 +458,8 @@ sidebar .files  a.file i{background: url('../img/icons.png') no-repeat 0 -59px;}
 .content .chat .chat-box p .date{display: none; float: right; font-size: 0.8em; color: rgba(0,0,0,.6); font-weight: normal; font-style: italic;}
 .content .chat .chat-box p:first-of-type .date{display: block;}
 .content .chat .chat-box p:hover .date{display: block;}
-
 .content .chat .chat-box p:last-child{margin-bottom: 0}
+.content .chat .chat-box p a{color: #333; border-bottom: 1px solid #ccc; padding-bottom: 1px}
 .content .chat-input{ overflow: hidden; z-index: 500; bottom: 0; position: absolute; right: 0; left: 0;
 	border-top: 1px solid #ccc;
   background-image: -webkit-gradient(linear, 0 0, 0 45, color-stop(0.044, #fdfdfd), to(#dfe2e9));
@@ -467,7 +467,7 @@ sidebar .files  a.file i{background: url('../img/icons.png') no-repeat 0 -59px;}
   background-image: -moz-linear-gradient(#fdfdfd 4.4%, #dfe2e9);
   background-image: -o-linear-gradient(#fdfdfd 4.4%, #dfe2e9);	
 }
-.content .chat-input input.text{height: auto; max-height: 1.2em;  border-radius: 4px; width: 95%; padding: 1%; display: block; margin: 1% 1.5%}
+.content .chat-input input.text{height: auto; max-height: 1.2em; background: white url('../img/icon-chat.png') 10px center no-repeat; border-radius: 4px; width: 93%; padding: 1% 1% 1% 3%; display: block; margin: 1% 1.5%}
 
 
 .modal-invite{width: 500px}
