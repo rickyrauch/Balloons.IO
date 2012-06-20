@@ -7,6 +7,8 @@ $(function() {
   // First update the title with room's name
   updateTitle();
 
+  focusInput();
+
   // Then check users online!
   $('.people a').each(function(index, element) {
     USERS[$(element).data('username')] = 1;
@@ -312,6 +314,8 @@ $(function() {
     if(windowStatus == "visible" && afkDeliveredMessages) {
       afkDeliveredMessages = 0;
       updateTitle();
+    } else if (windowStatus == "visible") {
+      focusInput();
     }
   }
 
@@ -320,5 +324,9 @@ $(function() {
       count: afkDeliveredMessages,
       roomName: roomName
     }, true));
+  }
+
+  function focusInput() {
+    $(".chat-input input.text").focus();
   }
 });
