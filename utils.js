@@ -21,7 +21,7 @@ exports.restrict = function(req, res, next){
 
 exports.genRoomKey = function() {
   var shasum = crypto.createHash('sha1');
-  shasum.update(Date.now().toString());
+  shasum.update(Date.now.getTime().toString());
   return shasum.digest('hex').substr(0,8);
 };
 
