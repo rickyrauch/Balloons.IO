@@ -1,6 +1,15 @@
 $(function() {
-  var USERS = window.USERS = {};
+  var USERS = window.USERS = {}
+    , windowStatus
+    , afkDeliveredMessages = 0
+    , roomName = $('#room_name').text();
 
+  // First update the title with room's name
+  updateTitle();
+
+  focusInput();
+
+  // Then check users online!
   $('.people a').each(function(index, element) {
     USERS[$(element).data('username')] = 1;
   });
@@ -59,9 +68,9 @@ $(function() {
         lastInputUser = $lastInput.data('user');
 
         if($lastInput.hasClass('chat-box') && lastInputUser === chatBoxData.nickname) {
-          $lastInput.append(ich.chat_box_text(chatBoxData));
+          $lastInput.append(parseChatBoxMsg(ich.chat_box_text(chatBoxData)));
         } else {
-          $('.chat .history').append(ich.chat_box(chatBoxData));
+          $('.chat .history').append(parseChatBox(ich.chat_box(chatBoxData)));
         }
 
         $('.chat').scrollTop($('.chat').prop('scrollHeight'));
@@ -155,12 +164,19 @@ $(function() {
     data.time = timeParser(time)
 
     if($lastInput.hasClass('chat-box') && lastInputUser === data.nickname) {
-      $lastInput.append(ich.chat_box_text(data));
+      $lastInput.append(parseChatBoxMsg(ich.chat_box_text(data)));
     } else {
-      $('.chat .current').append(ich.chat_box(data));
+      $('.chat .current').append(parseChatBox(ich.chat_box(data)));
     }
 
     $('.chat').scrollTop($('.chat').prop('scrollHeight'));
+    
+    //update title if window is hidden
+    if(windowStatus == "hidden") {
+      afkDeliveredMessages +=1;
+      updateTitle();
+    }
+
   });
 
   socket.on('user leave', function(data) {
@@ -238,5 +254,81 @@ $(function() {
       seconds: seconds > 10 ? seconds : '0' + seconds,
       meridiem: hours > 12 ? 'PM' : 'AM'
     }
+  };
+
+  var textParser = function(text) {
+    return text
+      .replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,"<a href=\"$1\" target='_blank'>$1</a>")
+      .replace(/(@)([a-zA-Z0-9_]+)/g, "<a href=\"http://twitter.com/$2\" target=\"_blank\">$1$2</a>");
+  };
+
+  var parseChatBox = function(chatBox) {
+    var chatBoxMsg = chatBox.find('p');
+    parseChatBoxMsg(chatBoxMsg);
+    return chatBox;
+  };
+
+  var parseChatBoxMsg = function(chatBoxMsg) {
+    var msg = chatBoxMsg.html();
+    return chatBoxMsg.html(textParser(msg));
+  };
+
+  // TITLE notifications
+  var hidden
+    , change
+    , vis = {
+        hidden: "visibilitychange",
+        mozHidden: "mozvisibilitychange",
+        webkitHidden: "webkitvisibilitychange",
+        msHidden: "msvisibilitychange",
+        oHidden: "ovisibilitychange" /* not currently supported */
+    };             
+  
+  for (var hidden in vis) {
+    if (vis.hasOwnProperty(hidden) && hidden in document) {
+        change = vis[hidden];
+        break;
+    }
+  }
+  
+  if (change) {
+    document.addEventListener(change, onchange);
+  } else if (/*@cc_on!@*/false) { // IE 9 and lower
+    document.onfocusin = document.onfocusout = onchange
+  } else {
+    window.onfocus = window.onblur = onchange;
+  }
+
+  function onchange (evt) {
+    var body = document.body;
+    evt = evt || window.event;
+
+    if (evt.type == "focus" || evt.type == "focusin") {
+      windowStatus = "visible";
+    } else if (evt.type == "blur" || evt.type == "focusout") {
+      windowStatus = "hidden";
+    } else {
+      windowStatus = this[hidden] ? "hidden" : "visible";
+    }
+
+    if(windowStatus == "visible" && afkDeliveredMessages) {
+      afkDeliveredMessages = 0;
+      updateTitle();
+    }
+
+    if (windowStatus == "visible") {
+      focusInput();
+    }
+  }
+
+  function updateTitle() {
+    $('title').html(ich.title_template({
+      count: afkDeliveredMessages,
+      roomName: roomName
+    }, true));
+  }
+
+  function focusInput() {
+    $(".chat-input input.text").focus();
   }
 });
