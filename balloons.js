@@ -101,7 +101,7 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
   utils.getRoomInfo(req, res, client, function(room) {
     utils.getUsersInRoom(req, res, client, room, function(users) {
       utils.getPublicRoomsInfo(client, function(rooms) {
-        utils.getUserStatus(req.getAuthDetails().user.usarname, client, function(status) {
+        utils.getUserStatus(req.getAuthDetails().user.username, client, function(status) {
           utils.enterRoom(req, res, room, users, rooms, status);
         });
       });
