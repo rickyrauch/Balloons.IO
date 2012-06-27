@@ -1,13 +1,16 @@
 {
     "name": "Balloons.io"
+  , "description": "Web multi-room chat server and client ready to use."
   , "version": "0.0.1"
   , "dependencies": {
-      "express": "2.5.9"
-    , "jade": ">= 0.0.1"
-    , "socket.io": "0.9.6"
-    , "easy-oauth": "0.2.1"
-    , "redis": ">= 0.7.1"
-    , "connect-redis": "1.4.0"
+        "express": "2.5.9"
+      , "jade": ">= 0.0.1"
+      , "socket.io": "0.9.6"
+      , "easy-oauth": "0.2.1"
+      , "redis": ">= 0.7.1"
+      , "connect-redis": "1.4.0"
+    }
+  , "engines": {
+    "node": "0.6.x"
   }
 }
-
