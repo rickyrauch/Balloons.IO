@@ -222,8 +222,9 @@ $(function() {
   });
 
   $(".chat-input input").keypress(function(e) {
-    if(e.which == 13) {
-      var chunks = $(this).val().match(/.{1,1024}/g)
+    var inputText = $(this).val().trim();
+    if(e.which == 13 && inputText) {
+      var chunks = inputText.match(/.{1,1024}/g)
         , len = chunks.length;
 
       for(var i = 0; i<len; i++) {
@@ -275,6 +276,9 @@ $(function() {
   };
 
   var patterns = {
+    angry: /\&gt;:-o|\&gt;:o|\&gt;:-O|\&gt;:O|\&gt;:-\(|\&gt;:\(/g,
+    naughty: /\&gt;:-\)|\&gt;:\)|\&gt;:-\&gt;|\&gt;:\&gt;/g,
+    sick: /:-\&amp;|:\&amp;|=\&amp;|=-\&amp;|:-@|:@|=@|=-@/g,
     smile: /:-\)|:\)|=-\)|=\)/g,
     wink: /;-\)|;\)/g,
     frown: /:-\(|:\(|=\(|=-\(/g,
@@ -286,20 +290,17 @@ $(function() {
     yuck: /:-P|:-p|:-b|:P|:p|:b|=-P|=-p|=-b|=P|=p|=b/g,
     yum: /:-d|:d/g,
     grin: /\^_\^|\^\^|\^-\^/g,
-    sarcastic: /:->|:>|\^o\)/g,
-    angry: />:-o|>:o|>:-O|>:O|>:-\(|>:\(/g,
+    sarcastic: /:-\&gt;|:\&gt;|\^o\)/g,
     cry: /:'\(|='\(|:'-\(|='-\(/g,
     cool: /8-\)|8\)|B-\)|B\)/g,
     nerd: /:-B|:B|8-B|8B/g,
     innocent: /O:-\)|o:-\)|O:\)|o:\)/g,
-    naughty: />:-\)|>:\)|>:->|>:>/g,
     sealed: /:-X|:X|=X|=-X/g,
     footinmouth: /:-!|:!/g,
     embarrassed: /:-\[|:\[|=\[|=-\[/g,
     crazy: /%-\)|%\)/g,
     confused: /:-S|:S|:-s|:s|%-\(|%\(|X-\(|X\(/g,
-    moneymouth: /:-$|:$|=$|=-$/g,
-    sick: /:-&|:&|=&|=-&|:-@|:@|=@|=-@/g,
+    moneymouth: /:-\$|:\$|=\$|=-\$/g,
     heart: /\(L\)|\(l\)/g,
     thumbsup: /\(Y\)|\(y\)/g,
     thumbsdown: /\(N\)|\(n\)/g,
@@ -307,7 +308,7 @@ $(function() {
     mini_smile: /c:|C:|c-:|C-:/g,
     mini_frown: /:c|:C|:-c|:-C/g,
     content_: /:j|:J/g,
-    hearteyes: /<3/g
+    hearteyes: /\&lt;3/g
   };
 
   var emoticHTML = "<span class='emoticon $emotic'></span>";
