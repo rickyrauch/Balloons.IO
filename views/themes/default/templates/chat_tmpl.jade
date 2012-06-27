@@ -1,7 +1,7 @@
 script#chat_box(type='text/html')
   .chat-box(data-user='{{ nickname }}', data-type='{{ type }}')
     .avatar
-      img(src='http://twitter.com/api/users/profile_image/{{ nickname }}')
+      img(src='http://twitter.com/api/users/profile_image/{{ nickname }}?size=normal')
     h5
       | {{ nickname }}
     {{> chat_box_text }}
