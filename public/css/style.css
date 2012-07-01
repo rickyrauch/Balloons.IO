@@ -460,6 +460,7 @@ sidebar .files  a.file i{background: url('../img/icons.png') no-repeat 0 -59px;}
 .content .chat .chat-box p:hover .date{display: block;}
 .content .chat .chat-box p:last-child{margin-bottom: 0}
 .content .chat .chat-box p a{color: #333; border-bottom: 1px solid #ccc; padding-bottom: 1px}
+.content .chat .chat-box p span.emoticon{display:inline-block; width:18px; height:18px;}
 .content .chat-input{ overflow: hidden; z-index: 500; bottom: 0; position: absolute; right: 0; left: 0;
 	border-top: 1px solid #ccc;
   background-image: -webkit-gradient(linear, 0 0, 0 45, color-stop(0.044, #fdfdfd), to(#dfe2e9));
@@ -634,6 +635,42 @@ span.dropdown-users-online{background: #999; background: rgba(0,0,0,.2); margin-
 .text-grey:focus{outline: none; border-color: #999}
 input::-webkit-input-placeholder, input::-moz-input-placeholder		 {color: #999;  font-style: italic; }
 
+/* ==|== emoticons =====================================================
+   Author:
+   ========================================================================== */
+    .emoticon-angry {background-image:url('../img/emoticons/angry.png');}
+    .emoticon-naughty {background-image:url('../img/emoticons/naughty.png');}
+    .emoticon-sick {background-image:url('../img/emoticons/sick.png');}
+    .emoticon-smile {background-image:url('../img/emoticons/smile.png');}
+    .emoticon-wink {background-image:url('../img/emoticons/wink.png');}
+    .emoticon-frown {background-image:url('../img/emoticons/frown.png');}
+    .emoticon-ambivalent {background-image:url('../img/emoticons/ambivalent.png');}
+    .emoticon-slant {background-image:url('../img/emoticons/slant.png');}
+    .emoticon-gasp {background-image:url('../img/emoticons/gasp.png');}
+    .emoticon-laugh {background-image:url('../img/emoticons/laugh.png');}
+    .emoticon-kiss {background-image:url('../img/emoticons/kiss.png');}
+    .emoticon-yuck {background-image:url('../img/emoticons/yuck.png');}
+    .emoticon-yum {background-image:url('../img/emoticons/yum.png');}
+    .emoticon-grin {background-image:url('../img/emoticons/grin.png');}
+    .emoticon-sarcastic {background-image:url('../img/emoticons/sarcastic.png');}
+    .emoticon-cry {background-image:url('../img/emoticons/cry.png');}
+    .emoticon-cool {background-image:url('../img/emoticons/cool.png');}
+    .emoticon-nerd {background-image:url('../img/emoticons/nerd.png');}
+    .emoticon-innocent {background-image:url('../img/emoticons/innocent.png');}
+    .emoticon-sealed {background-image:url('../img/emoticons/sealed.png');}
+    .emoticon-footinmouth {background-image:url('../img/emoticons/footinmouth.png');}
+    .emoticon-embarrassed {background-image:url('../img/emoticons/embarrassed.png');}
+    .emoticon-crazy {background-image:url('../img/emoticons/crazy.png');}
+    .emoticon-confused {background-image:url('../img/emoticons/confused.png');}
+    .emoticon-moneymouth {background-image:url('../img/emoticons/moneymouth.png');}
+    .emoticon-heart {background-image:url('../img/emoticons/heart.png');}
+    .emoticon-thumbsup {background-image:url('../img/emoticons/thumbsup.png');}
+    .emoticon-thumbsdown {background-image:url('../img/emoticons/thumbsdown.png');}
+    .emoticon-not-amused {background-image:url('../img/emoticons/not-amused.png');}
+    .emoticon-mini-smile {background-image:url('../img/emoticons/mini-smile.png');}
+    .emoticon-mini-frown {background-image:url('../img/emoticons/mini-frown.png');}
+    .emoticon-content {background-image:url('../img/emoticons/content.png');}
+    .emoticon-hearteyes {background-image:url('../img/emoticons/hearteyes.png');}
 
 /* ==|== media queries ======================================================
    EXAMPLE Media Query for Responsive Design.

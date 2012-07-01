@@ -222,8 +222,9 @@ $(function() {
   });
 
   $(".chat-input input").keypress(function(e) {
-    if(e.which == 13) {
-      var chunks = $(this).val().match(/.{1,1024}/g)
+    var inputText = $(this).val().trim();
+    if(e.which == 13 && inputText) {
+      var chunks = inputText.match(/.{1,1024}/g)
         , len = chunks.length;
 
       for(var i = 0; i<len; i++) {
@@ -257,6 +258,7 @@ $(function() {
   };
 
   var textParser = function(text) {
+    text = injectEmoticons(text);
     return text
       .replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,"<a href=\"$1\" target='_blank'>$1</a>")
       .replace(/(@)([a-zA-Z0-9_]+)/g, "<a href=\"http://twitter.com/$2\" target=\"_blank\">$1$2</a>");
@@ -272,6 +274,51 @@ $(function() {
     var msg = chatBoxMsg.html();
     return chatBoxMsg.html(textParser(msg));
   };
+
+  var patterns = {
+    angry: /\&gt;:-o|\&gt;:o|\&gt;:-O|\&gt;:O|\&gt;:-\(|\&gt;:\(/g,
+    naughty: /\&gt;:-\)|\&gt;:\)|\&gt;:-\&gt;|\&gt;:\&gt;/g,
+    sick: /:-\&amp;|:\&amp;|=\&amp;|=-\&amp;|:-@|:@|=@|=-@/g,
+    smile: /:-\)|:\)|=-\)|=\)/g,
+    wink: /;-\)|;\)/g,
+    frown: /:-\(|:\(|=\(|=-\(/g,
+    ambivalent: /:-\||:\|/g,
+    slant: /:-\/|:\/|:-\\|:\\|=-\/|=\/|=-\\|=\\/g,
+    gasp: /:-O|:O|:-o|:o|=-O|=O|=-o|=o/g,
+    laugh: /:-D|:D|=-D|=D/g,
+    kiss: /:-\*|:\*|=-\*|=\*/g,
+    yuck: /:-P|:-p|:-b|:P|:p|:b|=-P|=-p|=-b|=P|=p|=b/g,
+    yum: /:-d|:d/g,
+    grin: /\^_\^|\^\^|\^-\^/g,
+    sarcastic: /:-\&gt;|:\&gt;|\^o\)/g,
+    cry: /:'\(|='\(|:'-\(|='-\(/g,
+    cool: /8-\)|8\)|B-\)|B\)/g,
+    nerd: /:-B|:B|8-B|8B/g,
+    innocent: /O:-\)|o:-\)|O:\)|o:\)/g,
+    sealed: /:-X|:X|=X|=-X/g,
+    footinmouth: /:-!|:!/g,
+    embarrassed: /:-\[|:\[|=\[|=-\[/g,
+    crazy: /%-\)|%\)/g,
+    confused: /:-S|:S|:-s|:s|%-\(|%\(|X-\(|X\(/g,
+    moneymouth: /:-\$|:\$|=\$|=-\$/g,
+    heart: /\(L\)|\(l\)/g,
+    thumbsup: /\(Y\)|\(y\)/g,
+    thumbsdown: /\(N\)|\(n\)/g,
+    "not-amused": /-.-\"|-.-|-_-\"|-_-/g,
+    "mini-smile": /c:|C:|c-:|C-:/g,
+    "mini-frown": /:c|:C|:-c|:-C/g,
+    content: /:j|:J/g,
+    hearteyes: /\&lt;3/g
+  };
+
+  var emoticHTML = "<span class='emoticon $emotic'></span>";
+
+  var injectEmoticons = function(text) {
+    for(var emotic in patterns) {
+      text = text.replace(patterns[emotic],emoticHTML.replace("$emotic", "emoticon-" + emotic));
+    }
+    return text;
+  }
 
   // TITLE notifications
   var hidden
