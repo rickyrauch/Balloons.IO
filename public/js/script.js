@@ -304,10 +304,10 @@ $(function() {
     heart: /\(L\)|\(l\)/g,
     thumbsup: /\(Y\)|\(y\)/g,
     thumbsdown: /\(N\)|\(n\)/g,
-    bored: /-.-\"|-.-|-_-\"|-_-/g,
-    mini_smile: /c:|C:|c-:|C-:/g,
-    mini_frown: /:c|:C|:-c|:-C/g,
-    content_: /:j|:J/g,
+    "not-amused": /-.-\"|-.-|-_-\"|-_-/g,
+    "mini-smile": /c:|C:|c-:|C-:/g,
+    "mini-frown": /:c|:C|:-c|:-C/g,
+    content: /:j|:J/g,
     hearteyes: /\&lt;3/g
   };
 
@@ -315,7 +315,7 @@ $(function() {
 
   var injectEmoticons = function(text) {
     for(var emotic in patterns) {
-      text = text.replace(patterns[emotic],emoticHTML.replace("$emotic", emotic));
+      text = text.replace(patterns[emotic],emoticHTML.replace("$emotic", "emoticon-" + emotic));
     }
     return text;
   }
