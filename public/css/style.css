@@ -460,7 +460,7 @@ sidebar .files  a.file i{background: url('../img/icons.png') no-repeat 0 -59px;}
 .content .chat .chat-box p:hover .date{display: block;}
 .content .chat .chat-box p:last-child{margin-bottom: 0}
 .content .chat .chat-box p a{color: #333; border-bottom: 1px solid #ccc; padding-bottom: 1px}
-.content .chat .chat-box p span.emoticon{display:inline-block; width:18px; height:18px;}
+.content .chat .chat-box p span.emoticon{display:inline-block; width:18px; height:18px; margin-bottom: -4px}
 .content .chat-input{ overflow: hidden; z-index: 500; bottom: 0; position: absolute; right: 0; left: 0;
 	border-top: 1px solid #ccc;
   background-image: -webkit-gradient(linear, 0 0, 0 45, color-stop(0.044, #fdfdfd), to(#dfe2e9));
