@@ -6,7 +6,7 @@
         "express": "2.5.9"
       , "jade": ">= 0.0.1"
       , "socket.io": "0.9.6"
-      , "easy-oauth": "0.2.1"
+      , "easy-oauth": "0.2.2"
       , "redis": ">= 0.7.1"
       , "connect-redis": "1.4.0"
     }
