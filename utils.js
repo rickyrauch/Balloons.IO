@@ -4,14 +4,8 @@
  */
 
 exports.restrict = function(req, res, next){
-  req.authenticate(['oauth'], function(error, authenticated){ 
-    if(authenticated){
-      next();
-    }
-    else{
-      res.redirect('/');
-    }
-  });
+  if(req.isAuthenticated()) next();
+  else res.redirect('/');
 };
 
 /*
@@ -59,7 +53,7 @@ exports.createRoom = function(req, res, client, roomKey) {
   var room = {
     key: roomKey,
     name: req.body.room_name,
-    admin: req.getAuthDetails().user.username,
+    admin: req.user.username,
     locked: 0,
     online: 0
   };
@@ -166,7 +160,7 @@ exports.enterRoom = function(req, res, room, users, rooms, status){
     room: room,
     rooms: rooms,
     user: {
-      nickname: req.getAuthDetails().user.username,
+      nickname: req.user.username,
       status: status
     },
     users_list: users

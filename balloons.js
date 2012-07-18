@@ -4,10 +4,11 @@
 
 var express = require('express')
   , sio = require('socket.io')
-  , easyoauth = require('easy-oauth')
   , redis = require('redis')
   , connect = require('express/node_modules/connect')
   , parseCookie = connect.utils.parseCookie
+  , passport = require('passport')
+  , TwitterStrategy = require('passport-twitter').Strategy
   , RedisStore = require('connect-redis')(express)
   , sessionStore = new RedisStore
   , config = require('./config.json')
@@ -29,6 +30,28 @@ var client = redis.createClient();
 init(client);
 
 /*
+ * Auth strategy
+ */
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.use(new TwitterStrategy({
+    consumerKey: config.auth.twitter.consumerkey,
+    consumerSecret: config.auth.twitter.consumersecret,
+    callbackURL: config.auth.twitter.callback
+  },
+  function(token, tokenSecret, profile, done) {
+    return done(null, profile);
+  }
+));
+
+/*
  * Create and config server
  */
 
@@ -45,10 +68,10 @@ app.configure(function() {
     key: "balloons",
     store: sessionStore
   }));
-  app.use(easyoauth(config.auth));
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(app.router);
 });
-
 
 /*
  * Routes
@@ -59,18 +82,32 @@ app.configure(function() {
  */
 
 app.get('/', function(req, res, next) {
-  req.authenticate(['oauth'], function(error, authenticated){ 
-    if(authenticated){
-      client.hmset(
-          'users:' + req.getAuthDetails().user.username
-        , req.getAuthDetails().user
-      );
-      res.redirect('/rooms/list');
-    }
-    else{
-      res.render('index');
-    }
-  });
+  if(req.isAuthenticated()){
+    client.hmset(
+        'users:' + req.user.username
+      , req.user
+    );
+    res.redirect('/rooms/list');
+  } else{
+    res.render('index');
+  }
+});
+
+/*
+ * Authentication routes
+ */
+
+app.get('/auth/twitter', passport.authenticate('twitter'));
+
+app.get('/auth/twitter/callback', 
+  passport.authenticate('twitter', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/');
+});
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
 });
 
 /*
@@ -103,7 +140,7 @@ app.get('/rooms/:id', utils.restrict, function(req, res) {
   utils.getRoomInfo(req, res, client, function(room) {
     utils.getUsersInRoom(req, res, client, room, function(users) {
       utils.getPublicRoomsInfo(client, function(rooms) {
-        utils.getUserStatus(req.getAuthDetails().user.username, client, function(status) {
+        utils.getUserStatus(req.user.username, client, function(status) {
           utils.enterRoom(req, res, room, users, rooms, status);
         });
       });
