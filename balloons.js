@@ -12,7 +12,6 @@ var express = require('express')
   , fs = require('fs')
   , init = require('./init');
 
-
 /*
  * Instantiate redis
  */

@@ -5,15 +5,20 @@
 
 var parent = module.parent.exports 
   , app = parent.app
+  , express = require('express')
   , client = parent.client
   , sessionStore = parent.sessionStore
-  , sio = require('socket.io');
+  , sio = require('socket.io')
+  , connect = require('express/node_modules/connect')
+  , parseCookie = connect.utils.parseCookie
+  , fs = require('fs');
+
 
 var io = sio.listen(app);
 
 io.set('authorization', function (hsData, accept) {
   if(hsData.headers.cookie) {
-    var cookie = app.parseCookie(hsData.headers.cookie)
+    var cookie = parseCookie(hsData.headers.cookie)
       , sid = cookie['balloons'];
 
     sessionStore.load(sid, function(err, session) {
