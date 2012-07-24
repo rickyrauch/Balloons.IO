@@ -8,8 +8,6 @@ var express = require('express')
   , RedisStore = require('connect-redis')(express)
   , sessionStore = exports.sessionStore = new RedisStore
   , config = require('./config.json')
-  , utils = require('./utils')
-  , fs = require('fs')
   , init = require('./init');
 
 /*
