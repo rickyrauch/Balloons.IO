@@ -5,7 +5,7 @@
   , "dependencies": {
         "express": "2.5.9"
       , "jade": ">= 0.0.1"
-      , "socket.io": "0.9.6"
+      , "socket.io": "0.9.7"
       , "redis": ">= 0.7.1"
       , "connect-redis": "1.4.0"
       , "passport": "0.1.x"
