@@ -4,14 +4,14 @@
   , "version": "0.0.1"
   , "dependencies": {
         "express": "2.5.9"
-      , "jade": ">= 0.0.1"
+      , "jade": "*"
       , "socket.io": "0.9.7"
-      , "redis": ">= 0.7.1"
-      , "connect-redis": "1.4.0"
+      , "redis": ">= 0.7.2"
+      , "connect-redis": "1.4.x"
       , "passport": "0.1.x"
       , "passport-twitter": "0.1.x"
     }
   , "engines": {
-    "node": "0.6.x"
+    "node": ">= 0.6.0"
   }
 }
