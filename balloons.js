@@ -161,12 +161,13 @@ io.set('authorization', function (hsData, accept) {
       , sid = cookie['balloons'];
 
     sessionStore.load(sid, function(err, session) {
+      console.log(session);
       if(err || !session) {
         return accept('Error retrieving session!', false);
       }
 
       hsData.balloons = {
-        user: session.auth.user,
+        user: session.passport.user,
         room: /\/rooms\/(?:([^\/]+?))\/?$/g.exec(hsData.headers.referer)[1]
       };
 
@@ -186,6 +187,7 @@ io.configure(function() {
 
 
 io.sockets.on('connection', function (socket) {
+  console.log(socket.handshake.balloons);
   var hs = socket.handshake
     , nickname = hs.balloons.user.username
     , room_id = hs.balloons.room
