@@ -8,7 +8,6 @@ var express = require('express')
   , connect = require('express/node_modules/connect')
   , parseCookie = connect.utils.parseCookie
   , passport = require('passport')
-  , TwitterStrategy = require('passport-twitter').Strategy
   , RedisStore = require('connect-redis')(express)
   , sessionStore = new RedisStore
   , config = require('./config.json')
@@ -29,27 +28,7 @@ var client = redis.createClient();
 
 init(client);
 
-/*
- * Auth strategy
- */
-
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.use(new TwitterStrategy({
-    consumerKey: config.auth.twitter.consumerkey,
-    consumerSecret: config.auth.twitter.consumersecret,
-    callbackURL: config.auth.twitter.callback
-  },
-  function(token, tokenSecret, profile, done) {
-    return done(null, profile);
-  }
-));
+require('./strategy');
 
 /*
  * Create and config server
