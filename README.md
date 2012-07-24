@@ -17,14 +17,14 @@ sites do much better than what we could do ourselves:
 
 ### Requirements
 
--   [node.JS]: http://nodejs.org
--		[Redis-server]: http://redis.io
+-   [node.JS](http://nodejs.org)
+-		[Redis-server](http://redis.io)
 
 If you have these 2 tools installed, go to terminal and type:
 
 `npm install`
 
-Balloons uses easy-OAuth for authentication with Twitter. For now, this is the only authentication method we provide.
+Balloons uses [PassportJS](http://passportjs.org) for authentication with Twitter. For now, this is the only authentication method we provide.
 
 To set up Balloons with Twitter follow these few steps:
 
