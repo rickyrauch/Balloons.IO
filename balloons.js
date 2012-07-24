@@ -28,6 +28,10 @@ var client = redis.createClient();
 
 init(client);
 
+/*
+ * Passportjs auth strategy
+ */
+
 require('./strategy');
 
 /*
