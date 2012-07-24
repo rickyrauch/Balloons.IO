@@ -3,6 +3,7 @@
  */
 
 var express = require('express')
+  , http = require('http')
   , redis = require('redis')
   , passport = require('passport')
   , RedisStore = require('connect-redis')(express)
@@ -32,14 +33,15 @@ require('./strategy');
  * Create and config server
  */
 
-var app = exports.app = express.createServer();
+var app = exports.app = express();
 
 app.configure(function() {
+  app.set('port', config.app.port || 6789);
   app.set('view engine', 'jade'); 
   app.set('views', __dirname + '/views/themes/' + config.theme.name);
   app.use(express.static(__dirname + '/public'));
   app.use(express.bodyParser());
-  app.use(express.cookieParser());
+  app.use(express.cookieParser(config.session.secret));
   app.use(express.session({
     secret: config.session.secret,
     key: "balloons",
@@ -57,11 +59,24 @@ app.configure(function() {
 require('./routes');
 
 /*
+ * Web server
+ */
+
+exports.server = http.createServer(app).listen(app.get('port'), function() {
+  console.log('Balloons.io started on port %d', app.get('port'));
+});
+
+/*
  * Socket.io
  */
 
 require('./sockets');
 
-app.listen(config.app.port);
 
-console.log('Balloons.io started at port %d', app.address().port);
+/*
+ * Catch uncaught exceptions
+ */
+
+process.on('uncaughtException', function(err){
+  console.log('Exception: ' + err.stack);
+});

@@ -5,6 +5,7 @@
 
 var parent = module.parent.exports 
   , app = parent.app
+  , server = parent.server
   , express = require('express')
   , client = parent.client
   , sessionStore = parent.sessionStore
@@ -14,7 +15,7 @@ var parent = module.parent.exports
   , fs = require('fs');
 
 
-var io = sio.listen(app);
+var io = sio.listen(server);
 
 io.set('authorization', function (hsData, accept) {
   if(hsData.headers.cookie) {
