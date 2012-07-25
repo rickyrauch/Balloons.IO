@@ -5,7 +5,7 @@
 
 var passport = require('passport')
   , TwitterStrategy = require('passport-twitter').Strategy
-  , FacebookStrategy = require('facebook-strategy').Strategy 
+  , FacebookStrategy = require('passport-facebook').Strategy 
   , config = require('./config.json');
 
 /*
@@ -39,7 +39,7 @@ if(config.auth.facebook.clientid.length) {
       callbackURL: config.auth.facebook.callback
     },
     function(accessToken, refreshToken, profile, done) {
-      return done(err, user);
+      return done(null, profile);
     }
   ));
 }
