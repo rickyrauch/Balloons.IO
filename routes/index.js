@@ -6,6 +6,7 @@
 var app = module.parent.exports.app
   , passport = require('passport')
   , client = module.parent.exports.client
+  , config = require('../config')
   , utils = require('../utils');
 
 /*
@@ -28,22 +29,25 @@ app.get('/', function(req, res, next) {
  * Authentication routes
  */
 
-app.get('/auth/twitter', passport.authenticate('twitter'));
+if(config.auth.twitter.consumerkey.length) {
+  app.get('/auth/twitter', passport.authenticate('twitter'));
 
-app.get('/auth/twitter/callback', 
-  passport.authenticate('twitter', { failureRedirect: '/' }),
-  function(req, res) {
-    res.redirect('/');
-});
+  app.get('/auth/twitter/callback', 
+    passport.authenticate('twitter', { failureRedirect: '/' }),
+    function(req, res) {
+      res.redirect('/');
+  });
+}
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
+if(config.auth.facebook.clientid.length) {
+  app.get('/auth/facebook', passport.authenticate('facebook'));
 
-app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: '/' }),
-  function(req, res) {
-    res.redirect('/');
-});
-
+  app.get('/auth/facebook/callback', 
+    passport.authenticate('facebook', { failureRedirect: '/' }),
+    function(req, res) {
+      res.redirect('/');
+  });
+}
 
 app.get('/logout', function(req, res){
   req.logout();
