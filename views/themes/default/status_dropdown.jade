@@ -2,14 +2,14 @@
 - var current;
 .dropdown.dropdown-status
 	i
-	a.selected(class='#{user_status}', href='#')
+	a.selected(class='#{user.status}', href='#')
 		b
-		| #{user_status}
+		| #{user.status}
 	.dropdown-options
 		.triangle
 		.list
 			- fullStatus.forEach(function(status) {
-				- if (status == user_status)
+				- if (status == user.status)
 					- current = 'current'
 				- else
 					- current = ''

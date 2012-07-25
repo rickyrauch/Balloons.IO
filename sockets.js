@@ -10,17 +10,17 @@ var parent = module.parent.exports
   , client = parent.client
   , sessionStore = parent.sessionStore
   , sio = require('socket.io')
-  , connect = require('express/node_modules/connect')
-  , parseCookie = connect.utils.parseCookie
+  , parseCookies = require('connect').utils.parseSignedCookies
+  , cookie = require('cookie')
+  , config = require('./config.json')
   , fs = require('fs');
 
 
 var io = sio.listen(server);
-
 io.set('authorization', function (hsData, accept) {
   if(hsData.headers.cookie) {
-    var cookie = parseCookie(hsData.headers.cookie)
-      , sid = cookie['balloons'];
+    var cookies = parseCookies(cookie.parse(hsData.headers.cookie), config.session.secret)
+      , sid = cookies['balloons'];
 
     sessionStore.load(sid, function(err, session) {
       if(err || !session) {
@@ -48,7 +48,6 @@ io.configure(function() {
 
 
 io.sockets.on('connection', function (socket) {
-  console.log(socket.handshake.balloons);
   var hs = socket.handshake
     , nickname = hs.balloons.user.username
     , room_id = hs.balloons.room

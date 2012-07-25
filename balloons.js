@@ -43,7 +43,6 @@ app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.cookieParser(config.session.secret));
   app.use(express.session({
-    secret: config.session.secret,
     key: "balloons",
     store: sessionStore
   }));

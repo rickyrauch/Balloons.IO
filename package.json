@@ -3,7 +3,9 @@
   , "description": "Web multi-room chat server and client ready to use."
   , "version": "0.0.1"
   , "dependencies": {
-        "express": "3.0.0alpha4"
+        "express": "3.0.0rc1"
+      , "connect": "2.4.x"
+      , "cookie": "0.0.x"
       , "jade": "*"
       , "socket.io": "0.9.7"
       , "redis": ">= 0.7.2"
