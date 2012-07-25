@@ -161,6 +161,7 @@ exports.enterRoom = function(req, res, room, users, rooms, status){
     rooms: rooms,
     user: {
       nickname: req.user.username,
+      provider: req.user.provider,
       status: status
     },
     users_list: users
