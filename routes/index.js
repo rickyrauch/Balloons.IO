@@ -33,20 +33,22 @@ if(config.auth.twitter.consumerkey.length) {
   app.get('/auth/twitter', passport.authenticate('twitter'));
 
   app.get('/auth/twitter/callback', 
-    passport.authenticate('twitter', { failureRedirect: '/' }),
-    function(req, res) {
-      res.redirect('/');
-  });
+    passport.authenticate('twitter', {
+      successRedirect: '/',
+      failureRedirect: '/'
+    })
+  );
 }
 
 if(config.auth.facebook.clientid.length) {
   app.get('/auth/facebook', passport.authenticate('facebook'));
 
   app.get('/auth/facebook/callback', 
-    passport.authenticate('facebook', { failureRedirect: '/' }),
-    function(req, res) {
-      res.redirect('/');
-  });
+    passport.authenticate('facebook', {
+      successRedirect: '/',
+      failureRedirect: '/'
+    })
+  );
 }
 
 app.get('/logout', function(req, res){
