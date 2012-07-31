@@ -53,7 +53,7 @@ exports.createRoom = function(req, res, client, roomKey) {
   var room = {
     key: roomKey,
     name: req.body.room_name,
-    admin: req.user.username,
+    admin: req.user.provider + ":" + req.user.username,
     locked: 0,
     online: 0
   };
@@ -116,11 +116,16 @@ exports.getUsersInRoom = function(req, res, client, room, fn) {
   client.smembers('rooms:' + req.params.id + ':online', function(err, online_users) {
     var users = [];
 
-    online_users.forEach(function(username, index) {
-      client.get('users:' + username + ':status', function(err, status) {
+    online_users.forEach(function(userKey, index) {
+      client.get('users:' + userKey + ':status', function(err, status) {
+        var msnData = userKey.split(':')
+          , username = msnData.length > 1 ? msnData[1] : msnData[0]
+          , provider = msnData.length > 1 ? msnData[0] : "twitter";
+
         users.push({
-            username: username
-          , status: status || 'available'
+            username: username,
+            provider: provider,
+            status: status || 'available'
         });
       });
     });
@@ -144,8 +149,8 @@ exports.getPublicRooms = function(client, fn){
  * Get User status
  */
 
-exports.getUserStatus = function(username, client, fn){
-  client.get('users:' + username + ':status', function(err, status) {
+exports.getUserStatus = function(userKey, client, fn){
+  client.get('users:' + userKey + ':status', function(err, status) {
     if (!err && status) fn(status);
     else fn('available');
   });

@@ -57,8 +57,12 @@ $(function() {
 
       data.history.forEach(function(historyLine) {
         var time = new Date(historyLine.atTime)
+          , msnData = historyLine.from.split(':')
+          , nickname = msnData.length > 1 ? msnData[1] : msnData[0]
+          , provider = msnData.length > 1 ? msnData[0] : "twitter"
           , chatBoxData = {
-              nickname: historyLine.from,
+              nickname: nickname,
+              provider: provider,
               msg: historyLine.withData,
               type: 'history',
               time: timeParser(time)

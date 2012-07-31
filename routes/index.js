@@ -19,7 +19,7 @@ app.get('/', function(req, res, next) {
         'users:' + req.user.username
       , req.user
     );
-    res.redirect('/rooms/list');
+    res.redirect('/rooms');
   } else{
     res.render('index');
   }
@@ -60,7 +60,7 @@ app.get('/logout', function(req, res){
  * Rooms list
  */
 
-app.get('/rooms/list', utils.restrict, function(req, res) {
+app.get('/rooms', utils.restrict, function(req, res) {
   utils.getPublicRoomsInfo(client, function(rooms) {
     res.render('room_list', { rooms: rooms });
   });

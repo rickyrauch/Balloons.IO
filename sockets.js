@@ -50,6 +50,8 @@ io.configure(function() {
 io.sockets.on('connection', function (socket) {
   var hs = socket.handshake
     , nickname = hs.balloons.user.username
+    , provider = hs.balloons.user.provider
+    , userKey = provider + ":" + nickname
     , room_id = hs.balloons.room
     , now = new Date()
     // Chat Log handler
@@ -58,15 +60,16 @@ io.sockets.on('connection', function (socket) {
 
   socket.join(room_id);
 
-  client.sadd('users:' + nickname + ':sockets', socket.id, function(err, socketAdded) {
+  client.sadd('users:' + userKey + ':sockets', socket.id, function(err, socketAdded) {
     if(socketAdded) {
       client.sadd('socketio:sockets', socket.id);
-      client.sadd('rooms:' + room_id + ':online', nickname, function(err, userAdded) {
+      client.sadd('rooms:' + room_id + ':online', userKey, function(err, userAdded) {
         if(userAdded) {
           client.hincrby('rooms:' + room_id + ':info', 'online', 1);
-          client.get('users:' + nickname + ':status', function(err, status) {
+          client.get('users:' + userKey + ':status', function(err, status) {
             io.sockets.in(room_id).emit('new user', {
               nickname: nickname,
+              provider: provider,
               status: status || 'available'
             });
           });
@@ -80,7 +83,7 @@ io.sockets.on('connection', function (socket) {
     if(no_empty.length > 0) {
       var chatlogRegistry = {
         type: 'message',
-        from: nickname,
+        from: userKey,
         atTime: new Date(),
         withData: data.msg
       }
@@ -89,6 +92,7 @@ io.sockets.on('connection', function (socket) {
       
       io.sockets.in(room_id).emit('new msg', {
         nickname: nickname,
+        provider: provider,
         msg: data.msg
       });        
     }   
@@ -97,9 +101,10 @@ io.sockets.on('connection', function (socket) {
   socket.on('set status', function(data) {
     var status = data.status;
 
-    client.set('users:' + nickname + ':status', status, function(err, statusSet) {
+    client.set('users:' + userKey + ':status', status, function(err, statusSet) {
       io.sockets.emit('user-info update', {
         username: nickname,
+        provider: provider,
         status: status
       });
     });
@@ -126,17 +131,18 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('disconnect', function() {
     // 'sockets:at:' + room_id + ':for:' + nickname
-    client.srem('users:' + nickname + ':sockets', socket.id, function(err, removed) {
+    client.srem('users:' + userKey + ':sockets', socket.id, function(err, removed) {
       if(removed) {
         client.srem('socketio:sockets', socket.id);
-        client.scard('users:' + nickname + ':sockets', function(err, members_no) {
+        client.scard('users:' + userKey + ':sockets', function(err, members_no) {
           if(!members_no) {
-            client.srem('rooms:' + room_id + ':online', nickname, function(err, removed) {
+            client.srem('rooms:' + room_id + ':online', userKey, function(err, removed) {
               if (removed) {
                 client.hincrby('rooms:' + room_id + ':info', 'online', -1);
                 chatlogWriteStream.destroySoon();
                 io.sockets.in(room_id).emit('user leave', {
-                  nickname: nickname
+                  nickname: nickname,
+                  provider: provider
                 });
               }
             });
