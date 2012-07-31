@@ -554,6 +554,7 @@ body.home-page{background: #f1f1f1 url('../img/bg-site.png'); position: relative
 body.home-page .inner-padding{padding: 2em}
 body.home-page .homepage-container {width: 824px;  padding-top: 10em; overflow: hidden; margin: auto; position: relative}
 body.home-page .homepage-container .login-box{background: white; z-index: 100000; position: absolute; right: 0; text-align: center; width: 300px; }
+body.home-page .homepage-container .login-box em{display: block; color: #999; padding: 3px}
 body.home-page .homepage-container .login-box .logo{height: 154px; margin: auto; display: block; margin-bottom: 2em; width: auto}
 body.home-page .homepage-container .login-box p{line-height: 2em}
 .box-container{ border-radius: 4px; background: white; border: 1px solid #ccc; }
