@@ -262,10 +262,11 @@ $(function() {
   };
 
   var textParser = function(text) {
-    text = injectEmoticons(text);
-    return text
+    text = text
       .replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,"<a href=\"$1\" target='_blank'>$1</a>")
       .replace(/(@)([a-zA-Z0-9_]+)/g, "<a href=\"http://twitter.com/$2\" target=\"_blank\">$1$2</a>");
+
+   return  injectEmoticons(text);
   };
 
   var parseChatBox = function(chatBox) {
@@ -287,7 +288,6 @@ $(function() {
     wink: /;-\)|;\)/g,
     frown: /:-\(|:\(|=\(|=-\(/g,
     ambivalent: /:-\||:\|/g,
-    slant: /:-\/|:\/|:-\\|:\\|=-\/|=\/|=-\\|=\\/g,
     gasp: /:-O|:O|:-o|:o|=-O|=O|=-o|=o/g,
     laugh: /:-D|:D|=-D|=D/g,
     kiss: /:-\*|:\*|=-\*|=\*/g,
