@@ -149,8 +149,8 @@ exports.getPublicRooms = function(client, fn){
  * Get User status
  */
 
-exports.getUserStatus = function(userKey, client, fn){
-  client.get('users:' + userKey + ':status', function(err, status) {
+exports.getUserStatus = function(user, client, fn){
+  client.get('users:' + user.provider + ":" + user.username + ':status', function(err, status) {
     if (!err && status) fn(status);
     else fn('available');
   });
