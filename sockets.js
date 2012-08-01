@@ -29,7 +29,7 @@ io.set('authorization', function (hsData, accept) {
 
       hsData.balloons = {
         user: session.passport.user,
-        room: /\/rooms\/(?:([^\/]+?))\/?$/g.exec(hsData.headers.referer)[1]
+        room: /\/(?:([^\/]+?))\/?$/g.exec(hsData.headers.referer)[1]
       };
 
       return accept(null, true);

@@ -39,7 +39,7 @@ exports.validRoomName = function(req, res, fn) {
 exports.roomExists = function(req, res, client, roomKey, fn) {
   client.exists('rooms:' + req.body.roomKey + ':info', function(err, exists) {
     if(!err && exists) {
-      res.redirect( '/rooms/' + req.body.roomKey );
+      res.redirect( '/' + req.body.roomKey );
     } else {
       fn()
     }
@@ -61,7 +61,7 @@ exports.createRoom = function(req, res, client, roomKey) {
   client.hmset('rooms:' + roomKey + ':info', room, function(err, ok) {
     if(!err && ok) {
       client.sadd('balloons:public:rooms', roomKey);
-      res.redirect('/rooms/' + roomKey);
+      res.redirect('/' + roomKey);
     } else {
       res.send(500);
     }

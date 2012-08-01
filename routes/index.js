@@ -82,7 +82,7 @@ app.post('/create', utils.restrict, function(req, res) {
  * Join a room
  */
 
-app.get('/rooms/:id', utils.restrict, function(req, res) {
+app.get('/:id', utils.restrict, function(req, res) {
   utils.getRoomInfo(req, res, client, function(room) {
     utils.getUsersInRoom(req, res, client, room, function(users) {
       utils.getPublicRoomsInfo(client, function(rooms) {
