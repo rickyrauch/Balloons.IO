@@ -445,6 +445,16 @@ sidebar .files a span{
 sidebar .files  a i{ margin: 4px; display: block; width: 12px; height: 12px}
 sidebar .files  a.picture i{background: url('../img/icons.png') no-repeat 0 1px;}
 sidebar .files  a.file i{background: url('../img/icons.png') no-repeat 0 -59px;}
+sidebar .sidebar-open-source{background: red; bottom: 0; position: absolute; right: 0; left: 0; padding: 6px; text-align: center; text-transform: uppercase;
+		font-size: 10px;
+		color: #999;
+		box-shadow: 0 1px 0 rgba(255,255,255,.04) inset;
+		background-image: -webkit-linear-gradient(#272727,  #1b1b1c);
+		background-image: -moz-linear-gradient(#7e7e7e, #272727 8.6%, #090909);
+		background-image: -o-linear-gradient(#7e7e7e, #272727 8.6%, #090909);
+		border-top: 1px solid black;
+}
+sidebar .sidebar-open-source:hover{color: white}
 
 .content{position: absolute; bottom: 0; right: 0; top: 4.4em;  left: 201px;   }
 .content .chat{ z-index: 100; position: absolute; top: 0; left: 0; right: 0; bottom: 60px; overflow-y: scroll;  }
