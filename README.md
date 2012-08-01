@@ -29,11 +29,9 @@ Balloons uses [PassportJS](http://passportjs.org) for authentication with Twitte
 To set up Balloons with Twitter follow these few steps:
 
 * Copy 'config.sample.json' to 'config.json'.
-To allow Sign In with Twitter:
-* [Create a new application](https://dev.twitter.com/apps/new) and copy 
+* To allow Sign In with Twitter: [Create a new application](https://dev.twitter.com/apps/new) and copy 
 the keys that Twitter gives you into 'config.json'.
-To allow Sign In with Facebook:
-* [Create a new application](https://developers.facebook.com/apps) and copy the keys Facebook gives you into 'config.json'
+* To allow Sign In with Facebook: [Create a new application](https://developers.facebook.com/apps) and copy the keys Facebook gives you into 'config.json'
 * Go to terminal and run `node balloons`.
 Point your browser to `http://127.0.0.1:6789`.
 (You can also change the port from 'config.json')
