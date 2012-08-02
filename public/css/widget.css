@@ -232,12 +232,6 @@ textarea {
   vertical-align: top;
   resize: vertical;
 }
-input:valid,
-textarea:valid,
-input:invalid,
-textarea:invalid {
-  background-color: #f0dddd;
-}
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -253,12 +247,13 @@ td {
 }
 /* Widget */
 .widget {
-  width: 260px;
+  width: 240px;
   height: 700px;
   position: relative;
   float: right;
-  border-left: 3px solid #f00;
   font-size: 12px;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAABAgMAAABvZVxdAAAAA3NCSVQICAjb4U/gAAAADFBMVEX+/v709ffp7O+8yNnyNneLAAAACXBIWXMAAAsSAAALEgHS3X78AAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M1cbXjNgAAAAtJREFUCJljeJIDAAI3AVGBljVmAAAAAElFTkSuQmCC") repeat-y;
+  padding-left: 7px;
 }
 .widget h1 {
   margin: 0;
@@ -275,11 +270,10 @@ td {
   position: absolute;
   top: 40px;
   font-size: 12px;
-  background: #f00;
   bottom: 40px;
 }
 .widget .chats .chat {
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 .widget .chats .chat img.avatar {
   width: 30px;
@@ -296,22 +290,40 @@ td {
   font-size: 11px;
   margin-bottom: 2px;
 }
+.widget .chats .chat .chat-data .message {
+  display: block;
+}
 .widget .chat-input {
   position: absolute;
+  right: 0;
+  left: 7px;
   bottom: 0;
   padding: 10px;
-  background: #f00;
+  border-top: 1px solid #ccc;
+  background-image: -webkit-gradient(linear, 0 0, 0 45, color-stop(0.044, #fdfdfd), to(#dfe2e9));
+  background-image: -webkit-linear-gradient(#eee 4.4%, #ccc);
+  background-image: -moz-linear-gradient(#fdfdfd 4.4%, #dfe2e9);
+  background-image: -o-linear-gradient(#fdfdfd 4.4%, #dfe2e9);
 }
 .widget .chat-input input.text {
-  width: 200px;
+  width: 174px;
   float: left;
   border-radius: 4px;
-  border: 1px solid #333;
+  border: 1px solid #999;
   padding: 6px;
 }
+.widget .chat-input input:focus {
+  outline: none;
+  border-color: #333;
+}
 .widget .chat-input a.logout {
-  width: 24px;
-  height: 24px;
+  border-radius: 4px;
+  margin-left: 4px;
+  width: 28px;
+  height: 28px;
+  display: block;
+  float: left;
+  text-indent: 1000;
   background: #00f;
 }
 /* eo Widget */

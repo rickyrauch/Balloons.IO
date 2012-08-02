@@ -56,8 +56,6 @@ input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-b
 input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
 button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
 textarea { overflow: auto; vertical-align: top; resize: vertical; }
-input:valid, textarea:valid {  }
-input:invalid, textarea:invalid { background-color: #f0dddd; }
 
 table { border-collapse: collapse; border-spacing: 0; }
 td { vertical-align: top; }
@@ -68,7 +66,7 @@ td { vertical-align: top; }
 
 /* Widget */
 .widget
-	width: 260px; height: 700px; position: relative; float: right; border-left: 3px solid red; font-size: 12px
+	width: 240px; height: 700px; position: relative; float: right; font-size: 12px; background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAABAgMAAABvZVxdAAAAA3NCSVQICAjb4U/gAAAADFBMVEX+/v709ffp7O+8yNnyNneLAAAACXBIWXMAAAsSAAALEgHS3X78AAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M1cbXjNgAAAAtJREFUCJljeJIDAAI3AVGBljVmAAAAAElFTkSuQmCC") repeat-y; padding-left: 7px;
 	h1	
 		margin: 0; padding: 10px; font-size: 14px; text-shadow: 0 1px 0 rgba(255,255,255,.6);
 		background-image: -webkit-gradient(linear, 0 0, 0 27, from(#f1f1f1), to(#cdcdcd));
@@ -76,20 +74,29 @@ td { vertical-align: top; }
 		background-image: -moz-linear-gradient(#f1f1f1, #cdcdcd);
 		background-image: -o-linear-gradient(#f1f1f1, #cdcdcd);
 	.chats
-		padding: 10px; position: absolute; top: 40px; font-size: 12px; background: red; bottom: 40px;
+		padding: 10px; position: absolute; top: 40px; font-size: 12px; bottom: 40px;
 		.chat
-			margin-bottom: 20px
+			margin-bottom: 14px
 			img.avatar
 				width: 30px; border-radius: 4px; position: absolute;
 
 			.chat-data	
 				margin-left: 40px; display: block;		
 				.username {display: block; font-weight: bold; font-size: 11px; margin-bottom: 2px} 
+				.message{display: block;}
 				
 	.chat-input
-		position: absolute; bottom: 0; padding: 10px; background: red;
-		input.text{width: 200px; float: left; border-radius: 4px; border: 1px solid #333; padding: 6px; }
-		a.logout{width: 24px; height: 24px; background: blue; }
+		position: absolute;right: 0; left: 7px; bottom: 0; padding: 10px; 
+		border-top: 1px solid #ccc;
+		background-image: -webkit-gradient(linear, 0 0, 0 45, color-stop(0.044, #fdfdfd), to(#dfe2e9));
+		background-image: -webkit-linear-gradient(#eee 4.4%, #ccc);
+		background-image: -moz-linear-gradient(#fdfdfd 4.4%, #dfe2e9);
+		background-image: -o-linear-gradient(#fdfdfd 4.4%, #dfe2e9);
+		input.text
+			width: 174px; float: left; border-radius: 4px; border: 1px solid #999; padding: 6px;
+		input:focus 
+			outline: none; border-color: #333;
+		a.logout{border-radius: 4px; margin-left: 4px; width: 28px; height: 28px; display: block; float: left; text-indent: 1000; background: blue; }
 /* eo Widget */
 
 
