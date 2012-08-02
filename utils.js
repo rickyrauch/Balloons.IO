@@ -1,3 +1,4 @@
+var crypto = require('crypto');
 
 /*
  * Restrict paths
@@ -12,8 +13,10 @@ exports.restrict = function(req, res, next){
  * Generates a URI Like key for a room
  */       
 
-exports.genRoomKey = function(roomName) {
-  return roomName.replace(/[^a-zA-Z0-9-_]/g, '');
+exports.genRoomKey = function() {
+  var shasum = crypto.createHash('sha1');
+  shasum.update(Date.now().toString());
+  return shasum.digest('hex').substr(0,6);
 };
 
 /*
@@ -21,12 +24,11 @@ exports.genRoomKey = function(roomName) {
  */
 
 exports.validRoomName = function(req, res, fn) {
-  var roomKey = exports.genRoomKey(req.body.room_name)
-    , keyLen = roomKey.length
-    , nameLen = req.body.room_name.length;
+  req.body.room_name = req.body.room_name.trim();
+  var nameLen = req.body.room_name.length;
 
-  if(nameLen < 255 && keyLen >0) {
-    fn(roomKey);
+  if(nameLen < 255 && nameLen >0) {
+    fn();
   } else {
     res.redirect('back');
   }
@@ -35,11 +37,10 @@ exports.validRoomName = function(req, res, fn) {
 /*
  * Checks if room exists
  */
-
-exports.roomExists = function(req, res, client, roomKey, fn) {
-  client.exists('rooms:' + req.body.roomKey + ':info', function(err, exists) {
-    if(!err && exists) {
-      res.redirect( '/' + req.body.roomKey );
+exports.roomExists = function(req, res, client, fn) {
+  client.hget('balloons:rooms:keys', encodeURIComponent(req.body.room_name), function(err, roomKey) {
+    if(!err && roomKey) {
+      res.redirect( '/rooms/' + roomKey );
     } else {
       fn()
     }
@@ -49,17 +50,19 @@ exports.roomExists = function(req, res, client, roomKey, fn) {
 /*
  * Creates a room
  */       
-exports.createRoom = function(req, res, client, roomKey) {
-  var room = {
-    key: roomKey,
-    name: req.body.room_name,
-    admin: req.user.provider + ":" + req.user.username,
-    locked: 0,
-    online: 0
-  };
+exports.createRoom = function(req, res, client) {
+  var roomKey = exports.genRoomKey()
+    , room = {
+        key: roomKey,
+        name: req.body.room_name,
+        admin: req.user.provider + ":" + req.user.username,
+        locked: 0,
+        online: 0
+      };
 
   client.hmset('rooms:' + roomKey + ':info', room, function(err, ok) {
     if(!err && ok) {
+      client.hset('balloons:rooms:keys', encodeURIComponent(req.body.room_name), roomKey);
       client.sadd('balloons:public:rooms', roomKey);
       res.redirect('/' + roomKey);
     } else {
