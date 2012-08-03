@@ -2,7 +2,7 @@ script#chat_box(type='text/html')
   .chat-box(data-user='{{ nickname }}', data-type='{{ type }}')
     div(class="avatar avatar-" + user.provider)
       img(src='http://avatars.io/{{ provider }}/{{ nickname }}')
-      i
+      a(href="")
     h5
       | {{ nickname }}
     {{> chat_box_text }}
