@@ -267,7 +267,6 @@ td {
 }
 .widget h1 a.information {
   text-indent: -1000em;
-  border: 1px solid #d9dee4;
   border-radius: 100px;
   padding: 4px;
   display: block;
@@ -341,6 +340,24 @@ td {
 }
 .widget .chat-input a.logout:hover {
   opacity: 0.8;
+}
+.widget div.login {
+  background: rgba(255,255,255,0.9);
+  padding: 30px;
+  padding-top: 50%;
+  text-align: center;
+  z-index: 1000;
+  position: absolute;
+  left: 7px;
+  right: 0;
+  bottom: 0;
+  top: 0;
+}
+.widget div.login img {
+  width: 130px;
+}
+.widget div.login a {
+  text-decoration: none;
 }
 /* eo Widget */
 @media only screen and (min-width: 35em) {
