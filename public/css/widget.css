@@ -248,8 +248,11 @@ td {
 /* Widget */
 .widget {
   width: 240px;
-  height: 700px;
-  position: relative;
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  overflow: hidden;
   float: right;
   font-size: 12px;
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAABAgMAAABvZVxdAAAAA3NCSVQICAjb4U/gAAAADFBMVEX+/v709ffp7O+8yNnyNneLAAAACXBIWXMAAAsSAAALEgHS3X78AAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M1cbXjNgAAAAtJREFUCJljeJIDAAI3AVGBljVmAAAAAElFTkSuQmCC") repeat-y;
