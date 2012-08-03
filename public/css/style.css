@@ -708,7 +708,7 @@ p span.date {
 .content .chat .chat-box .avatar img {
   max-width: 100%;
 }
-.content .chat .chat-box .avatar i {
+.content .chat .chat-box .avatar a {
   background: #f00;
   display: none;
   width: 14px;
@@ -717,13 +717,13 @@ p span.date {
   right: 2px;
   position: absolute;
 }
-.content .chat .chat-box .avatar.avatar-facebook i {
+.content .chat .chat-box .avatar.avatar-facebook a {
   background: #39589c url("https://s3.amazonaws.com/social-buttons/img/icon-facebook.png") center no-repeat;
 }
-.content .chat .chat-box .avatar.avatar-twitter i {
+.content .chat .chat-box .avatar.avatar-twitter a {
   background: url("../img/icon-twitter-big.png") center no-repeat;
 }
-.content .chat .chat-box .avatar:hover i {
+.content .chat .chat-box .avatar:hover a {
   display: block;
 }
 .content .chat .chat-box p:first-of-type .date {
