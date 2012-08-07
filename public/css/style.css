@@ -292,6 +292,7 @@ body.homepage a {
 }
 body.homepage .public-rooms {
   right: 0;
+  overflow-y: scroll;
 }
 body.homepage .private-rooms {
   bottom: 0;
@@ -299,18 +300,18 @@ body.homepage .private-rooms {
   top: 0;
   overflow-y: scroll;
 }
-body.homepage ul {
+body.homepage ul.list-rooms {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-body.homepage ul li a {
+body.homepage ul.list-rooms li a {
   padding: 20px;
   font-size: 14px;
   display: block;
   border-bottom: 1px solid #b4b8c2;
 }
-body.homepage ul li a span {
+body.homepage ul.list-rooms li a span {
   background: #b4b8c2;
   color: #fff;
   font-weight: bold;
@@ -318,11 +319,11 @@ body.homepage ul li a span {
   padding: 2px 7px;
   float: right;
 }
-body.homepage ul li a:hover {
+body.homepage ul.list-rooms li a:hover {
   background-color: #dfe2e9;
   color: #333;
 }
-body.homepage ul li a:hover span {
+body.homepage ul.list-rooms li a:hover span {
   background: none;
   color: #333;
 }
@@ -390,8 +391,7 @@ body.homepage .homepage-left .feature {
   margin: 30px;
   margin-top: 40px;
   position: relative;
-  overflow: hidden;
-  height: 86px;
+  min-height: 86px;
 }
 body.homepage .homepage-left .feature i {
   background: #000;
