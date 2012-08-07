@@ -365,6 +365,17 @@ body.homepage .homepage-col .homepage-col-content .sb {
   display: block;
   margin-bottom: 30px;
 }
+body.homepage .homepage-col .input-fake {
+  border: 0;
+  border-bottom: 1px solid #b4b8c2;
+  padding: 20px;
+  font-size: 14px;
+  width: 100%;
+  border-left: 6px solid #43c5d8;
+}
+body.homepage .homepage-col .input-fake:focus {
+  outline: none;
+}
 body.homepage .homepage-left {
   padding: 0 20px;
   position: fixed;
