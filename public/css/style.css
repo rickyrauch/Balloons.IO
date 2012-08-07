@@ -304,6 +304,7 @@ body.homepage ul.list-rooms {
   list-style: none;
   margin: 0;
   padding: 0;
+  border-top: 1px solid #b4b8c2;
 }
 body.homepage ul.list-rooms li a {
   padding: 20px;
@@ -367,10 +368,10 @@ body.homepage .homepage-col .homepage-col-content .sb {
 }
 body.homepage .homepage-col .input-fake {
   border: 0;
-  border-bottom: 1px solid #b4b8c2;
-  padding: 20px;
+  padding: 20px 0;
+  text-indent: 14px;
+  width: 90%;
   font-size: 14px;
-  width: 100%;
   border-left: 6px solid #43c5d8;
 }
 body.homepage .homepage-col .input-fake:focus {
