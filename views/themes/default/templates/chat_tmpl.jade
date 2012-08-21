@@ -1,5 +1,5 @@
 script#chat_box(type='text/html')
-  .chat-box(data-user='{{ nickname }}', data-type='{{ type }}')
+  .chat-box(data-user='{{ nickname }}', data-provider='{{ provider }}', data-type='{{ type }}')
     div(class="avatar avatar-" + user.provider)
       img(src='http://avatars.io/{{ provider }}/{{ nickname }}')
       a(href="https://{{ provider }}.com/{{ nickname }}")
@@ -18,7 +18,7 @@ script#chat_notice(type='text/html')
     |  {{ noticeMsg }}
 
 script#people_box(type='text/html')
-  a(class='{{ status }}', href='#', data-username='{{ nickname }}')
+  a(class='{{ status }}', href='#', data-username='{{ nickname }}', data-provider='{{ provider }}')
     b
     | {{ nickname }}
 

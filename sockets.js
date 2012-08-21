@@ -60,7 +60,7 @@ io.sockets.on('connection', function (socket) {
 
   socket.join(room_id);
 
-  client.sadd('users:' + userKey + ':sockets', socket.id, function(err, socketAdded) {
+  client.sadd('sockets:for:' + userKey + ':at:' + room_id, socket.id, function(err, socketAdded) {
     if(socketAdded) {
       client.sadd('socketio:sockets', socket.id);
       client.sadd('rooms:' + room_id + ':online', userKey, function(err, userAdded) {
@@ -130,11 +130,11 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function() {
-    // 'sockets:at:' + room_id + ':for:' + nickname
-    client.srem('users:' + userKey + ':sockets', socket.id, function(err, removed) {
+    // 'sockets:at:' + room_id + ':for:' + userKey
+    client.srem('sockets:for:' + userKey + ':at:' + room_id, socket.id, function(err, removed) {
       if(removed) {
         client.srem('socketio:sockets', socket.id);
-        client.scard('users:' + userKey + ':sockets', function(err, members_no) {
+        client.scard('sockets:for:' + userKey + ':at:' + room_id, function(err, members_no) {
           if(!members_no) {
             client.srem('rooms:' + room_id + ':online', userKey, function(err, removed) {
               if (removed) {
