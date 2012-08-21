@@ -16,7 +16,7 @@ var app = module.parent.exports.app
 app.get('/', function(req, res, next) {
   if(req.isAuthenticated()){
     client.hmset(
-        'users:' + req.user.username
+        'users:' + req.user.provider + ":" + req.user.username
       , req.user
     );
     res.redirect('/rooms');
