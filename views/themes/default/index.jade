@@ -14,11 +14,15 @@ block content
 				.inner-padding
 					img.logo(src='img/logo.png', width='217', height='239', alt='Logo')
 					h3 Free & ready to go web chat room.
-					p 
-						strong Ballons.IO	 
-						| is build with the help of node.JS, Socket.IO and Redis.
-					div
-						a#twitbutt.sign-in-twitter(href="/auth/twitter") sign in
+					p
+						a#twitbutt.sb.sb-small.sb-twitter(href="/auth/twitter") 
+							i 
+							| Sign in with Twitter
+						em or
+						a#fbbutt.sb.sb-small.sb-facebook(href="/auth/facebook") 
+							i
+							| Sign in with facebook
+
 			// #login-box 
 		// .homepage-container
 	

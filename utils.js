@@ -1,3 +1,4 @@
+var crypto = require('crypto');
 
 /*
  * Restrict paths
@@ -12,8 +13,10 @@ exports.restrict = function(req, res, next){
  * Generates a URI Like key for a room
  */       
 
-exports.genRoomKey = function(roomName) {
-  return roomName.replace(/[^a-zA-Z0-9-_]/g, '');
+exports.genRoomKey = function() {
+  var shasum = crypto.createHash('sha1');
+  shasum.update(Date.now().toString());
+  return shasum.digest('hex').substr(0,6);
 };
 
 /*
@@ -21,12 +24,11 @@ exports.genRoomKey = function(roomName) {
  */
 
 exports.validRoomName = function(req, res, fn) {
-  var roomKey = exports.genRoomKey(req.body.room_name)
-    , keyLen = roomKey.length
-    , nameLen = req.body.room_name.length;
+  req.body.room_name = req.body.room_name.trim();
+  var nameLen = req.body.room_name.length;
 
-  if(nameLen < 255 && keyLen >0) {
-    fn(roomKey);
+  if(nameLen < 255 && nameLen >0) {
+    fn();
   } else {
     res.redirect('back');
   }
@@ -35,11 +37,10 @@ exports.validRoomName = function(req, res, fn) {
 /*
  * Checks if room exists
  */
-
-exports.roomExists = function(req, res, client, roomKey, fn) {
-  client.exists('rooms:' + req.body.roomKey + ':info', function(err, exists) {
-    if(!err && exists) {
-      res.redirect( '/rooms/' + req.body.roomKey );
+exports.roomExists = function(req, res, client, fn) {
+  client.hget('balloons:rooms:keys', encodeURIComponent(req.body.room_name), function(err, roomKey) {
+    if(!err && roomKey) {
+      res.redirect( '/' + roomKey );
     } else {
       fn()
     }
@@ -49,19 +50,21 @@ exports.roomExists = function(req, res, client, roomKey, fn) {
 /*
  * Creates a room
  */       
-exports.createRoom = function(req, res, client, roomKey) {
-  var room = {
-    key: roomKey,
-    name: req.body.room_name,
-    admin: req.user.username,
-    locked: 0,
-    online: 0
-  };
+exports.createRoom = function(req, res, client) {
+  var roomKey = exports.genRoomKey()
+    , room = {
+        key: roomKey,
+        name: req.body.room_name,
+        admin: req.user.provider + ":" + req.user.username,
+        locked: 0,
+        online: 0
+      };
 
   client.hmset('rooms:' + roomKey + ':info', room, function(err, ok) {
     if(!err && ok) {
+      client.hset('balloons:rooms:keys', encodeURIComponent(req.body.room_name), roomKey);
       client.sadd('balloons:public:rooms', roomKey);
-      res.redirect('/rooms/' + roomKey);
+      res.redirect('/' + roomKey);
     } else {
       res.send(500);
     }
@@ -116,11 +119,16 @@ exports.getUsersInRoom = function(req, res, client, room, fn) {
   client.smembers('rooms:' + req.params.id + ':online', function(err, online_users) {
     var users = [];
 
-    online_users.forEach(function(username, index) {
-      client.get('users:' + username + ':status', function(err, status) {
+    online_users.forEach(function(userKey, index) {
+      client.get('users:' + userKey + ':status', function(err, status) {
+        var msnData = userKey.split(':')
+          , username = msnData.length > 1 ? msnData[1] : msnData[0]
+          , provider = msnData.length > 1 ? msnData[0] : "twitter";
+
         users.push({
-            username: username
-          , status: status || 'available'
+            username: username,
+            provider: provider,
+            status: status || 'available'
         });
       });
     });
@@ -144,8 +152,8 @@ exports.getPublicRooms = function(client, fn){
  * Get User status
  */
 
-exports.getUserStatus = function(username, client, fn){
-  client.get('users:' + username + ':status', function(err, status) {
+exports.getUserStatus = function(user, client, fn){
+  client.get('users:' + user.provider + ":" + user.username + ':status', function(err, status) {
     if (!err && status) fn(status);
     else fn('available');
   });
@@ -161,6 +169,7 @@ exports.enterRoom = function(req, res, room, users, rooms, status){
     rooms: rooms,
     user: {
       nickname: req.user.username,
+      provider: req.user.provider,
       status: status
     },
     users_list: users

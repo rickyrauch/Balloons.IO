@@ -12,7 +12,7 @@ block content
 						each room,index in rooms
 							- var roomClass = room.online > 0 ? "room-active" : "room-inactive";
 							- var word = room.online == 1 ? "user" : "users";
-							a(href='/rooms/' + room.key, class="#{roomClass}", title="#{room.name}")
+							a(href='/' + room.key, class="#{roomClass}", title="#{room.name}")
 								| #{room.name.substr(0,20)}
 								span.users-online
 									| #{room.online} #{word}

@@ -11,7 +11,7 @@ $(function() {
 
   // Then check users online!
   $('.people a').each(function(index, element) {
-    USERS[$(element).data('username')] = 1;
+    USERS[$(element).data('provider') + ":" + $(element).data('username')] = 1;
   });
 
   //View handlers
@@ -57,17 +57,21 @@ $(function() {
 
       data.history.forEach(function(historyLine) {
         var time = new Date(historyLine.atTime)
+          , msnData = historyLine.from.split(':')
+          , nickname = msnData.length > 1 ? msnData[1] : msnData[0]
+          , provider = msnData.length > 1 ? msnData[0] : "twitter"
           , chatBoxData = {
-              nickname: historyLine.from,
+              nickname: nickname,
+              provider: provider,
               msg: historyLine.withData,
               type: 'history',
               time: timeParser(time)
             };
 
         $lastInput = $('.chat .history').children().last();
-        lastInputUser = $lastInput.data('user');
+        lastInputUserKey = $lastInput.data('provider') + ':' + $lastInput.data('user');
 
-        if($lastInput.hasClass('chat-box') && lastInputUser === chatBoxData.nickname) {
+        if($lastInput.hasClass('chat-box') && lastInputUserKey === chatBoxData.provider + ':' + chatBoxData.nickname) {
           $lastInput.append(parseChatBoxMsg(ich.chat_box_text(chatBoxData)));
         } else {
           $('.chat .history').append(parseChatBox(ich.chat_box(chatBoxData)));
@@ -82,10 +86,10 @@ $(function() {
     var message = "$username has joined the room.";
 
     //If user is not 'there'
-    if(!$('.people a[data-username="' + data.nickname + '"]').length) {
+    if(!$('.people a[data-username="' + data.nickname + '"][data-provider="' + data.provider + '"]').length) {
       //Then add it
       $('.online .people').prepend(ich.people_box(data));
-      USERS[data.nickname] = 1;
+      USERS[data.provider + ":" + data.nickname] = 1;
 
       // Chat notice
       message = message
@@ -109,7 +113,7 @@ $(function() {
       }
     } else {
       //Instead, just check him as 'back'
-      USERS[data.nickname] = 1;
+      USERS[data.provider + ":" + data.nickname] = 1;
     }
   });
 
@@ -117,7 +121,7 @@ $(function() {
     var message = "$username is now $status.";
 
     // Update dropdown
-    if(data.username === $('#username').text()) {
+    if(data.username === $('#username').text() && data.provider === $('#provider').text()) {
       $('.dropdown-status .list a').toggleClass('current', false);
       $('.dropdown-status .list a.' + data.status).toggleClass('current', true);
 
@@ -128,7 +132,7 @@ $(function() {
     }
 
     // Update users list
-    $('.people a[data-username=' + data.username + ']')
+    $('.people a[data-username=' + data.username + '][data-provider="' + data.provider + '"]')
       .removeClass('available away busy')
       .addClass(data.status);
 
@@ -158,12 +162,12 @@ $(function() {
   socket.on('new msg', function(data) {
     var time = new Date(),
         $lastInput = $('.chat .current').children().last(),
-        lastInputUser = $lastInput.data('user');
+        lastInputUserKey = $lastInput.data('provider') + ':' + $lastInput.data('user');
 
     data.type = 'chat';
     data.time = timeParser(time)
 
-    if($lastInput.hasClass('chat-box') && lastInputUser === data.nickname) {
+    if($lastInput.hasClass('chat-box') && lastInputUserKey === data.provider + ':' + data.nickname) {
       $lastInput.append(parseChatBoxMsg(ich.chat_box_text(data)));
     } else {
       $('.chat .current').append(parseChatBox(ich.chat_box(data)));
@@ -183,17 +187,17 @@ $(function() {
     var nickname = $('#username').text()
       , message = "$username has left the room.";
     
-    for (var username in USERS) {
-      if(username === data.nickname && username != nickname) {
+    for (var userKey in USERS) {
+      if(userKey === data.provider + ":" + data.nickname && data.nickname != nickname) {
         //Mark user as leaving
-        USERS[username] = 0;
+        USERS[userKey] = 0;
 
         //Wait a little before removing user
         setTimeout(function() {
-          //If not connected
-          if (!USERS[username]) {
+          //If not re-connected
+          if (!USERS[userKey]) {
             //Remove it and notify
-            $('.people a[data-username="' + username + '"]').remove();
+            $('.people a[data-username="' + data.nickname + '"][data-provider="' + data.provider + '"]').remove();
 
             // Chat notice
             message = message
@@ -258,10 +262,11 @@ $(function() {
   };
 
   var textParser = function(text) {
-    text = injectEmoticons(text);
-    return text
+    text = text
       .replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,"<a href=\"$1\" target='_blank'>$1</a>")
       .replace(/(@)([a-zA-Z0-9_]+)/g, "<a href=\"http://twitter.com/$2\" target=\"_blank\">$1$2</a>");
+
+   return  injectEmoticons(text);
   };
 
   var parseChatBox = function(chatBox) {
@@ -283,7 +288,6 @@ $(function() {
     wink: /;-\)|;\)/g,
     frown: /:-\(|:\(|=\(|=-\(/g,
     ambivalent: /:-\||:\|/g,
-    slant: /:-\/|:\/|:-\\|:\\|=-\/|=\/|=-\\|=\\/g,
     gasp: /:-O|:O|:-o|:o|=-O|=O|=-o|=o/g,
     laugh: /:-D|:D|=-D|=D/g,
     kiss: /:-\*|:\*|=-\*|=\*/g,

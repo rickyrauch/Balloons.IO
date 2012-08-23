@@ -6,6 +6,7 @@
 var app = module.parent.exports.app
   , passport = require('passport')
   , client = module.parent.exports.client
+  , config = require('../config')
   , utils = require('../utils');
 
 /*
@@ -15,10 +16,10 @@ var app = module.parent.exports.app
 app.get('/', function(req, res, next) {
   if(req.isAuthenticated()){
     client.hmset(
-        'users:' + req.user.username
+        'users:' + req.user.provider + ":" + req.user.username
       , req.user
     );
-    res.redirect('/rooms/list');
+    res.redirect('/rooms');
   } else{
     res.render('index');
   }
@@ -28,13 +29,27 @@ app.get('/', function(req, res, next) {
  * Authentication routes
  */
 
-app.get('/auth/twitter', passport.authenticate('twitter'));
+if(config.auth.twitter.consumerkey.length) {
+  app.get('/auth/twitter', passport.authenticate('twitter'));
 
-app.get('/auth/twitter/callback', 
-  passport.authenticate('twitter', { failureRedirect: '/' }),
-  function(req, res) {
-    res.redirect('/');
-});
+  app.get('/auth/twitter/callback', 
+    passport.authenticate('twitter', {
+      successRedirect: '/',
+      failureRedirect: '/'
+    })
+  );
+}
+
+if(config.auth.facebook.clientid.length) {
+  app.get('/auth/facebook', passport.authenticate('facebook'));
+
+  app.get('/auth/facebook/callback', 
+    passport.authenticate('facebook', {
+      successRedirect: '/',
+      failureRedirect: '/'
+    })
+  );
+}
 
 app.get('/logout', function(req, res){
   req.logout();
@@ -45,7 +60,7 @@ app.get('/logout', function(req, res){
  * Rooms list
  */
 
-app.get('/rooms/list', utils.restrict, function(req, res) {
+app.get('/rooms', utils.restrict, function(req, res) {
   utils.getPublicRoomsInfo(client, function(rooms) {
     res.render('room_list', { rooms: rooms });
   });
@@ -57,8 +72,8 @@ app.get('/rooms/list', utils.restrict, function(req, res) {
 
 app.post('/create', utils.restrict, function(req, res) {
   utils.validRoomName(req, res, function(roomKey) {
-    utils.roomExists(req, res, client, roomKey, function() {
-      utils.createRoom(req, res, client, roomKey);
+    utils.roomExists(req, res, client, function() {
+      utils.createRoom(req, res, client);
     });
   });
 });
@@ -67,11 +82,11 @@ app.post('/create', utils.restrict, function(req, res) {
  * Join a room
  */
 
-app.get('/rooms/:id', utils.restrict, function(req, res) {
+app.get('/:id', utils.restrict, function(req, res) {
   utils.getRoomInfo(req, res, client, function(room) {
     utils.getUsersInRoom(req, res, client, room, function(users) {
       utils.getPublicRoomsInfo(client, function(rooms) {
-        utils.getUserStatus(req.user.username, client, function(status) {
+        utils.getUserStatus(req.user, client, function(status) {
           utils.enterRoom(req, res, room, users, rooms, status);
         });
       });

@@ -38,7 +38,8 @@ block content
 		sidebar
 			include chat_list
 			include files_list
-  
+			a(href="https://github.com/gravityonmars/Balloons.IO", target="_blank", class="sidebar-open-source") get the code from github
+
 		.content(role='main')
 			.chat
 				// chat-content
@@ -52,13 +53,14 @@ block content
 			.line-chat.second
 
 			.chat-input
-				input.text(type='text', name='', value='')
+				input.text(type='text', name='', placeholder="Your Message", value='')
 				// .chat-input
 
 	// .wrap
 
 	span#room_name(style="display:none")= room.name
 	span#username(style="display:none")= user.nickname
+	span#provider(style="display:none")= user.provider
 
 	include templates/chat_tmpl
 

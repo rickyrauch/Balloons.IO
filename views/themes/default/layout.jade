@@ -17,12 +17,18 @@ html.no-js(lang="en")
 		meta(name="description", content="")
 		meta(name="author", content="")
 		meta(name="viewport", content="width=device-width, initial-scale=1")
+		
 
+		link(rel="stylesheet", href="https://s3.amazonaws.com/social-buttons/css/social-buttons.css")
 		link(rel="stylesheet", href="/js/libs/fancy-box/jquery.fancybox.css")
 		link(rel="stylesheet", href="/css/style.css")
   
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
 		script(src="/js/libs/modernizr-2.5.3.min.js")
 
-	body
+	- if("undefined" != typeof room) {
+		body.fancy-theme
+	- } else {
+		body
+	- }  
 		block content

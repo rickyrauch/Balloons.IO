@@ -1,7 +1,8 @@
 script#chat_box(type='text/html')
-  .chat-box(data-user='{{ nickname }}', data-type='{{ type }}')
-    .avatar
-      img(src='http://twitter.com/api/users/profile_image/{{ nickname }}?size=normal')
+  .chat-box(data-user='{{ nickname }}', data-provider='{{ provider }}', data-type='{{ type }}')
+    div(class="avatar avatar-{{ provider }}")
+      img(src='http://avatars.io/{{ provider }}/{{ nickname }}')
+      a(href="https://{{ provider }}.com/{{ nickname }}")
     h5
       | {{ nickname }}
     {{> chat_box_text }}
@@ -17,7 +18,7 @@ script#chat_notice(type='text/html')
     |  {{ noticeMsg }}
 
 script#people_box(type='text/html')
-  a(class='{{ status }}', href='#', data-username='{{ nickname }}')
+  a(class='{{ status }}', href='#', data-username='{{ nickname }}', data-provider='{{ provider }}')
     b
     | {{ nickname }}
 
