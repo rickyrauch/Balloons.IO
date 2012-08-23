@@ -382,18 +382,17 @@ body.homepage .homepage-left {
   position: fixed;
   bottom: 0;
   top: 0;
-  width: 30%;
+  width: 400px;
   text-align: center;
   float: left;
 }
 body.homepage .homepage-left img {
   margin: 40px 0 100px;
-  width: auto;
-  max-width: 100%;
+  width: 45%;
 }
 body.homepage .homepage-left .features {
   position: absolute;
-  bottom: 30px;
+  bottom: 40px;
   right: 0;
 }
 body.homepage .homepage-left .feature {
