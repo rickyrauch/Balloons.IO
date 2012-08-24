@@ -13,8 +13,12 @@
       , "passport": "0.1.x"
       , "passport-twitter": "0.1.x"
       , "passport-facebook": "0.1.x"
+      , "forever": "*"
+      , "redis-url": "0.1.0"
+      , "url": "*"
     }
   , "engines": {
-    "node": ">= 0.6.0"
+    "node": ">= 0.6.0",
+    "npm": ">= 0.6"
   }
 }
