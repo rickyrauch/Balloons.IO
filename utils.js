@@ -192,3 +192,7 @@ exports.caseInsensitiveSort = function (a, b) {
 
    return ret;
 };
+
+exports.genUserKey = function(user) {
+  return user.provider + ":" + user.username;
+}

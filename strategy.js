@@ -13,11 +13,13 @@ var passport = require('passport')
  */
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user.key);
 });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
+passport.deserializeUser(function(userKey, done) {
+  api.redis.getUser(userKey, function(err, user) {
+    return done(null, user);
+  };
 });
 
 if(config.auth.twitter.consumerkey.length) {
@@ -27,7 +29,9 @@ if(config.auth.twitter.consumerkey.length) {
       callbackURL: config.auth.twitter.callback
     },
     function(token, tokenSecret, profile, done) {
-      return done(null, profile);
+      api.redis.getOrCreateUser(profile, function(err, user) {
+        return done(null, user);
+      });
     }
   ));
 } 
@@ -39,7 +43,9 @@ if(config.auth.facebook.clientid.length) {
       callbackURL: config.auth.facebook.callback
     },
     function(accessToken, refreshToken, profile, done) {
-      return done(null, profile);
+      api.redis.getOrCreateUser(profile, function(err, user) {
+        return done(null, user);
+      });
     }
   ));
 }

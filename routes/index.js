@@ -14,15 +14,8 @@ var app = module.parent.exports.app
  */
 
 app.get('/', function(req, res, next) {
-  if(req.isAuthenticated()){
-    client.hmset(
-        'users:' + req.user.username
-      , req.user
-    );
-    res.redirect('/rooms');
-  } else{
-    res.render('index');
-  }
+  if(req.isAuthenticated()) return res.redirect('/rooms');
+  return res.render('index');
 });
 
 /*
@@ -75,6 +68,12 @@ app.post('/create', utils.restrict, function(req, res) {
     utils.roomExists(req, res, client, function() {
       utils.createRoom(req, res, client);
     });
+  });
+});
+
+app.get('/new_splash', function(req, res) {
+  utils.getPublicRoomsInfo(client, function(rooms) {
+    res.render('homepage', { rooms: rooms });
   });
 });
 
