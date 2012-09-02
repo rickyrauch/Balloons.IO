@@ -4,18 +4,25 @@
 
 var express = require('express')
   , http = require('http')
-  , redis = require('redis')
   , passport = require('passport')
-  , RedisStore = require('connect-redis')(express)
-  , sessionStore = exports.sessionStore = new RedisStore
   , config = require('./config.json')
-  , init = require('./init');
+  , init = require('./init')
+  , redis = require('redis')
+  , RedisStore = require('connect-redis')(express);
 
 /*
  * Instantiate redis
  */
 
-var client = exports.client  = redis.createClient();
+if (process.env.REDISTOGO_URL) {
+  var rtg   = require('url').parse(process.env.REDISTOGO_URL);
+  var client = exports.client  = redis.createClient(rtg.port, rtg.hostname);
+  client.auth(rtg.auth.split(':')[1]); // auth 1st part is username and 2nd is password separated by ":"
+} else {
+  var client = exports.client  = redis.createClient();
+}
+
+var sessionStore = exports.sessionStore = new RedisStore({client: client});
 
 /*
  * Clean db and create folder
@@ -36,7 +43,7 @@ require('./strategy');
 var app = exports.app = express();
 
 app.configure(function() {
-  app.set('port', config.app.port || 6789);
+  app.set('port', process.env.PORT || config.app.port || 6789);
   app.set('view engine', 'jade'); 
   app.set('views', __dirname + '/views/themes/' + config.theme.name);
   app.use(express.static(__dirname + '/public'));

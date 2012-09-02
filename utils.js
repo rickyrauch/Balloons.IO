@@ -40,7 +40,7 @@ exports.validRoomName = function(req, res, fn) {
 exports.roomExists = function(req, res, client, fn) {
   client.hget('balloons:rooms:keys', encodeURIComponent(req.body.room_name), function(err, roomKey) {
     if(!err && roomKey) {
-      res.redirect( '/rooms/' + roomKey );
+      res.redirect( '/' + roomKey );
     } else {
       fn()
     }

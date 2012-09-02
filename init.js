@@ -24,7 +24,7 @@ module.exports = function(client){
    */
 
   // Delete all users sockets from their lists
-  client.keys('users:*:sockets', function(err, keys) {
+  client.keys('sockets:for:*', function(err, keys) {
     if(keys.length) client.del(keys);
     console.log('Deletion of sockets reference for each user >> ', err || "Done!");
   });
