@@ -4,6 +4,36 @@ var parent = module.parent.exports
 	, utils = require('../utils')
 	, client = parent.client;
 
+var keys = {
+	room: function(rid) {
+		return 'rooms:$'.replace('$', rid);
+	},
+
+	roomUsers: function(rid) {
+		return 'rooms:$:users'.replace('$', rid);
+	},
+
+	user: function(uid) {
+		return 'users:$'.replace('$', uid);
+	},
+
+	roomsKeys: function(params) {
+		return 'balloons:rooms:keys';
+	},
+
+	publicRooms: function(params) {
+		return 'balloons:public:rooms';
+	},
+
+	clientSockets: function(uid, sid) {
+		return 'sockets:for:$:at:$'.replace('$', uid).replace('$', sid);
+	},
+
+	appSockets: function(params) {
+		return 'socket.io:sockets';
+	}
+};
+
 /*
  *	HASH: Room
  *	rooms:<room_key>
@@ -89,7 +119,7 @@ exports.getPublicRooms = function(fn) {
 /*
  *	SET: Room Online Users
  *	rooms:<room_key>:users
- *	[<user_key>, <user_key>, ... ]
+ *	|- [<room_key>, <room_key>, ... ]
  *
 */
 exports.getRoomUsers = function(roomKey, fn) {
@@ -170,11 +200,31 @@ exports.updateUserStatus = function(userKey, statusUpdate, fn) {
 
 /*
  *	SET: SocketIO Sockets
- *	socketio:sockets 
- *	|- key: <user_key>
- *	|- provider: <provider>
- *	|- status: <status>
- *	|- [passport-data]
+ *	socket.io:sockets 
+ *	|- [<soket_id>, <soket_id>, ... ]
+ *
+*/
+
+exports.addSocketToApp = function(socketId, fn) {
+	client.sadd(keys.appSockets(), socketId, function(err, saved) {
+		if(err) return fn(err);
+		if(!saved) return fn("Couldn't save socket to App!");
+		return fn(null);
+	});
+};
+
+exports.removeSocketFromApp = function(socketId, fn) {
+	client.srem(keys.appSockets(), socketId, function(err, removed) {
+		if(err) return fn(err);
+		if(!removed) return fn("Couldn't remove socket from App!");
+		return fn(null);
+	});
+}
+
+/*
+ *	SET: Client Sockets
+ *	sockets:for:<user_key>:at:<room_key> 
+ *	|- [<soket_id>, <soket_id>, ... ]
  *
 */
 
@@ -201,21 +251,6 @@ exports.getClientSocketsCount = function(userKey, roomId, fn) {
 	});
 };
 
-exports.addSocketToApp = function(socketId, fn) {
-	client.sadd(keys.appSockets(), socketId, function(err, saved) {
-		if(err) return fn(err);
-		if(!saved) return fn("Couldn't save socket to App!");
-		return fn(null);
-	});
-};
-
-exports.removeSocketFromApp = function(socketId, fn) {
-	client.srem(keys.appSockets(), socketId, function(err, removed) {
-		if(err) return fn(err);
-		if(!removed) return fn("Couldn't remove socket from App!");
-		return fn(null);
-	});
-}
 
 exports.manageSocketOnConnection = function(userKey, roomId, socketId, fn) {
 	exports.addSocketToClient(userKey, roomId, socketId, function(err) {
@@ -237,6 +272,13 @@ exports.manageSocketOnDisconnection = function(userKey, roomId, socketId, fn) {
 	});
 };
 
+/*
+ *	HASH: Room Keys track
+ *	balloons:rooms:keys 
+ *	|- <room_name>: <room_key>
+ *
+*/
+
 exports.roomExists = function(roomName, fn) {
 	client.hget(keys.roomsKeys(), encodeURIComponent(roomName), function(err, roomKey) {
 		if(err) console.log(err);
@@ -248,36 +290,13 @@ exports.addRoomKey = function(room, fn) {
   client.hset(keys.roomsKeys(), encodeURIComponent(room.name), room.key);
 };
 
+/*
+ *	SET: Public Rooms track
+ *	balloons:rooms:keys 
+ *	|- [<room_key>, <room_key>, ... ]
+ *
+*/
+
 exports.addPublicRoom = function(room) {
 	client.sadd(keys.publicRooms(), room.key);
-};
-
-var keys = {
-	room: function(rid) {
-		return 'rooms:$'.replace('$', rid);
-	},
-
-	roomUsers: function(rid) {
-		return 'rooms:$:users'.replace('$', rid);
-	},
-
-	user: function(uid) {
-		return 'users:$'.replace('$', uid);
-	},
-
-	roomsKeys: function(params) {
-		return 'balloons:rooms:keys';
-	},
-
-	publicRooms: function(params) {
-		return 'balloons:public:rooms';
-	},
-
-	clientSockets: function(uid, sid) {
-		return 'sockets:for:$:at:$'.replace('$', uid).replace('$', sid);
-	},
-
-	appSockets: function(params) {
-		return 'socket.io:sockets';
-	}
 };
