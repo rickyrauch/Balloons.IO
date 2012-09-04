@@ -6,7 +6,9 @@
 var passport = require('passport')
   , TwitterStrategy = require('passport-twitter').Strategy
   , FacebookStrategy = require('passport-facebook').Strategy 
-  , config = require('./config.json');
+  , config = require('./config.json')
+  , client = exports.client = module.parent.exports.client
+  , api = require('./api');
 
 /*
  * Auth strategy
@@ -18,8 +20,8 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(userKey, done) {
   api.redis.getUser(userKey, function(err, user) {
-    return done(null, user);
-  };
+    return done(err, user);
+  });
 });
 
 if(config.auth.twitter.consumerkey.length) {
@@ -30,7 +32,7 @@ if(config.auth.twitter.consumerkey.length) {
     },
     function(token, tokenSecret, profile, done) {
       api.redis.getOrCreateUser(profile, function(err, user) {
-        return done(null, user);
+        return done(err, user);
       });
     }
   ));
@@ -44,7 +46,7 @@ if(config.auth.facebook.clientid.length) {
     },
     function(accessToken, refreshToken, profile, done) {
       api.redis.getOrCreateUser(profile, function(err, user) {
-        return done(null, user);
+        return done(err, user);
       });
     }
   ));

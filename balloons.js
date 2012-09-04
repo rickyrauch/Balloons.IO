@@ -5,30 +5,35 @@
 var express = require('express')
   , http = require('http')
   , passport = require('passport')
-  , config = require('./config.json')
-  , init = require('./init')
-  , redis = require('redis')
-  , RedisStore = require('connect-redis')(express);
+  , config = require('./config.json');
 
 /*
  * Instantiate redis
  */
+var redis = require('redis')
+  , client;
 
+// client connect
 if (process.env.REDISTOGO_URL) {
-  var rtg   = require('url').parse(process.env.REDISTOGO_URL);
-  var client = exports.client  = redis.createClient(rtg.port, rtg.hostname);
-  client.auth(rtg.auth.split(':')[1]); // auth 1st part is username and 2nd is password separated by ":"
+  var rtg = require('url').parse(process.env.REDISTOGO_URL);
+  client = redis.createClient(rtg.port, rtg.hostname);
+  if(rtg.auth) client.auth(rtg.auth.split(':')[1]);
 } else {
-  var client = exports.client  = redis.createClient();
+  client = redis.createClient();
 }
 
-var sessionStore = exports.sessionStore = new RedisStore({client: client});
+// externalize client
+exports.client = client;
+
+// session store
+var RedisStore = require('connect-redis')(express)
+  , sessionStore = exports.sessionStore = new RedisStore({ client: client });
 
 /*
  * Clean db and create folder
  */
 
-init(client);
+require('./init')(client);
 
 /*
  * Passportjs auth strategy

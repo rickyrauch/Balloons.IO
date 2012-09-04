@@ -7,7 +7,8 @@ var parent = module.parent.exports
   , app = parent.app
   , server = parent.server
   , express = require('express')
-  , client = parent.client
+  , client = exports.client = parent.client
+  , api = require('./api')
   , sessionStore = parent.sessionStore
   , sio = require('socket.io')
   , parseCookies = require('connect').utils.parseSignedCookies
@@ -27,12 +28,16 @@ io.set('authorization', function (hsData, accept) {
         return accept('Error retrieving session!', false);
       }
 
-      hsData.balloons = {
-        user: session.passport.user,
-        room: /\/(?:([^\/]+?))\/?$/g.exec(hsData.headers.referer)[1]
-      };
+      api.redis.getUser(session.passport.user, function(err, user) {
+        if(err) return accept(err, false);
+        
+        hsData.balloons = {
+          user: user,
+          room: /\/(?:([^\/]+?))\/?$/g.exec(hsData.headers.referer)[1]
+        };
 
-      return accept(null, true);
+        return accept(null, true);
+      });
       
     });
   } else {
@@ -49,9 +54,11 @@ io.configure(function() {
 
 io.sockets.on('connection', function (socket) {
   var hs = socket.handshake
-    , nickname = hs.balloons.user.username
-    , provider = hs.balloons.user.provider
-    , userKey = provider + ":" + nickname
+    , user = hs.balloons.user
+    , userKey = user.key
+    , nickname = user.username
+    , provider = user.provider
+    , userStatus = user.status
     , room_id = hs.balloons.room
     , now = new Date()
     // Chat Log handler
@@ -60,22 +67,19 @@ io.sockets.on('connection', function (socket) {
 
   socket.join(room_id);
 
-  client.sadd('sockets:for:' + userKey + ':at:' + room_id, socket.id, function(err, socketAdded) {
-    if(socketAdded) {
-      client.sadd('socketio:sockets', socket.id);
-      client.sadd('rooms:' + room_id + ':online', userKey, function(err, userAdded) {
-        if(userAdded) {
-          client.hincrby('rooms:' + room_id + ':info', 'online', 1);
-          client.get('users:' + userKey + ':status', function(err, status) {
-            io.sockets.in(room_id).emit('new user', {
-              nickname: nickname,
-              provider: provider,
-              status: status || 'available'
-            });
-          });
-        }
-      });
-    }
+  api.redis.manageSocketOnConnection(userKey, room_id, socket.id, function(err) {
+    if(err) return console.error(err);
+    api.redis.addUserToRoom(room_id, userKey, function(err) {
+      if(err) return console.error(err);
+      api.redis.updateRoomCounter(room_id, 1, function(err) {
+        if(err) return console.log(err);
+        io.sockets.in(room_id).emit('new user', {
+          nickname: nickname,
+          provider: provider,
+          status: userStatus || 'available'
+        });
+      })
+    })
   });
 
   socket.on('my msg', function(data) {
@@ -91,6 +95,7 @@ io.sockets.on('connection', function (socket) {
       chatlogWriteStream.write(JSON.stringify(chatlogRegistry) + "\n");
       
       io.sockets.in(room_id).emit('new msg', {
+        key: userKey,
         nickname: nickname,
         provider: provider,
         msg: data.msg
@@ -99,13 +104,15 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('set status', function(data) {
-    var status = data.status;
+    //revisar si hace falta actualizar el valor en la session!!
+    userStatus = data.status;
 
-    client.set('users:' + userKey + ':status', status, function(err, statusSet) {
+    api.redis.updateUserStatus(userKey, userStatus, function(err) {
+      if(err) return console.error(err);
       io.sockets.emit('user-info update', {
         username: nickname,
         provider: provider,
-        status: status
+        status: userStatus || 'available'
       });
     });
   });
@@ -130,25 +137,25 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function() {
-    // 'sockets:at:' + room_id + ':for:' + userKey
-    client.srem('sockets:for:' + userKey + ':at:' + room_id, socket.id, function(err, removed) {
-      if(removed) {
-        client.srem('socketio:sockets', socket.id);
-        client.scard('sockets:for:' + userKey + ':at:' + room_id, function(err, members_no) {
-          if(!members_no) {
-            client.srem('rooms:' + room_id + ':online', userKey, function(err, removed) {
-              if (removed) {
-                client.hincrby('rooms:' + room_id + ':info', 'online', -1);
-                chatlogWriteStream.destroySoon();
-                io.sockets.in(room_id).emit('user leave', {
-                  nickname: nickname,
-                  provider: provider
-                });
-              }
+    api.redis.manageSocketOnDisconnection(userKey, room_id, socket.id, function(err) {
+      if(err) return console.error(err);
+      api.redis.getClientSocketsCount(userKey, room_id, function(err, count) {
+        if(err) return console.error(err);
+        if(!count) {
+          api.redis.removeUserFromRoom(room_id, userKey, function(err) {
+            if(err) return console.error(err);
+            api.redis.updateRoomCounter(room_id, -1, function(err) {
+              if(err) return console.error(err);
+              chatlogWriteStream.destroySoon();
+              io.sockets.in(room_id).emit('user leave', {
+                nickname: nickname,
+                provider: provider
+              });
             });
-          }
-        });
-      }
+          });
+        };
+      });
     });
   });
+
 });
