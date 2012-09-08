@@ -34,6 +34,7 @@ var keys = {
 	}
 };
 
+
 /*
  *	HASH: Room
  *	rooms:<room_key>
@@ -44,6 +45,7 @@ var keys = {
  * 	|- online: [Number] [ (SET) rooms:<room_key>:users ]
  *
 */
+
 exports.createRoom = function(roomData, roomAdmin, fn) {
 	var room = {
 		key: utils.genRoomKey(),
@@ -122,6 +124,7 @@ exports.getPublicRooms = function(fn) {
  *	|- [<room_key>, <room_key>, ... ]
  *
 */
+
 exports.getRoomUsers = function(roomKey, fn) {
 	client.smembers(keys.roomUsers(roomKey), function(err, users) {
 		if(err) return fn(err);
@@ -145,6 +148,30 @@ exports.removeUserFromRoom = function(roomKey, userKey, fn) {
 	})
 };
 
+exports.removeAllUsersFromRooms = function() {
+  client.keys(keys.roomUsers('*'), function(err, keys) {
+    if(err) return console.error(err);
+    var roomNames = []
+      , multi = client.multi()
+      , key;
+    
+    if(keys.length) {
+      roomNames = roomNames.concat(keys);
+      client.del(keys);
+    }
+
+    roomNames.forEach(function(roomName, index) {
+      key = roomName.replace(':users', '');
+      multi.hset(key, 'online', 0);
+    });
+
+    multi.exec(function(err, results) {
+      return console.log('Deletion of online users from rooms >> ', err || "Done!");
+    });
+  });
+};
+
+
 /*
  *	HASH: User
  *	users:<user_key>
@@ -153,6 +180,7 @@ exports.removeUserFromRoom = function(roomKey, userKey, fn) {
  *	|- [passport-data]
  *
 */
+
 exports.createUser = function(passport, fn) {
 	passport.key = utils.genUserKey(passport);
 	passport.status = 'available';
@@ -219,7 +247,16 @@ exports.removeSocketFromApp = function(socketId, fn) {
 		if(!removed) return fn("Couldn't remove socket from App!");
 		return fn(null);
 	});
-}
+};
+
+exports.removeAllSocketIOSockets = function() {
+  client.smembers(keys.appSockets(), function(err, sockets) {
+    if(sockets.length) client.del(sockets);
+    client.del(keys.appSockets());
+    return console.log('Deletion of socket.io stored sockets data >> ', err || "Done!");
+  });
+};
+
 
 /*
  *	SET: Client Sockets
@@ -251,6 +288,12 @@ exports.getClientSocketsCount = function(userKey, roomId, fn) {
 	});
 };
 
+exports.deleteAllClientSockets = function() {
+  client.keys(keys.clientSockets('*','*'), function(err, keys) {
+    if(keys.length) client.del(keys);
+    console.log('Deletion of sockets reference for each user >> ', err || "Done!");
+  });
+}
 
 exports.manageSocketOnConnection = function(userKey, roomId, socketId, fn) {
 	exports.addSocketToClient(userKey, roomId, socketId, function(err) {
@@ -272,6 +315,7 @@ exports.manageSocketOnDisconnection = function(userKey, roomId, socketId, fn) {
 	});
 };
 
+
 /*
  *	HASH: Room Keys track
  *	balloons:rooms:keys 
@@ -289,6 +333,7 @@ exports.roomExists = function(roomName, fn) {
 exports.addRoomKey = function(room, fn) {
   client.hset(keys.roomsKeys(), encodeURIComponent(room.name), room.key);
 };
+
 
 /*
  *	SET: Public Rooms track

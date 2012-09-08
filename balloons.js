@@ -7,6 +7,7 @@ var express = require('express')
   , passport = require('passport')
   , config = require('./config.json');
 
+
 /*
  * Instantiate redis
  */
@@ -29,17 +30,22 @@ exports.client = client;
 var RedisStore = require('connect-redis')(express)
   , sessionStore = exports.sessionStore = new RedisStore({ client: client });
 
+var api = require('./api');
+
+
 /*
  * Clean db and create folder
  */
 
-require('./init')(client);
+require('./init')(api);
+
 
 /*
  * Passportjs auth strategy
  */
 
 require('./strategy');
+
 
 /*
  * Create and config server
@@ -63,11 +69,13 @@ app.configure(function() {
   app.use(app.router);
 });
 
+
 /*
  * Routes
  */
 
 require('./routes');
+
 
 /*
  * Web server
@@ -76,6 +84,7 @@ require('./routes');
 exports.server = http.createServer(app).listen(app.get('port'), function() {
   console.log('Balloons.io started on port %d', app.get('port'));
 });
+
 
 /*
  * Socket.io
