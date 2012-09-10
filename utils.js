@@ -161,16 +161,27 @@ exports.enterRoom = function(req, res, room, rooms){
   res.locals({
     room: room,
     rooms: rooms,
-    user: {
-      key: req.user.key,
-      nickname: req.user.username,
-      provider: req.user.provider,
-      status: req.user.status
-    },
+    user: exports.clearUserInfo(req.user),
     users_list: room.users
   });
   res.render('room');
 };
+
+/*
+ * Prepare user info before deliver
+ */
+exports.clearUserInfo = function(user) {
+  if(!user) return null;
+  return user = {
+    key: user.key,
+    username: user.username,
+    displayName: user.displayName,
+    provider: user.provider,
+    photos: user.photos,
+    status: user.status
+  }
+}
+
 
 /*
  * Sort Case Insensitive

@@ -1,10 +1,10 @@
 script#chat_box(type='text/html')
-  .chat-box(data-user='{{ nickname }}', data-provider='{{ provider }}', data-type='{{ type }}')
+  .chat-box(data-user='{{ username }}', data-provider='{{ provider }}', data-type='{{ type }}')
     div(class="avatar avatar-{{ provider }}")
-      img(src='http://avatars.io/{{ provider }}/{{ nickname }}')
-      a(href="https://{{ provider }}.com/{{ nickname }}")
+      img(src='http://avatars.io/{{ provider }}/{{ username }}')
+      a(href="https://{{ provider }}.com/{{ username }}")
     h5
-      | {{ nickname }}
+      | {{ username }}
     {{> chat_box_text }}
 
 script#chat_box_text(type='text/html')
@@ -18,9 +18,9 @@ script#chat_notice(type='text/html')
     |  {{ noticeMsg }}
 
 script#people_box(type='text/html')
-  a(class='{{ status }}', href='#', data-username='{{ nickname }}', data-provider='{{ provider }}')
+  a(class='{{ status }}', href='#', data-username='{{ username }}', data-provider='{{ provider }}')
     b
-    | {{ nickname }}
+    | {{ username }}
 
 script#title_template(type='text/html')
   | {{#count}} ({{ count }}) {{/count}} {{ roomName }} - Balloons.IO

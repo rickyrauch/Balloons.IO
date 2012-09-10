@@ -88,6 +88,7 @@ app.get('/new_splash', function(req, res) {
 app.get('/:id', utils.restrict, function(req, res) {
   api.redis.getFullRoom(req.params.id, function(err, room) {
     if(err) return res.redirect('/');
+    console.log(room);
     api.redis.getPublicRooms(function(err, rooms) {
       if(err) return res.redirect('/');
       utils.enterRoom(req, res, room, rooms);

@@ -56,7 +56,7 @@ io.sockets.on('connection', function (socket) {
   var hs = socket.handshake
     , user = hs.balloons.user
     , userKey = user.key
-    , nickname = user.username
+    , username = user.username
     , provider = user.provider
     , userStatus = user.status
     , room_id = hs.balloons.room
@@ -74,7 +74,7 @@ io.sockets.on('connection', function (socket) {
       api.redis.updateRoomCounter(room_id, 1, function(err) {
         if(err) return console.log(err);
         io.sockets.in(room_id).emit('new user', {
-          nickname: nickname,
+          username: username,
           provider: provider,
           status: userStatus || 'available'
         });
@@ -96,7 +96,7 @@ io.sockets.on('connection', function (socket) {
       
       io.sockets.in(room_id).emit('new msg', {
         key: userKey,
-        nickname: nickname,
+        username: username,
         provider: provider,
         msg: data.msg
       });        
@@ -110,7 +110,7 @@ io.sockets.on('connection', function (socket) {
     api.redis.updateUserStatus(userKey, userStatus, function(err) {
       if(err) return console.error(err);
       io.sockets.emit('user-info update', {
-        username: nickname,
+        username: username,
         provider: provider,
         status: userStatus || 'available'
       });
@@ -148,7 +148,7 @@ io.sockets.on('connection', function (socket) {
               if(err) return console.error(err);
               chatlogWriteStream.destroySoon();
               io.sockets.in(room_id).emit('user leave', {
-                nickname: nickname,
+                username: username,
                 provider: provider
               });
             });

@@ -124,12 +124,32 @@ exports.getPublicRooms = function(fn) {
  *	|- [<room_key>, <room_key>, ... ]
  *
 */
-
-exports.getRoomUsers = function(roomKey, fn) {
+exports._getRoomUsersKeys = function(roomKey, fn) {
 	client.smembers(keys.roomUsers(roomKey), function(err, users) {
 		if(err) return fn(err);
 		return fn(null, users);
-	})
+	});
+};
+
+exports.getRoomUsers = function(roomKey, fn) {
+	var users = [];
+	exports._getRoomUsersKeys(roomKey, function(err, usersKeys) {
+		if(err) return fn(err);
+		var multi = client.multi();
+		usersKeys.forEach(function(userKey) {
+			multi.hgetall(keys.user(userKey), function(err, user) {
+				// if(err) return fn(err);
+				// if(!user) return fn("Coudn't find user.");
+				return user;
+			});
+		});
+		multi.exec(function(err, results) {
+			results.forEach(function(u) {
+				users.push(utils.clearUserInfo(u));
+			});
+			return fn(null, users);
+		});
+	});
 };
 
 exports.addUserToRoom = function(roomKey, userKey, fn) {
@@ -206,6 +226,7 @@ exports.getOrCreateUser = function(passport, fn) {
 		if(user) return fn(null, user);
 		exports.createUser(passport, function(err, user) {
 			if(err) return fn(err);
+			console.log('created user');
 			return fn(null, user);
 		});
 	});
