@@ -24,9 +24,9 @@ sites do much better than what we could do ourselves:
 
 ### Install Redis
 
-    wget http://redis.googlecode.com/files/redis-2.0.4.tar.gz
-    tar xvf redis-2.0.4.tar.gz
-    cd redis-2.0.4
+    wget http://redis.googlecode.com/files/redis-2.4.17.tar.gz
+    tar xvf redis-2.4.17.tar.gz
+    cd redis-2.4.17
     make && make install
 
 Start Redis
