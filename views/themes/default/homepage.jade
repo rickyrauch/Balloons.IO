@@ -21,19 +21,20 @@ html.no-js(lang='en')
       h3 Private Rooms
       //
          <input class="input-fake" placeholder="Enter your room name"> 
-      .homepage-col-content
-        h4
-          | You must to be authenticated to see private rooms you created or you been invited.
-        p
-          a.sb.sb-big.sb-facebook(href='#')
-            i
-            span Connect with Facebook
-            strong 12k have done this.
-        p
-          a.sb.sb-big.sb-twitter(href='#')
-            i
-            span Connect with Twitter
-            strong 12k have done this.
+      if(!user)
+        .homepage-col-content
+          h4
+            | You must to be authenticated to see private rooms you created or you been invited.
+          p
+            a.sb.sb-big.sb-facebook(href='/auth/facebook')
+              i
+              span Connect with Facebook
+              strong 12k have done this.
+          p
+            a.sb.sb-big.sb-twitter(href='/auth/twitter')
+              i
+              span Connect with Twitter
+              strong 12k have done this.
       //
          .homepage-col-content 
     //
@@ -45,6 +46,7 @@ html.no-js(lang='en')
         - if(rooms.length) {
           - rooms.forEach(function(room) {
               li
+                - if(!user) room.key = ''
                 a(href='/' + room.key)
                   | #{room.name.substr(0,20)}
                   span #{room.online}

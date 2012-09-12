@@ -15,15 +15,20 @@ var app = module.parent.exports.app
  */
 
 app.get('/', function(req, res, next) {
-  if(req.isAuthenticated()) return res.redirect('/rooms');
-  return res.render('index');
+  api.redis.getPublicRooms(function(err, rooms) {
+    if(err) console.error(err);
+    if(req.isAuthenticated()) var user = req.user;
+    return res.render('homepage', { rooms: rooms || [], user: user || null });
+  });
+  // if(req.isAuthenticated()) return res.redirect('/new_splash');
+  // return res.render('new_splash');
 });
 
 /*
  * Authentication routes
  */
 
-if(config.auth.twitter.consumerkey.length) {
+if(config.auth.twitter && config.auth.twitter.consumerkey.length) {
   app.get('/auth/twitter', passport.authenticate('twitter'));
 
   app.get('/auth/twitter/callback', 
@@ -34,7 +39,7 @@ if(config.auth.twitter.consumerkey.length) {
   );
 }
 
-if(config.auth.facebook.clientid.length) {
+if(config.auth.facebook && config.auth.facebook.clientid.length) {
   app.get('/auth/facebook', passport.authenticate('facebook'));
 
   app.get('/auth/facebook/callback', 
