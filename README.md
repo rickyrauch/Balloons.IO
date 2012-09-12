@@ -54,9 +54,18 @@ Go to terminal and run `node balloons`.
 
 Point your browser to `http://127.0.0.1:6789` (You can also change the port from 'config.json')
 
-Balloons uses [PassportJS](http://passportjs.org) for authentication with Twitter. For now, this is the only authentication method we provide.
+Balloons uses [PassportJS](http://passportjs.org) for authentication with Twitter and Facebook.
 
 Enjoy!
+
+
+
+
+
+
+
+
+
 
 
 ## License 
