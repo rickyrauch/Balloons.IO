@@ -29,7 +29,7 @@ sites do much better than what we could do ourselves:
     make && make install
 
 Start Redis
-    ./redis-server ./redis.conf
+`./redis-server ./redis.conf`
 
 
 If you have these 2 tools installed, go to terminal and type:
