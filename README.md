@@ -1,4 +1,5 @@
-# Balloons.IO
+Balloons.IO
+===========
 
 Balloons.IO is a web multi-room chat server and client ready to use.
 It’s build with the help of node.JS, Express, Socket.IO and Redis. [Follow us on twitter][]
@@ -19,6 +20,17 @@ sites do much better than what we could do ourselves:
 
 -   [node.JS](http://nodejs.org)
 -		[Redis-server](http://redis.io)
+
+
+### Install Redis
+    wget http://redis.googlecode.com/files/redis-2.0.4.tar.gz
+    tar xvf redis-2.0.4.tar.gz
+    cd redis-2.0.4
+    make && make install
+
+Start Redis
+    ./redis-server ./redis.conf
+
 
 If you have these 2 tools installed, go to terminal and type:
 
