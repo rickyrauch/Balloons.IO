@@ -17,8 +17,8 @@ var express = require('express')
 
 // explicit redis config - usually for Nodejitsu
 if (config.redis) {
-
-  client = redis.createClient(config.redis.post, config.redis.hostname, config.redis.options);
+  console.log("---- USING EXPLICIT REDIS CONFIG ---- " + config.redis.hostname + ":" + config.redis.port);
+  client = redis.createClient(config.redis.port, config.redis.hostname, config.redis.options);
   if (config.redis.password) client.auth(config.redis.password);
 }
 
