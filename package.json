@@ -1,5 +1,10 @@
 {
-    "name": "Balloons.io"
+    "name": "Balloons.IO"
+  , "subdomain": "balloonsio"
+  , "scripts": {
+        "start": "balloons.js"
+    }
+  , "version": "0.0.2"
   , "description": "Web multi-room chat server and client ready to use."
   , "version": "0.0.1"
   , "dependencies": {
@@ -7,7 +12,7 @@
       , "connect": "2.4.x"
       , "cookie": "0.0.x"
       , "jade": "*"
-      , "socket.io": ">=0.9.7"
+      , "socket.io": ">= 0.9.7"
       , "redis": "0.7.2"
       , "connect-redis": "1.4.x"
       , "passport": "0.1.x"
@@ -18,7 +23,7 @@
       , "url": "*"
     }
   , "engines": {
-    "node": ">= 0.6.0",
+    "node": ">= 0.6.x",
     "npm": ">= 0.6"
   }
 }

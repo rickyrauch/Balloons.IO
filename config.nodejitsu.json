@@ -1,0 +1,30 @@
+{
+  "auth": {
+    "twitter": {
+      "consumerkey" : "yourConsumerKey",
+      "consumersecret" : "yourSecretKey",
+      "callback" : "http://127.0.0.1:6789/auth/twitter/callback"
+    },
+    "facebook": {
+      "clientid" : "473460009360636",
+      "clientsecret" : "48e4d1090cd6d66040673342aad1ec85",
+      "callback" : "http://127.0.0.1:6789/auth/facebook/callback"
+    }
+  },
+  "theme": {
+    "name" : "ffc"
+  },
+  "session" : {
+    "secret" : "yourbestsecret"
+  },
+  "app": {
+    "port": 6789
+  },
+  "redis": {
+    "hostname": "redis.example.com",
+    "port": "1234",
+    "options": {
+      "parser": "javascript"
+    }
+  }
+}

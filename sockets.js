@@ -6,7 +6,7 @@
 var parent = module.parent.exports 
   , app = parent.app
   , server = parent.server
-  , express = require('express')
+  , express = require('express') // is this necessary here?
   , client = parent.client
   , sessionStore = parent.sessionStore
   , sio = require('socket.io')
