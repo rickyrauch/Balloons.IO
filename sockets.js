@@ -12,7 +12,7 @@ var parent = module.parent.exports
   , sio = require('socket.io')
   , parseCookies = require('connect').utils.parseSignedCookies
   , cookie = require('cookie')
-  , config = require('./config.json')
+  , config = parent.config
   , fs = require('fs');
 
 

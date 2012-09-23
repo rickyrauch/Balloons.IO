@@ -4,7 +4,7 @@
   "scripts": {
     "start": "balloons.js"
   },
-  "version": "0.0.1-1",
+  "version": "0.0.1-2",
   "description": "Web multi-room chat server and client ready to use.",
   "dependencies": {
     "express": "3.0.0rc1",
