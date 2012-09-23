@@ -23,6 +23,7 @@
   "redis": {
     "hostname": "tetra.redistogo.com",
     "port": 9960,
+    "password": "3f76931223c74d163643d2b27c2b933d",
     "options": {
       "parser": "javascript"
     }
