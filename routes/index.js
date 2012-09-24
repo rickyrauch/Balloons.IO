@@ -3,10 +3,11 @@
  * Module dependencies
  */
 
-var app = module.parent.exports.app
+var parent = module.parent.exports
+  , config = parent.config
+  , app = parent.app
   , passport = require('passport')
-  , client = module.parent.exports.client
-  , config = require('../config')
+  , client = parent.client
   , utils = require('../utils');
 
 /*

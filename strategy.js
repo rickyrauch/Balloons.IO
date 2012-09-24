@@ -3,10 +3,11 @@
  * Module dependencies
  */
 
-var passport = require('passport')
+var parent = module.parent.exports
+  , config = parent.config
+  , passport = require('passport')
   , TwitterStrategy = require('passport-twitter').Strategy
-  , FacebookStrategy = require('passport-facebook').Strategy 
-  , config = require('./config.json');
+  , FacebookStrategy = require('passport-facebook').Strategy;
 
 /*
  * Auth strategy
@@ -20,7 +21,7 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-if(config.auth.twitter.consumerkey.length) {
+if(config.auth.twitter && config.auth.twitter.consumerkey.length) {
   passport.use(new TwitterStrategy({
       consumerKey: config.auth.twitter.consumerkey,
       consumerSecret: config.auth.twitter.consumersecret,
@@ -32,7 +33,7 @@ if(config.auth.twitter.consumerkey.length) {
   ));
 } 
 
-if(config.auth.facebook.clientid.length) {
+if(config.auth.facebook && config.auth.facebook.clientid.length) {
   passport.use(new FacebookStrategy({
       clientID: config.auth.facebook.clientid,
       clientSecret: config.auth.facebook.clientsecret,

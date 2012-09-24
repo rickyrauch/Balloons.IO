@@ -5,22 +5,36 @@
 var express = require('express')
   , http = require('http')
   , passport = require('passport')
-  , config = require('./config.json')
+  , config = exports.config = require('./config/' + (process.env.NODE_ENV || 'development') + '.json')
   , init = require('./init')
   , redis = require('redis')
-  , RedisStore = require('connect-redis')(express);
+  , RedisStore = require('connect-redis')(express)
+  , client = null;
 
 /*
  * Instantiate redis
  */
 
-if (process.env.REDISTOGO_URL) {
-  var rtg   = require('url').parse(process.env.REDISTOGO_URL);
-  var client = exports.client  = redis.createClient(rtg.port, rtg.hostname);
-  client.auth(rtg.auth.split(':')[1]); // auth 1st part is username and 2nd is password separated by ":"
-} else {
-  var client = exports.client  = redis.createClient();
+// explicit redis config - usually for Nodejitsu
+if (config.redis) {
+  console.log("---- USING EXPLICIT REDIS CONFIG ---- " + config.redis.hostname + ":" + config.redis.port);
+  client = redis.createClient(config.redis.port, config.redis.hostname, config.redis.options);
+  if (config.redis.password) client.auth(config.redis.password);
 }
+
+// Redis To Go connections string - usually for Heroku 
+else if (process.env.REDISTOGO_URL) {
+
+  var rtg   = require('url').parse(process.env.REDISTOGO_URL);
+  client = redis.createClient(rtg.port, rtg.hostname);
+  client.auth(rtg.auth.split(':')[1]); // auth 1st part is username and 2nd is password separated by ":"
+
+// default redis client settings - usually for development environment
+} else {
+
+  client = redis.createClient();
+}
+exports.client = client;
 
 var sessionStore = exports.sessionStore = new RedisStore({client: client});
 

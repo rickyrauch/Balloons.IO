@@ -6,13 +6,13 @@
 var parent = module.parent.exports 
   , app = parent.app
   , server = parent.server
-  , express = require('express')
+  , express = require('express') // is this necessary here?
   , client = parent.client
   , sessionStore = parent.sessionStore
   , sio = require('socket.io')
   , parseCookies = require('connect').utils.parseSignedCookies
   , cookie = require('cookie')
-  , config = require('./config.json')
+  , config = parent.config
   , fs = require('fs');
 
 
@@ -41,7 +41,7 @@ io.set('authorization', function (hsData, accept) {
 });
 
 io.configure(function() {
-  io.set('store', new sio.RedisStore);
+  io.set('store', new sio.RedisStore({ redisClient: client }));
   io.enable('browser client minification');
   io.enable('browser client gzip');
 });

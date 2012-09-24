@@ -1,6 +1,10 @@
 {
     "name": "Balloons.io"
   , "description": "Web multi-room chat server and client ready to use."
+  , "subdomain": "myNodejitsuSubdomain"
+  , "scripts": {
+        "start": "balloons.js"
+    }
   , "version": "0.0.1"
   , "dependencies": {
         "express": "3.0.0rc1"
@@ -18,7 +22,7 @@
       , "url": "*"
     }
   , "engines": {
-    "node": ">= 0.6.0",
+    "node": ">= 0.6.x",
     "npm": ">= 0.6"
   }
 }
