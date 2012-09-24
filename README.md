@@ -41,9 +41,9 @@ If you have these 2 tools installed, go to terminal and type:
     git clone https://github.com/gravityonmars/Balloons.IO.git
     cd Balloons.IO
     npm install
-    mv config.sample.json config.json
+    mv config/sample.json config/development.json
 
-Then, edit config.json with your favorite text editor and add Facebook & Twitter keys.
+Then, edit development.json with your favorite text editor and add Facebook & Twitter keys.
 
 To allow Sign In with Twitter: [Create a new application](https://dev.twitter.com/apps/new) and copy 
 the keys that Twitter gives you into 'config.json'.

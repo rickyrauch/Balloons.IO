@@ -6,13 +6,13 @@
       "callback" : "http://127.0.0.1:6789/auth/twitter/callback"
     },
     "facebook": {
-      "clientid" : "473460009360636",
-      "clientsecret" : "48e4d1090cd6d66040673342aad1ec85",
+      "clientid" : "yourClientID",
+      "clientsecret" : "yourClientSecret",
       "callback" : "http://127.0.0.1:6789/auth/facebook/callback"
     }
   },
   "theme": {
-    "name" : "ffc"
+    "name" : "default"
   },
   "session" : {
     "secret" : "yourbestsecret"
