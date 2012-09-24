@@ -1,5 +1,8 @@
 .DS_Store
 *.swp
 node_modules
+config/development.json
+config/production.json
+config/staging.json
 chats/*
 *.rdb
