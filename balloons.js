@@ -5,7 +5,7 @@
 var express = require('express')
   , http = require('http')
   , passport = require('passport')
-  , config = exports.config = require('./config.' + (process.env.NODE_ENV || 'development') + '.json')
+  , config = exports.config = require('./config/' + (process.env.NODE_ENV || 'development') + '.json')
   , init = require('./init')
   , redis = require('redis')
   , RedisStore = require('connect-redis')(express)
