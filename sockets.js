@@ -8,6 +8,7 @@ var parent = module.parent.exports
   , server = parent.server
   , express = require('express')
   , client = parent.client
+  , subClient = parent.subClient
   , sessionStore = parent.sessionStore
   , sio = require('socket.io')
   , parseCookies = require('connect').utils.parseSignedCookies
@@ -41,7 +42,7 @@ io.set('authorization', function (hsData, accept) {
 });
 
 io.configure(function() {
-  io.set('store', new sio.RedisStore({client: client}));
+  io.set('store', new sio.RedisStore({ redisSub: subClient, redisPub: client, redisClient: client }));
   io.enable('browser client minification');
   io.enable('browser client gzip');
 });

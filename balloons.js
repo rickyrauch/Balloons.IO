@@ -16,10 +16,16 @@ var express = require('express')
 
 if (process.env.REDISTOGO_URL) {
   var rtg   = require('url').parse(process.env.REDISTOGO_URL);
-  var client = exports.client  = redis.createClient(rtg.port, rtg.hostname);
-  client.auth(rtg.auth.split(':')[1]); // auth 1st part is username and 2nd is password separated by ":"
+  var r_pass = rtg.auth.split(':')[1];  // auth 1st part is username and 2nd is password separated by ":"
+
+  var client    = exports.client     = redis.createClient(rtg.port, rtg.hostname);
+  var subClient = exports.subClient  = redis.createClient(rtg.port, rtg.hostname);
+
+  client.auth(r_pass);
+  subClient.auth(r_pass);
 } else {
-  var client = exports.client  = redis.createClient();
+  var client    = exports.client     = redis.createClient();
+  var subClient = exports.subClient  = redis.createClient();
 }
 
 var sessionStore = exports.sessionStore = new RedisStore({client: client});
