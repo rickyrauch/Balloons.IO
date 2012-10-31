@@ -8,21 +8,30 @@ var express = require('express')
   , config = require('./config.json')
   , init = require('./init')
   , redis = require('redis')
-  , RedisStore = require('connect-redis')(express);
+  , RedisStore = require('connect-redis')(express)
+  , io;
 
 /*
  * Instantiate redis
  */
 
+var client;
+
 if (process.env.REDISTOGO_URL) {
-  var rtg   = require('url').parse(process.env.REDISTOGO_URL);
-  var client = exports.client  = redis.createClient(rtg.port, rtg.hostname);
+  var rtg = require('url').parse(process.env.REDISTOGO_URL);
+  client = redis.createClient(rtg.port, rtg.hostname);
   client.auth(rtg.auth.split(':')[1]); // auth 1st part is username and 2nd is password separated by ":"
 } else {
-  var client = exports.client  = redis.createClient();
+  client = redis.createClient();
 }
 
-var sessionStore = exports.sessionStore = new RedisStore({client: client});
+var sessionStore = new RedisStore({client: client});
+
+/*
+ * Create app
+ */
+
+var app = express();
 
 /*
  * Clean db and create folder
@@ -34,16 +43,15 @@ init(client);
  * Passportjs auth strategy
  */
 
-require('./strategy');
+require('./strategy')(app);
 
 /*
- * Create and config server
+ * Config app
  */
-
-var app = exports.app = express();
 
 app.configure(function() {
   app.set('port', process.env.PORT || config.app.port || 6789);
+  app.set('config', config);
   app.set('view engine', 'jade'); 
   app.set('views', __dirname + '/views/themes/' + config.theme.name);
   app.use(express.static(__dirname + '/public'));
@@ -62,13 +70,13 @@ app.configure(function() {
  * Routes
  */
 
-require('./routes');
+require('./routes')(app, client, io);
 
 /*
  * Web server
  */
 
-exports.server = http.createServer(app).listen(app.get('port'), function() {
+var server = http.createServer(app).listen(app.get('port'), function() {
   console.log('Balloons.io started on port %d', app.get('port'));
 });
 
@@ -76,7 +84,7 @@ exports.server = http.createServer(app).listen(app.get('port'), function() {
  * Socket.io
  */
 
-require('./sockets');
+io = require('./sockets')(app, server);
 
 
 /*
