@@ -17,7 +17,7 @@ var fs = require('fs');
  * API @public
  */
 
-module.exports = function(client){
+module.exports = function(client) {
 
   /*
    * Clean all forgoten sockets in Redis.io

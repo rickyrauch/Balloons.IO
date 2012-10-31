@@ -86,7 +86,6 @@ var server = http.createServer(app).listen(app.get('port'), function() {
 
 io = require('./sockets')(app, server);
 
-
 /*
  * Catch uncaught exceptions
  */
