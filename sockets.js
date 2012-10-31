@@ -16,7 +16,13 @@ var parent = module.parent.exports
   , fs = require('fs');
 
 
+
+
+
+module.exports = function(app, server) {
+
 var io = sio.listen(server);
+
 io.set('authorization', function (hsData, accept) {
   if(hsData.headers.cookie) {
     var cookies = parseCookies(cookie.parse(hsData.headers.cookie), config.session.secret)
@@ -152,3 +158,7 @@ io.sockets.on('connection', function (socket) {
     });
   });
 });
+
+return io;
+
+};
