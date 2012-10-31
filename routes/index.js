@@ -55,7 +55,7 @@ var getPublicRooms = function(req, res, next) {
   });
 };
 
-var isValidRoom = function(req, res, next) {
+var availableRoom = function(req, res, next) {
   utils.availableRoom(client, req.body.room_name, function(valid) {
     if(valid) next();
     else res.send(500);
