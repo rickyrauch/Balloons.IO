@@ -3,22 +3,19 @@
   , "description": "Web multi-room chat server and client ready to use."
   , "version": "0.0.1"
   , "dependencies": {
-        "express": "3.0.0rc1"
+        "express": "3.0.0"
       , "connect": "2.4.x"
       , "cookie": "0.0.x"
       , "jade": "*"
       , "socket.io": ">=0.9.7"
-      , "redis": "0.7.2"
+      , "redis": "0.8.x"
       , "connect-redis": "1.4.x"
       , "passport": "0.1.x"
       , "passport-twitter": "0.1.x"
       , "passport-facebook": "0.1.x"
-      , "forever": "*"
-      , "redis-url": "0.1.0"
-      , "url": "*"
     }
   , "engines": {
-    "node": ">= 0.6.0",
-    "npm": ">= 0.6"
+    "node": ">= 0.8.0",
+    "npm": ">= 1.0"
   }
 }
