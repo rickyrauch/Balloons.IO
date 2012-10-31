@@ -5,8 +5,10 @@
 
 var passport = require('passport')
   , TwitterStrategy = require('passport-twitter').Strategy
-  , FacebookStrategy = require('passport-facebook').Strategy 
+  , FacebookStrategy = require('passport-facebook').Strategy
   , config = require('./config.json');
+
+module.exports = function(app, client) {
 
 /*
  * Auth strategy
@@ -20,6 +22,10 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
+/*
+ * Twitter Strategy
+ */
+
 if(config.auth.twitter.consumerkey.length) {
   passport.use(new TwitterStrategy({
       consumerKey: config.auth.twitter.consumerkey,
@@ -27,10 +33,24 @@ if(config.auth.twitter.consumerkey.length) {
       callbackURL: config.auth.twitter.callback
     },
     function(token, tokenSecret, profile, done) {
+      client.hmset('users:twitter' + profile.username, profile);
       return done(null, profile);
     }
   ));
+
+  // Twitter auth routes
+  app.get('/auth/twitter', passport.authenticate('twitter'));
+  app.get('/auth/twitter/callback', 
+    passport.authenticate('twitter', {
+      successRedirect: '/',
+      failureRedirect: '/'
+    })
+  );
 } 
+
+/*
+ * Facebook Strategy
+ */
 
 if(config.auth.facebook.clientid.length) {
   passport.use(new FacebookStrategy({
@@ -39,7 +59,22 @@ if(config.auth.facebook.clientid.length) {
       callbackURL: config.auth.facebook.callback
     },
     function(accessToken, refreshToken, profile, done) {
+      client.hmset('users:facebook:' + profile.username, profile);
       return done(null, profile);
     }
   ));
+
+
+  // Facebook auth routes
+  app.get('/auth/facebook', passport.authenticate('facebook'));
+
+  app.get('/auth/facebook/callback', 
+    passport.authenticate('facebook', {
+      successRedirect: '/',
+      failureRedirect: '/'
+    })
+  );
+
 }
+
+};
