@@ -3,94 +3,118 @@
  * Module dependencies
  */
 
-var app = module.parent.exports.app
-  , passport = require('passport')
-  , client = module.parent.exports.client
-  , config = require('../config')
-  , utils = require('../utils');
+var passport = require('passport')
+  , utils = require('../utils')
+  , client
+  , io;
 
-/*
- * Homepage
- */
+module.exports = function(app, _client, _io) { 
+  client = _client;
+  io = _io;
 
-app.get('/', function(req, res, next) {
-  if(req.isAuthenticated()){
-    client.hmset(
-        'users:' + req.user.provider + ":" + req.user.username
-      , req.user
-    );
-    res.redirect('/rooms');
-  } else{
-    res.render('index');
-  }
-});
+  app.get('/', redirectLogged, render('index'));
+  app.get('/logout', logout, redirect('/'));
+  app.get('/rooms', isAuth, getPublicRooms, render('room_list'));
+  app.post('/create', isAuth, availableRoom, createRoom);
+  app.get('/:room_id', isAuth, getRoom, getRoomUsers, getPublicRooms, getUserStatus, render('room'));
+};
 
-/*
- * Authentication routes
- */
+var redirectLogged = function() {
+  return function(req, res, next) {
+    if(req.isAuthenticated()) res.redirect('/rooms');
+    else next();
+  };
+};
 
-if(config.auth.twitter.consumerkey.length) {
-  app.get('/auth/twitter', passport.authenticate('twitter'));
+var isAuth = function(req, res, next) {
+  if(req.isAuthenticated()) next();
+  else res.redirect('/');
+};
 
-  app.get('/auth/twitter/callback', 
-    passport.authenticate('twitter', {
-      successRedirect: '/',
-      failureRedirect: '/'
-    })
-  );
-}
+var render = function(path) {
+  return function(req, res) {
+    res.render(path);
+  };
+};
 
-if(config.auth.facebook.clientid.length) {
-  app.get('/auth/facebook', passport.authenticate('facebook'));
+var redirect = function(route) {
+  return function(req, res) {
+    res.redirect(route);
+  };
+};
 
-  app.get('/auth/facebook/callback', 
-    passport.authenticate('facebook', {
-      successRedirect: '/',
-      failureRedirect: '/'
-    })
-  );
-}
-
-app.get('/logout', function(req, res){
+var logout = function(req, res, next){
   req.logout();
-  res.redirect('/');
-});
+  next();
+};
 
-/*
- * Rooms list
- */
-
-app.get('/rooms', utils.restrict, function(req, res) {
+var getPublicRooms = function(req, res, next) {
   utils.getPublicRoomsInfo(client, function(rooms) {
-    res.render('room_list', { rooms: rooms });
-  });
-});
-
-/*
- * Create a rooom
- */
-
-app.post('/create', utils.restrict, function(req, res) {
-  utils.validRoomName(req, res, function(roomKey) {
-    utils.roomExists(req, res, client, function() {
-      utils.createRoom(req, res, client);
+      res.locals.rooms = rooms;
+      next();
     });
-  });
-});
+  };
+};
 
-/*
- * Join a room
- */
-
-app.get('/:id', utils.restrict, function(req, res) {
-  utils.getRoomInfo(req, res, client, function(room) {
-    utils.getUsersInRoom(req, res, client, room, function(users) {
-      utils.getPublicRoomsInfo(client, function(rooms) {
-        utils.getUserStatus(req.user, client, function(status) {
-          utils.enterRoom(req, res, room, users, rooms, status);
-        });
-      });
-    });
+var isValidRoom = function(req, res, next) {
+  utils.availableRoom(client, req.body.room_name, function(valid) {
+    if(valid) next();
+    else res.send(500);
   });
-});
+};
+
+var createRoom = function(req, res) {
+  utils.createRoom(client, req.body.room_name, function(err, key){
+    if(err) res.send(500);
+    else res.redirect('/' + key);
+  });
+};
+
+var getRoom = function(req, res, next) {
+  utils.getRoomInfo(client, req.params.room_id, function(err, room) {
+    if(err) {
+      next(err);
+    } else {
+      res.locals.room = req.room = room;
+      next();
+    }
+  });
+};
+
+var getRoomUsers = function(req, res, next) {
+  utils.getUsersInRoom(client, req.params.room_id, req.room, function(err, users){
+    if(err) {
+      next(err);
+    } else {
+      res.locals.users_list = req.users_list = users;
+      next();
+    }
+  });
+};
+
+var getPublicRooms = function(req, res, next) {
+  utils.getPublicRoomsInfo(client, function(err, rooms) {
+    if(err) {
+      next(err);
+    } else {
+      res.locals.rooms = req.rooms = rooms;
+      next();
+    }
+  });
+};
+
+var getUser = function(req, res, next) {
+  utils.getUserStatus(req.user, client, function(err, status){
+    if(err) {
+      next(err);
+    } else {
+      res.locals.user = {
+        nickname: req.user.username,
+        provider: req.user.provider,
+        status: status
+      };
+      next();
+    }
+  });
+};
 
