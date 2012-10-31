@@ -16,7 +16,7 @@ module.exports = function(app, _client, _io) {
   app.get('/logout', logout, redirect('/'));
   app.get('/rooms', isAuth, getPublicRooms, render('room_list'));
   app.post('/create', isAuth, availableRoom, createRoom);
-  app.get('/:room_id', isAuth, getRoom, getRoomUsers, getPublicRooms, getUserStatus, render('room'));
+  app.get('/:room_id', isAuth, getRoom, getRoomUsers, getPublicRooms, getUser, render('room'));
 };
 
 var redirectLogged = function() {
