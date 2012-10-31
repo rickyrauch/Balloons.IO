@@ -19,11 +19,9 @@ module.exports = function(app, _client, _io) {
   app.get('/:room_id', isAuth, getRoom, getRoomUsers, getPublicRooms, getUser, render('room'));
 };
 
-var redirectLogged = function() {
-  return function(req, res, next) {
-    if(req.isAuthenticated()) res.redirect('/rooms');
-    else next();
-  };
+var redirectLogged = function(req, res, next) {
+  if(req.isAuthenticated()) res.redirect('/rooms');
+  else next();
 };
 
 var isAuth = function(req, res, next) {
