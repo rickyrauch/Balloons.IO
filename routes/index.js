@@ -50,10 +50,9 @@ var logout = function(req, res, next){
 
 var getPublicRooms = function(req, res, next) {
   utils.getPublicRoomsInfo(client, function(rooms) {
-      res.locals.rooms = rooms;
-      next();
-    });
-  };
+    res.locals.rooms = rooms;
+    next();
+  });
 };
 
 var isValidRoom = function(req, res, next) {
