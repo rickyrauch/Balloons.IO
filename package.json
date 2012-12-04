@@ -8,7 +8,7 @@
       , "cookie": "0.0.x"
       , "jade": "*"
       , "socket.io": ">=0.9.7"
-      , "redis": "0.8.x"
+      , "redis": "0.7.2"
       , "connect-redis": "1.4.x"
       , "passport": "0.1.x"
       , "passport-twitter": "0.1.x"
