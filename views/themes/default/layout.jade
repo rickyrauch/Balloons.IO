@@ -1,12 +1,13 @@
 !!! 5
 //if lt IE 7
-html.no-js.ie6.oldie(lang="en")
+	html(class="no-js ie6 oldie", lang="en")
 //if IE 7
-html.no-js.ie7.oldie(lang="en")
+	html(class="no-js ie7 oldie", lang="en")
 //if IE 8
-html.no-js.ie8.oldie(lang="en")
-//if gt IE 8
-html.no-js(lang="en")
+	html(class="no-js ie8 oldie", lang="en")
+// [if gt IE 8] <!
+html(class="no-js", lang="en")
+	// <![endif]
 
 	head
 		meta(charset="utf-8")
@@ -26,9 +27,6 @@ html.no-js(lang="en")
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
 		script(src="/js/libs/modernizr-2.5.3.min.js")
 
-	- if("undefined" != typeof room) {
-		body.fancy-theme
-	- } else {
-		body
-	- }  
+	- var body_class = (("undefined" != typeof room) ? 'fancy-theme' : 'home-page')
+	body(class=body_class)
 		block content
