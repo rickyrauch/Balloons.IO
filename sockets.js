@@ -52,6 +52,10 @@ io.configure(function() {
   io.enable('browser client gzip');
 });
 
+io.configure('production', function(){
+  io.set('log level', 1);
+});
+
 
 io.sockets.on('connection', function (socket) {
   var hs = socket.handshake
