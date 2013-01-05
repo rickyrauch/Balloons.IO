@@ -19,5 +19,10 @@
   },
   "app": {
     "port": 6789
+  },
+  "db": {
+    "port": null,
+    "host": null,
+    "password": null
   }
 }
