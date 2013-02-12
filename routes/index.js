@@ -3,11 +3,49 @@
  * Module dependencies
  */
 
-var app = module.parent.exports.app
-  , passport = require('passport')
-  , client = module.parent.exports.client
+var passport = require('passport')
   , config = require('../config')
-  , utils = require('../utils');
+  , utils = require('../utils')
+  , debug = require('debug')('Balloons:routes');
+
+
+/**
+ * Set routes
+ */
+
+module.exports = function(app, db) {
+  app.get('/', isAuth, redirect('/rooms'));
+};
+
+/**
+ * check if user is auth
+ * otherwise show homepage
+ */
+
+var isAuth = function(req, res, next) {
+  (req.isAuthenticated()) ? 
+    next() : res.render('index');
+};
+
+/**
+ * Render a specific path
+ */
+
+var render = function(path) {
+  return function(req, res) {
+    res.render(path);
+  };
+};
+
+/**
+ * Redirect to specific uri
+ */
+
+var redirect = function(path) {
+  return function(req, res) {
+    res.redirect(path);
+  };
+};
 
 /*
  * Homepage
