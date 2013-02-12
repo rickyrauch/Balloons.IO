@@ -57,7 +57,7 @@ app.configure(function() {
  * Routes
  */
 
-require('./routes');
+require('./routes')(app, client);
 
 /*
  * Web server
