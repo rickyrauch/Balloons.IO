@@ -7,7 +7,8 @@
  * Module dependencies
  */
 
-var fs = require('fs');
+var fs = require('fs')
+  , debug = require('debug')('Balloons:init');
 
 
 /*
@@ -26,7 +27,7 @@ module.exports = function(client){
   // Delete all users sockets from their lists
   client.keys('sockets:for:*', function(err, keys) {
     if(keys.length) client.del(keys);
-    console.log('Deletion of sockets reference for each user >> ', err || "Done!");
+    debug('Deletion of sockets reference for each user >> ', err || "Done!");
   });
 
   // No one is online when starting up
@@ -43,13 +44,13 @@ module.exports = function(client){
       client.hset(key, 'online', 0);
     });
 
-    console.log('Deletion of online users from rooms >> ', err || "Done!");
+    debug('Deletion of online users from rooms >> ', err || "Done!");
   });
 
   // Delete all socket.io's sockets data from Redis
   client.smembers('socketio:sockets', function(err, sockets) {
     if(sockets.length) client.del(sockets);
-    console.log('Deletion of socket.io stored sockets data >> ', err || "Done!");
+    debug('Deletion of socket.io stored sockets data >> ', err || "Done!");
   });
 
   /*
