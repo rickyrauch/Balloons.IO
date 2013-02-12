@@ -14,10 +14,10 @@ var express = require('express')
  * Instantiate redis
  */
   
-var client = exports.client = redis.createClient(config.db.port, config.db.host);
+var client = redis.createClient(config.db.port, config.db.host);
 client.auth(config.db.password); 
 
-var sessionStore = exports.sessionStore = new RedisStore({cconfig.dbnt: client});
+var sessionStore = new RedisStore({cconfig.dbnt: client});
 
 /*
  * Clean db and create folder
@@ -35,7 +35,7 @@ require('./strategy');
  * Create and config server
  */
 
-var app = exports.app = express();
+var app = express();
 
 app.configure(function() {
   app.set('port', process.env.PORT || config.app.port || 6789);
@@ -63,7 +63,7 @@ require('./routes');
  * Web server
  */
 
-exports.server = http.createServer(app).listen(app.get('port'), function() {
+var server = http.createServer(app).listen(app.get('port'), function() {
   console.log('Balloons.io started on port %d', app.get('port'));
 });
 
