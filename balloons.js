@@ -13,16 +13,11 @@ var express = require('express')
 /*
  * Instantiate redis
  */
+  
+var client = exports.client = redis.createClient(config.db.port, config.db.host);
+client.auth(config.db.password); 
 
-if (process.env.REDISTOGO_URL) {
-  var rtg   = require('url').parse(process.env.REDISTOGO_URL);
-  var client = exports.client  = redis.createClient(rtg.port, rtg.hostname);
-  client.auth(rtg.auth.split(':')[1]); // auth 1st part is username and 2nd is password separated by ":"
-} else {
-  var client = exports.client  = redis.createClient();
-}
-
-var sessionStore = exports.sessionStore = new RedisStore({client: client});
+var sessionStore = exports.sessionStore = new RedisStore({cconfig.dbnt: client});
 
 /*
  * Clean db and create folder
