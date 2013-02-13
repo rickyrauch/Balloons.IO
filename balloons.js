@@ -29,7 +29,7 @@ init(client);
  * Passportjs auth strategy
  */
 
-require('./strategy');
+require('./auth');
 
 /*
  * Create and config server
