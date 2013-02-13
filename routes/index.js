@@ -5,16 +5,26 @@
 
 var passport = require('passport')
   , config = require('../config')
-  , utils = require('../utils')
+  , models = require('./models')
+  , crypto = require('crypto')
   , debug = require('debug')('Balloons:routes');
 
+/**
+ * Get models
+ */
+
+var Room = models('Room');
 
 /**
  * Set routes
  */
 
 module.exports = function(app, db) {
-  app.get('/', isAuth, redirect('/rooms'));
+  app.get(  '/',          isAuth, redirect('/rooms'));
+  app.get(  '/logout',    logout, redirect('/'));
+  app.get(  '/rooms',     isAuth, loadPublicGroups, render('room_list'));
+  app.post( '/create',    isAuth, validateRoom, createRoom);
+  app.post( '/:room_key', isAuth, loadRoom, loadRoomUsers, loadRooms, getStatus, render('room'));
 };
 
 /**
@@ -47,24 +57,93 @@ var redirect = function(path) {
   };
 };
 
-/*
- * Homepage
+/**
+ * Logout
  */
 
-app.get('/', function(req, res, next) {
-  if(req.isAuthenticated()){
-    client.hmset(
-        'users:' + req.user.provider + ":" + req.user.username
-      , req.user
-    );
-    res.redirect('/rooms');
-  } else{
-    res.render('index');
+var logout = function(req, res, next) {
+  req.logout();
+  next();
+};
+
+/**
+ * Load public rooms
+ */
+
+var loadPublicRooms = function(db) {
+  return function(req, res, next) {
+    Room.getPublic(db, function(err, rooms){
+      if(err) throw err;
+      res.locals.rooms = rooms;
+      next();  
+    }); 
+  };  
+};
+
+/**
+ * Validate room
+ */
+
+var validateRoom = function(req, res, next) {
+  var room_name = encodeURIComponent(req.body.room_name.trim());
+  if(validRoomName(room_name)) {
+    Room.findById(db, room_name, function(err, room){
+      if(err) throw err;
+      if(!room) {
+        req.room_name = room_name;
+        next();
+      } else {
+        // TODO: flash message
+        res.redirect('back');
+      }
+    });
+  } else {
+    // TODO: flash message
+    res.redirect('back');
   }
-});
+}; 
+
+/**
+ * Validate room name
+ */
+
+var validRoomName = function(str) {
+  return str && str.length < 255;
+};
+
+/**
+ * Create a room and redirect
+ */
+
+var createRoom = function(req, res) {
+  var room = new Room.model({
+    key: genRoomKey(),
+    name: req.room_name,
+    admin: req.user.provider + ":" + req.user.username,
+    locked: 0,
+    online: 0
+  });
+
+  room.save(function(err, r){
+    if(err) throw err;
+    res.redirect('/' + r.key);
+  });
+};
+ 
+/**
+ * Generate a room key
+ */
+
+var genRoomKey = function() {
+  var shasum = crypto.createHash('sha1');
+  shasum.update(Date.now().toString());
+  return shasum.digest('hex').substr(0,6);
+};
 
 /*
- * Authentication routes
+ * Authentication routes 
+ * 
+ * TODO: Fix this
  */
 
 if(config.auth.twitter.consumerkey.length) {
@@ -88,47 +167,4 @@ if(config.auth.facebook.clientid.length) {
     })
   );
 }
-
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
-
-/*
- * Rooms list
- */
-
-app.get('/rooms', utils.restrict, function(req, res) {
-  utils.getPublicRoomsInfo(client, function(rooms) {
-    res.render('room_list', { rooms: rooms });
-  });
-});
-
-/*
- * Create a rooom
- */
-
-app.post('/create', utils.restrict, function(req, res) {
-  utils.validRoomName(req, res, function(roomKey) {
-    utils.roomExists(req, res, client, function() {
-      utils.createRoom(req, res, client);
-    });
-  });
-});
-
-/*
- * Join a room
- */
-
-app.get('/:id', utils.restrict, function(req, res) {
-  utils.getRoomInfo(req, res, client, function(room) {
-    utils.getUsersInRoom(req, res, client, room, function(users) {
-      utils.getPublicRoomsInfo(client, function(rooms) {
-        utils.getUserStatus(req.user, client, function(status) {
-          utils.enterRoom(req, res, room, users, rooms, status);
-        });
-      });
-    });
-  });
-});
 
