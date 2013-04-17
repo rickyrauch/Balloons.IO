@@ -373,10 +373,14 @@ $(function() {
   }
 
   function updateTitle() {
-    $('title').html(ich.title_template({
-      count: afkDeliveredMessages,
-      roomName: roomName
-    }, true));
+    // On chrome, we have to add a timer for updating the title after the focus event
+    // else the title will not update
+    window.setTimeout(function () {
+      $('title').html(ich.title_template({
+        count: afkDeliveredMessages,
+        roomName: roomName
+      }, true));
+    },100);
   }
 
   function focusInput() {
