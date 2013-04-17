@@ -1,0 +1,23 @@
+{
+  "auth": {
+    "twitter": {
+      "consumerkey" : "yourConsumerKey",
+      "consumersecret" : "yourSecretKey",
+      "callback" : "http://balloons.a.pogoapp.com/auth/facebook/callback"
+    },
+    "facebook": {
+      "clientid" : "330137477082318",
+      "clientsecret" : "d96268abeaff37f762abaf1c6600dc21",
+      "callback" : "http://balloons.a.pogoapp.com/auth/facebook/callback"
+    }
+  },
+  "theme": {
+    "name" : "default"
+  },
+  "session" : {
+    "secret" : "omgwtfbbqsecret"
+  },
+  "app": {
+    "port": 6001
+  }
+}
