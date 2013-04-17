@@ -45,10 +45,18 @@ If you have these 2 tools installed, go to terminal and type:
 
 Then, edit config.json with your favorite text editor and add Facebook & Twitter keys.
 
-To allow Sign In with Twitter: [Create a new application](https://dev.twitter.com/apps/new) and copy 
-the keys that Twitter gives you into 'config.json'.
+To allow Sign In with Twitter: 
 
-To allow Sign In with Facebook: [Create a new application](https://developers.facebook.com/apps) and copy the keys Facebook gives you into 'config.json'
+- [Create a new application](https://dev.twitter.com/apps/new) and copy the keys that Twitter gives you into 'config.json'. 
+
+- Go to your Twitter app Settings and add the Callback URL contained in 'config.json': http://127.0.0.1:6789/auth/twitter/callback
+
+To allow Sign In with Facebook:
+
+- [Create a new application](https://developers.facebook.com/apps) and copy the keys Facebook gives you into 'config.json'.
+
+- Go to your Facebook app Settings/Basic, click on Website with Facebook Login and add the Callback URL contained in 'config.json':
+http://127.0.0.1:6789/auth/facebook/callback
 
 Go to terminal and run `node balloons`.
 
