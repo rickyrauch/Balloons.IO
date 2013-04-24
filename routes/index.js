@@ -7,7 +7,8 @@ var app = module.parent.exports.app
   , passport = require('passport')
   , client = module.parent.exports.client
   , config = require('../config')
-  , utils = require('../utils');
+  , utils = require('../utils')
+  , async = require('async');
 
 /*
  * Homepage
@@ -83,14 +84,12 @@ app.post('/create', utils.restrict, function(req, res) {
  */
 
 app.get('/:id', utils.restrict, function(req, res) {
-  utils.getRoomInfo(req, res, client, function(room) {
-    utils.getUsersInRoom(req, res, client, room, function(users) {
-      utils.getPublicRoomsInfo(client, function(rooms) {
-        utils.getUserStatus(req.user, client, function(status) {
-          utils.enterRoom(req, res, room, users, rooms, status);
-        });
-      });
-    });
+  async.auto({
+    room:   function (cb) { utils.getRoomInfo(req, res, client, function (room) { cb(null, room) }) },
+    users:  ['room', function (cb, o) { utils.getUsersInRoom(req, res, client, o.room, function (users) { cb(null, users) }) }],
+    rooms:  function (cb) { utils.getPublicRoomsInfo(client, function (rooms) { cb(null, rooms) }) },
+    status: function (cb) { utils.getUserStatus(req.user, client, function (status) { cb(null, status) }) },
+    enter:  ['room', 'users', 'rooms', 'status', function (cb, o) { utils.enterRoom(req, res, o.room, o.users, o.rooms, o.status); cb(); }]
   });
 });
 
