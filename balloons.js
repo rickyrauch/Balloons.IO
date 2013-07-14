@@ -3,7 +3,6 @@
  */
 
 var express = require('express')
-  , http = require('http')
   , passport = require('passport')
   , config = require('./config.json')
   , init = require('./init')
@@ -68,9 +67,17 @@ require('./routes');
  * Web server
  */
 
-exports.server = http.createServer(app).listen(app.get('port'), function() {
-  console.log('Balloons.io started on port %d', app.get('port'));
-});
+if(config.credentials) {
+  exports.server = require('https')
+  .createServer(config.credentials, app).listen(app.get('port'), function() {
+    console.log('Balloons.io started on port %d', app.get('port'));
+  });
+} else {
+  exports.server = require('http')
+  .createServer(app).listen(app.get('port'), function() {
+    console.log('Balloons.io started on port %d', app.get('port'));
+  });
+}
 
 /*
  * Socket.io
