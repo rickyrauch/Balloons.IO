@@ -12,13 +12,13 @@ module.exports = {
   redisURL: env.REDIS_URL || env.REDISTOGO_URL || "",
   auth: {
     facebook: {
-      clientID: env.FB_CLIENT_ID,
-      clientSecret: env.FB_CLIENT_SECRET,
+      clientid: env.FB_CLIENT_ID,
+      clientsecret: env.FB_CLIENT_SECRET,
       callback: env.FB_CALLBACK
     },
     twitter: {
-      consumerKey: env.TW_CONSUMER_KEY,
-      consumerSecret: env.TW_CONSUMER_SECRET,
+      consumerkey: env.TW_CONSUMER_KEY,
+      consumersecret: env.TW_CONSUMER_SECRET,
       callback: env.TW_CALLBACK
     }
   },
