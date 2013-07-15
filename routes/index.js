@@ -3,94 +3,109 @@
  * Module dependencies
  */
 
-var app = module.parent.exports.app
-  , passport = require('passport')
-  , client = module.parent.exports.client
-  , config = require('../config')
+var passport = require('passport')
   , utils = require('../utils');
 
-/*
- * Homepage
+/**
+ * Expose routes
  */
 
-app.get('/', function(req, res, next) {
-  if(req.isAuthenticated()){
-    client.hmset(
-        'users:' + req.user.provider + ":" + req.user.username
-      , req.user
-    );
-    res.redirect('/rooms');
-  } else{
-    res.render('index');
-  }
-});
+module.exports = Routes;
 
-/*
- * Authentication routes
+/**
+ * Defines routes for application
+ *
+ * @param {Express} app `Express` instance.
+ * @api public
  */
 
-if(config.auth.twitter.consumerkey.length) {
-  app.get('/auth/twitter', passport.authenticate('twitter'));
+function Routes (app) {
+  var config = app.get('config');
+  var client = app.get('redisClient');
+  
+  /*
+   * Homepage
+   */
 
-  app.get('/auth/twitter/callback', 
-    passport.authenticate('twitter', {
-      successRedirect: '/',
-      failureRedirect: '/'
-    })
-  );
-}
-
-if(config.auth.facebook.clientid.length) {
-  app.get('/auth/facebook', passport.authenticate('facebook'));
-
-  app.get('/auth/facebook/callback', 
-    passport.authenticate('facebook', {
-      successRedirect: '/',
-      failureRedirect: '/'
-    })
-  );
-}
-
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
-
-/*
- * Rooms list
- */
-
-app.get('/rooms', utils.restrict, function(req, res) {
-  utils.getPublicRoomsInfo(client, function(rooms) {
-    res.render('room_list', { rooms: rooms });
+  app.get('/', function(req, res, next) {
+    if(req.isAuthenticated()){
+      client.hmset(
+          'users:' + req.user.provider + ":" + req.user.username
+        , req.user
+      );
+      res.redirect('/rooms');
+    } else{
+      res.render('index');
+    }
   });
-});
 
-/*
- * Create a rooom
- */
+  /*
+   * Authentication routes
+   */
 
-app.post('/create', utils.restrict, function(req, res) {
-  utils.validRoomName(req, res, function(roomKey) {
-    utils.roomExists(req, res, client, function() {
-      utils.createRoom(req, res, client);
+  if(config.auth.twitter.consumerkey.length) {
+    app.get('/auth/twitter', passport.authenticate('twitter'));
+
+    app.get('/auth/twitter/callback', 
+      passport.authenticate('twitter', {
+        successRedirect: '/',
+        failureRedirect: '/'
+      })
+    );
+  }
+
+  if(config.auth.facebook.clientid.length) {
+    app.get('/auth/facebook', passport.authenticate('facebook'));
+
+    app.get('/auth/facebook/callback', 
+      passport.authenticate('facebook', {
+        successRedirect: '/',
+        failureRedirect: '/'
+      })
+    );
+  }
+
+  app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+  });
+
+  /*
+   * Rooms list
+   */
+
+  app.get('/rooms', utils.restrict, function(req, res) {
+    utils.getPublicRoomsInfo(client, function(rooms) {
+      res.render('room_list', { rooms: rooms });
     });
   });
-});
 
-/*
- * Join a room
- */
+  /*
+   * Create a rooom
+   */
 
-app.get('/:id', utils.restrict, function(req, res) {
-  utils.getRoomInfo(req, res, client, function(room) {
-    utils.getUsersInRoom(req, res, client, room, function(users) {
-      utils.getPublicRoomsInfo(client, function(rooms) {
-        utils.getUserStatus(req.user, client, function(status) {
-          utils.enterRoom(req, res, room, users, rooms, status);
+  app.post('/create', utils.restrict, function(req, res) {
+    utils.validRoomName(req, res, function(roomKey) {
+      utils.roomExists(req, res, client, function() {
+        utils.createRoom(req, res, client);
+      });
+    });
+  });
+
+  /*
+   * Join a room
+   */
+
+  app.get('/:id', utils.restrict, function(req, res) {
+    utils.getRoomInfo(req, res, client, function(room) {
+      utils.getUsersInRoom(req, res, client, room, function(users) {
+        utils.getPublicRoomsInfo(client, function(rooms) {
+          utils.getUserStatus(req.user, client, function(status) {
+            utils.enterRoom(req, res, room, users, rooms, status);
+          });
         });
       });
     });
   });
-});
 
+}
