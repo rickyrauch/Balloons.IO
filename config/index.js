@@ -42,7 +42,7 @@ function Config (app) {
   log('Save configuration values in app %j', config);
   app.set('config', config);
 
-  log('Setting port as %d', config.port);
+  log('Setting port as %d', config.app.port);
   app.set('port', config.app.port);
 
   log('Setting view engine as %s', 'jade');
