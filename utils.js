@@ -207,6 +207,7 @@ exports.merge = function merge(a, b) {
   for (var key in b) {
     if (exports.has.call(b, key) && b[key]) {
       if ('object' === type(b[key])) {
+        if ('undefined' === type(a[key])) a[key] = {};
         exports.merge(a[key], b[key]);
       } else {
         a[key] = b[key];
