@@ -204,7 +204,7 @@ exports.caseInsensitiveSort = function (a, b) {
 
 exports.merge = function merge(a, b) {
   for (var key in b) {
-    if (exports.has.call(b, key)) {
+    if (exports.has.call(b, key) && b[key]) {
       a[key] = b[key];
     }
   }
