@@ -52,7 +52,11 @@ function Sockets (app, server) {
   });
 
   io.configure(function() {
-    io.set('store', new sio.RedisStore({client: client}));
+    io.set('store', new sio.RedisStore({
+      redisClient: client,
+      redisPub: client,
+      redisSub: client
+    }));
     io.enable('browser client minification');
     io.enable('browser client gzip');
   });
