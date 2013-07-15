@@ -4,10 +4,11 @@ There are two methods allowed for configuration: `environment` variables or writ
 
 ## Inheritance
 
-1. `config.json`
-2. Environment (`env.js`)
+1. Environment (`env.js`)
+2. `config.json`
 
-The above means that `config.json` defined configuration values override those from environment.
+
+The above list means that `environment` configuration variables will override those from `config.json` file.
 
 ## Install
 

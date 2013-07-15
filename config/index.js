@@ -37,7 +37,7 @@ function Config (app) {
   }
 
   log('Attemp to load from environment');
-  utils.merge(env, config);
+  utils.merge(config, env);
 
   log('Save configuration values in app %j', config);
   app.set('config', config);
