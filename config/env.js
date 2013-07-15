@@ -9,7 +9,7 @@ var env = process.env;
  */
 
 module.exports = {
-  redisURL: env.REDIS_URL || env.REDIS_TO_GO || "",
+  redisURL: env.REDIS_URL || env.REDISTOGO_URL || "",
   auth: {
     facebook: {
       clientID: env.FB_CLIENT_ID,
