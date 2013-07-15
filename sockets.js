@@ -67,7 +67,7 @@ function Sockets (app, server) {
       , now = new Date()
       // Chat Log handler
       , chatlogFileName = './chats/' + room_id + (now.getFullYear()) + (now.getMonth() + 1) + (now.getDate()) + ".txt"
-      , chatlogWriteStream = fs.createWriteStream(chatlogFileName, {'flags': 'a'});
+      // , chatlogWriteStream = fs.createWriteStream(chatlogFileName, {'flags': 'a'});
 
     socket.join(room_id);
 
@@ -99,7 +99,7 @@ function Sockets (app, server) {
           withData: data.msg
         }
 
-        chatlogWriteStream.write(JSON.stringify(chatlogRegistry) + "\n");
+        // chatlogWriteStream.write(JSON.stringify(chatlogRegistry) + "\n");
         
         io.sockets.in(room_id).emit('new msg', {
           nickname: nickname,
@@ -150,7 +150,7 @@ function Sockets (app, server) {
               client.srem('rooms:' + room_id + ':online', userKey, function(err, removed) {
                 if (removed) {
                   client.hincrby('rooms:' + room_id + ':info', 'online', -1);
-                  chatlogWriteStream.destroySoon();
+                  // chatlogWriteStream.destroySoon();
                   io.sockets.in(room_id).emit('user leave', {
                     nickname: nickname,
                     provider: provider

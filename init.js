@@ -54,7 +54,7 @@ module.exports = function(client) {
   /*
    * Create 'chats' dir
    */
-  fs.mkdir('./chats');
+  // fs.mkdir('./chats');
 
 };
 
