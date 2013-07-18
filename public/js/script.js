@@ -37,7 +37,9 @@ $(function() {
   });
 
   //Socket.io
-  var socket = io.connect();
+  var socket = io.connect("", {
+    "connect timeout": 1000
+  });
 
   socket.on('error', function (reason){
     console.error('Unable to connect Socket.IO', reason);
