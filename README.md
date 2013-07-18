@@ -3,8 +3,6 @@ Balloons.IO
 
 Balloons.IO is a web multi-room chat server and client ready to use.
 It’s build with the help of node.JS, Express, Socket.IO and Redis. 
-
-### [Follow me on twitter](https://twitter.com/gravityonmars)
  
  ![image][]
   [image]: http://www.gravityonmars.com/wp-content/themes/gom3/images/projects/balloons-io/app-1.png
@@ -67,6 +65,10 @@ Balloons uses [PassportJS](http://passportjs.org) for authentication with Twitte
 Enjoy!
 
 
+## Contributors 
+- Dan Zajdband (https://twitter.com/dzajdband)
+- Ricardo Rauch (https://twitter.com/gravityonmars)
+- Cristian Douce (https://twitter.com/dzajdband)
 
 
 
