@@ -66,9 +66,9 @@ Enjoy!
 
 
 ## Contributors 
-- Dan Zajdband (https://twitter.com/dzajdband)
-- Ricardo Rauch (https://twitter.com/gravityonmars)
-- Cristian Douce (https://twitter.com/dzajdband)
+- [Dan Zajdband](https://twitter.com/dzajdband)
+- [Ricardo Rauch](https://twitter.com/gravityonmars)
+- [Cristian Douce](https://twitter.com/dzajdband)
 
 
 
