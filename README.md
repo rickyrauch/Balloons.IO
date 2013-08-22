@@ -39,26 +39,26 @@ If you have these 2 tools installed, go to terminal and type:
     git clone https://github.com/gravityonmars/Balloons.IO.git
     cd Balloons.IO
     npm install
-    mv config.sample.json config.json
+    mv config/config.sample.json config/config.json
 
-Then, edit config.json with your favorite text editor and add Facebook & Twitter keys.
+Then, edit config/config.json with your favorite text editor and add Facebook & Twitter keys.
 
 To allow Sign In with Twitter: 
 
-- [Create a new application](https://dev.twitter.com/apps/new) and copy the keys that Twitter gives you into 'config.json'. 
+- [Create a new application](https://dev.twitter.com/apps/new) and copy the keys that Twitter gives you into 'config/config.json'. 
 
-- Go to your Twitter app Settings and add the Callback URL contained in 'config.json': http://127.0.0.1:6789/auth/twitter/callback
+- Go to your Twitter app Settings and add the Callback URL contained in 'config/config.json': http://127.0.0.1:6789/auth/twitter/callback
 
 To allow Sign In with Facebook:
 
-- [Create a new application](https://developers.facebook.com/apps) and copy the keys Facebook gives you into 'config.json'.
+- [Create a new application](https://developers.facebook.com/apps) and copy the keys Facebook gives you into 'config/config.json'.
 
-- Go to your Facebook app Settings/Basic, click on Website with Facebook Login and add the Callback URL contained in 'config.json':
+- Go to your Facebook app Settings/Basic, click on Website with Facebook Login and add the Callback URL contained in 'config/config.json':
 http://127.0.0.1:6789/auth/facebook/callback
 
 Go to terminal and run `node balloons`.
 
-Point your browser to `http://127.0.0.1:6789` (You can also change the port from 'config.json')
+Point your browser to `http://127.0.0.1:6789` (You can also change the port from 'config/config.json')
 
 Balloons uses [PassportJS](http://passportjs.org) for authentication with Twitter and Facebook.
 
