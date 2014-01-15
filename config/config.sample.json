@@ -13,7 +13,7 @@
     }
   },
   "session" : {
-    "secret" : "yourbestsecret"
+    "secret" : "yourbestsecret",
     "age" : 0
   },
   "app": {
