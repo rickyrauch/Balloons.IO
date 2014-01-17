@@ -6,3 +6,4 @@ chats/*
 *.rdb
 !views/themes/default
 views/themes/*
+public/custom
