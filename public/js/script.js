@@ -321,7 +321,8 @@ $(function() {
 
   var injectEmoticons = function(text) {
     for(var emotic in patterns) {
-      text = text.replace(patterns[emotic],emoticHTML.replace("$emotic", "emoticon-" + emotic));
+      text = text.replace(new RegExp("(^|\\s+|>)(" + patterns[emotic] + ")(?=$|\\s+|<)", "g"),
+                          "$1" + emoticHTML.replace("$emotic", "emoticon-" + emotic));
     }
     return text;
   }
