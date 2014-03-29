@@ -14,7 +14,8 @@
     "passport": "~0.1.17",
     "passport-facebook": "~0.1.5",
     "passport-twitter": "~0.1.5",
-    "component-type": "component/type"
+    "component-type": "component/type",
+    "passport-github": "~0.1.5"
   },
   "engines": {
     "node": ">= 0.8.0",
