@@ -65,6 +65,17 @@ function Routes (app) {
     );
   }
 
+  if(config.auth.github.clientid.length) {
+    app.get('/auth/github', passport.authenticate('github'));
+
+    app.get('/auth/github/callback', 
+      passport.authenticate('github', {
+        successRedirect: '/',
+        failureRedirect: '/'
+      })
+    );
+  }
+
   app.get('/logout', function(req, res){
     req.logout();
     res.redirect('/');
