@@ -4,8 +4,7 @@ Balloons.IO
 Balloons.IO is a web multi-room chat server and client ready to use.
 It’s build with the help of node.JS, Express, Socket.IO and Redis. 
  
- ![image][]
-  [image]: https://i.cloudup.com/WFU5nGgvny.png
+<img src="https://i.cloudup.com/WFU5nGgvny.png" />
 
 ## Installation
 
